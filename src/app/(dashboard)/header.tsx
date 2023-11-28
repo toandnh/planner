@@ -4,9 +4,9 @@ import Link from 'next/link'
 
 import clsx from 'clsx'
 
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-
 import { Orbitron } from 'next/font/google'
+
+import AccountPopover from './accountPopover'
 
 const text = Orbitron({
 	subsets: ['latin'],
@@ -26,9 +26,7 @@ export default function Header() {
 					Planner
 				</h1>
 			</Link>
-			<Link href='/profile' className='flex justify-end items-center'>
-				<AccountBoxIcon fontSize='large' sx={{ color: '#000' }} />
-			</Link>
+			<AccountPopover />
 		</div>
 	)
 }

@@ -1,10 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
-
-import clsx from 'clsx'
-
-import Header from './header'
+import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +16,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={clsx('min-h-screen min-w-screen p-10', inter.className)}>
-				<Header />
-				{children}
-			</body>
+			<body className={inter.className}>{children}</body>
 		</html>
 	)
 }
