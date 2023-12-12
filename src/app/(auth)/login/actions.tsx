@@ -1,4 +1,6 @@
-import { signIn } from '@/auth'
+'use server'
+
+import { signIn, signOut } from '@/auth'
 
 export async function authenticate(
 	prevState: string | undefined,
@@ -10,6 +12,14 @@ export async function authenticate(
 		if ((error as Error).message.includes('CredentialsSignin')) {
 			return 'CredentialsSignin'
 		}
+		throw error
+	}
+}
+
+export async function logout() {
+	try {
+		await signOut()
+	} catch (error) {
 		throw error
 	}
 }

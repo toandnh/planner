@@ -9,7 +9,6 @@ export const authConfig = {
 	},
 	callbacks: {
 		authorized({ auth, request: { nextUrl } }) {
-			console.log(nextUrl.pathname)
 			const isLoggedIn = !!auth?.user
 			const isOnDashboard =
 				nextUrl.pathname === '/' || nextUrl.pathname === '/profile'
@@ -17,10 +16,9 @@ export const authConfig = {
 				if (isLoggedIn) return true
 				return false // Redirect unauthenticated users to login page
 			} else if (isLoggedIn) {
-				console.log('logged in')
 				return NextResponse.redirect(new URL('/', nextUrl)) // Redirect to home page
 			}
-			return true
+			return false
 		}
 	}
 } satisfies NextAuthConfig

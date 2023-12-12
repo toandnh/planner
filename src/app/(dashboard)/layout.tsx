@@ -4,6 +4,8 @@ import '../globals.css'
 
 import clsx from 'clsx'
 
+import AuthProvider from '@/components/providers/authProvider'
+
 import Header from './header'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,8 +23,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={clsx('min-h-screen min-w-screen p-10', inter.className)}>
-				<Header />
-				{children}
+				<AuthProvider>
+					<Header />
+					{children}
+				</AuthProvider>
 			</body>
 		</html>
 	)

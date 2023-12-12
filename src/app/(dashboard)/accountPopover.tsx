@@ -4,7 +4,7 @@ import { Popover } from '@headlessui/react'
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 
-import { signOut } from '@/auth'
+import { logout } from '../(auth)/login/actions'
 
 export default function AccountPopover() {
 	let content = (
@@ -19,7 +19,7 @@ export default function AccountPopover() {
 			<input
 				type='button'
 				onClick={async () => {
-					await signOut()
+					await logout()
 				}}
 				className='w-full h-full p-4 rounded-md hover:cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800'
 				value='Sign out'
