@@ -1,6 +1,6 @@
 export default function HealthProfile() {
 	return (
-		<form className='flex flex-col justify-center gap-10 p-10'>
+		<form className='h-full w-full flex flex-col justify-center gap-10 p-10'>
 			<div className='flex justify-center gap-5'>
 				<div className='flex gap-5'>
 					<div className='grid grid-flow-row gap-5'>

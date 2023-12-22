@@ -12,10 +12,10 @@ export default function ProfilePage() {
 	}
 
 	return (
-		<div className='bg-slate-100 min-h-[80vh] h-[100vh] p-20 mt-10'>
-			<div className='flex justify-center pb-5'>
-				<h2 className='text-xl font-semibold'>{session?.user.name}</h2>
-			</div>
+		<div className='bg-slate-100 min-h-screen flex flex-col p-10'>
+			<h2 className='h-full w-full flex justify-center items-center text-xl font-semibold pb-10'>
+				{session?.user.name}
+			</h2>
 
 			<TabsProfile />
 		</div>

@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import AuthProvider from '@/components/providers/authProvider'
 
 import Header from './header'
+import Footer from './footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
 				<AuthProvider>
 					<Header />
 					{children}
+					<Footer />
 				</AuthProvider>
 			</body>
 		</html>

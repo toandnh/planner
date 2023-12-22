@@ -19,7 +19,7 @@ export default function Header() {
 			<Link href='/' className='flex justify-start items-center'>
 				<h1
 					className={clsx(
-						'text-3xl text-neutral-900 font-semibold',
+						'flex items-center pb-10 text-3xl text-neutral-900 font-semibold',
 						text.className
 					)}
 				>
