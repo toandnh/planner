@@ -7,6 +7,8 @@ import {
 	PutItemCommand
 } from '@aws-sdk/client-dynamodb'
 
+import type { AttributeValue } from '@aws-sdk/client-dynamodb'
+
 const client = new DynamoDBClient({})
 
 declare type QueryResults = {
@@ -18,11 +20,12 @@ declare type QueryResults = {
 }
 
 export async function GET(req: NextApiRequest) {
+	const item = 'todo'
+
 	const searchParams = new URL(req.url as string).searchParams
 	const userId = searchParams.get('userId')
-	const item = searchParams.get('item')
 
-	if (!userId || !item) return NextResponse.json({ message: 'Missing data!' })
+	if (!userId) return NextResponse.json({ message: 'Missing data!' })
 
 	const { Items } = await client.send(
 		new QueryCommand({
@@ -37,7 +40,7 @@ export async function GET(req: NextApiRequest) {
 				'#i': 'Item',
 				'#n': 'Name'
 			},
-			ProjectionExpression: '#i, #n, Completed, Priority, Task'
+			ProjectionExpression: '#i, #n, Completed, Priority, Task, TaskItems'
 		})
 	)
 
@@ -54,7 +57,8 @@ export async function GET(req: NextApiRequest) {
 			name: item.Name ? item.Name.S : undefined,
 			completed: item.Completed ? item.Completed.BOOL : undefined,
 			priority: item.Priority ? item.Priority.N : undefined,
-			task: item.Task ? item.Task.S : undefined
+			task: item.Task ? item.Task.S : undefined,
+			taskItems: item.TaskItems ? item.TaskItems.M : undefined
 		}
 		results.push(currItem)
 	})
@@ -66,23 +70,29 @@ export async function POST(req: Request) {
 	const data = await req.json()
 
 	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId') as string
-	const item = searchParams.get('item')
+	const userId = searchParams.get('userId')
 
-	const { taskId, taskName, taskPriority, taskCompleted } = data
-	if (!userId || !item) NextResponse.json({ message: 'Missing data!' })
+	if (!userId) NextResponse.json({ message: 'Missing data!' })
 
-	const Item = {
-		UserID: { S: userId },
-		Item: { S: `${item}#${taskId}` },
-		Task: { S: taskName },
-		Priority: { N: taskPriority },
-		Completed: { BOOL: taskCompleted }
-	}
+	const { taskId, taskName, taskItems, taskPriority, taskCompleted } = data
+
+	let taskItemsObj: { [key: string]: { BOOL: boolean } } = {}
+	// Each item in taskItems is in the form [string, boolean]
+	taskItems.map((item: (string | boolean)[]) => {
+		taskItemsObj[item[0] as string] = { BOOL: item[1] as boolean }
+	})
+
 	await client.send(
 		new PutItemCommand({
 			TableName: process.env.TABLE_NAME,
-			Item
+			Item: {
+				UserID: { S: userId as string },
+				Item: { S: taskId as string },
+				Task: { S: taskName as string },
+				TaskItems: { M: taskItemsObj as Record<string, AttributeValue> },
+				Priority: { N: `${taskPriority}` as string },
+				Completed: { BOOL: taskCompleted as boolean }
+			}
 		})
 	)
 

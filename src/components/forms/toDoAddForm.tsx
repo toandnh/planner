@@ -1,32 +1,50 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 
 import CloseIcon from '@mui/icons-material/Close'
 
-export default function ToDoAddForm() {
+export default function ToDoAddForm({
+	userId,
+	numItems
+}: {
+	userId: string
+	numItems: number
+}) {
 	const numRowLimit = 3
 
 	const [totalRowLimit, setTotalRowLimit] = useState(3)
-	// A switch to signal useMemo() update
-	const [update, setUpdate] = useState(false)
 	const [opened, setOpened] = useState(false)
 
-	const [task, setTask] = useState('')
+	const [taskName, setTaskName] = useState('')
+	const [taskPriority, setTaskPriority] = useState(5)
 	const [taskItems, setTaskItems] = useState<string[]>([])
 
-	const fetcher = async (url: string, { arg }: { arg: { item: string } }) =>
+	const fetcher = async (
+		url: string,
+		{
+			arg
+		}: {
+			arg: {
+				taskId: string
+				taskName: string
+				taskItems: (string | boolean)[][]
+				taskPriority: number
+				taskCompleted: boolean
+			}
+		}
+	) =>
 		fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { data, trigger } = useSWRMutation('/api/todo', fetcher, {
-		revalidate: true
-	})
-
-	const toggleUpdate = () => setUpdate(!update)
+	const { data, trigger } = useSWRMutation(
+		`/api/todo?userId=${userId}`,
+		fetcher,
+		{ revalidate: true }
+	)
 
 	const toggleDrawer = (e: React.KeyboardEvent | React.MouseEvent) => {
 		// Keyboard stuff here
@@ -42,8 +60,8 @@ export default function ToDoAddForm() {
 
 		// Signal the reset of totalRowLimit;
 		setTotalRowLimit(numRowLimit)
-		// And reset the items array to contain only numRowLimit items
-		toggleUpdate()
+		// Reset taskItems array
+		setTaskItems(Array(numRowLimit).fill(''))
 	}
 
 	const handleAddMoreItems = (e: React.KeyboardEvent | React.MouseEvent) => {
@@ -56,48 +74,46 @@ export default function ToDoAddForm() {
 			return
 		}
 
-		toggleUpdate()
+		// Set new limit every time the function is called
+		setTotalRowLimit(totalRowLimit + numRowLimit)
+		// Increase the limit of the taskItems array
+		setTaskItems([...taskItems, ...Array(numRowLimit).fill('')])
 	}
 
 	const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setTask(e.target.value)
+		setTaskName(e.target.value)
 
-	const handleTaskItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		// data-key in the form 'row#i'
-		const index = parseInt(
-			e.target.getAttribute('data-key')?.split('#')[1] as string
-		)
-		const updatedTaskItems = taskItems.map((item, i) => {
-			if (i === index) return e.target.value
-			return item
-		})
-		setTaskItems(updatedTaskItems)
-	}
+	const handleTaskPriorityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+		setTaskPriority(5 - e.target.selectedIndex)
 
-	const getRows = () => {
-		let rows: React.ReactNode[] = []
-		for (let i = 0; i < totalRowLimit; i++) {
-			let row = (
-				<tr key={`row#${i}`} data-key={`row#${i}`}>
-					<td className='pl-20'>
-						<input
-							type='text'
-							value={taskItems[i]}
-							name={`row#${i}`}
-							onChange={handleTaskItemChange}
-							placeholder='List item'
-						/>
-					</td>
-				</tr>
-			)
-			rows.push(row)
+	const handleTaskItemChange =
+		(index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+			let updatedTaskItems = taskItems.map((item, i) => {
+				return i === index ? e.target.value : item
+			})
+			console.log(updatedTaskItems)
+			setTaskItems(updatedTaskItems)
 		}
-		// Set new limit every time the function is called
-		setTotalRowLimit(totalRowLimit + numRowLimit)
-		return rows
-	}
 
-	let items: React.ReactNode[] = useMemo(() => getRows(), [update])
+	const handleSubmit = async () => {
+		// Turn taskItems into a map
+		const taskItemTuples: (string | boolean)[][] = new Array()
+		taskItems.map((item) => {
+			// Only return non-empty items
+			if (item) taskItemTuples.push([item, false])
+		})
+
+		console.log(`todo#${numItems}`, taskName, taskItems, taskPriority)
+		console.log(taskItemTuples)
+
+		await trigger({
+			taskId: `todo#${numItems}`,
+			taskName: taskName,
+			taskItems: taskItemTuples,
+			taskPriority: taskPriority,
+			taskCompleted: false
+		})
+	}
 
 	const AddMoreButton: React.ReactNode = (
 		<div className='w-full flex justify-center'>
@@ -126,14 +142,18 @@ export default function ToDoAddForm() {
 					<td className='w-full'>
 						<input
 							type='text'
-							value={task}
-							name='new-task'
+							value={taskName}
+							name='taskName'
 							onChange={handleTaskChange}
 							placeholder='Other tasks'
 						/>
 					</td>
 					<td className='w-full'>
-						<select className='w-1/2' name='priority'>
+						<select
+							className='w-1/2'
+							onChange={handleTaskPriorityChange}
+							name='priority'
+						>
 							<option value='veryHigh'>Very High</option>
 							<option value='high'>High</option>
 							<option value='moderate'>Moderate</option>
@@ -145,6 +165,7 @@ export default function ToDoAddForm() {
 						<input
 							className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
 							type='submit'
+							onClick={handleSubmit}
 							value='Add'
 						/>
 					</td>
@@ -152,7 +173,21 @@ export default function ToDoAddForm() {
 						<span className='hidden' />
 					</td>
 				</tr>
-				{items.map((row) => row)}
+				{taskItems.map((item, i) => {
+					return (
+						<tr key={`row#${i}`}>
+							<td className='pl-20'>
+								<input
+									type='text'
+									value={item}
+									name={`taskItems${i}`}
+									onChange={handleTaskItemChange(i)}
+									placeholder='List item'
+								/>
+							</td>
+						</tr>
+					)
+				})}
 				<tr>
 					<td className='w-full flex justify-center'>
 						<input

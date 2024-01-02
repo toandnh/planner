@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useSession } from 'next-auth/react'
 
@@ -27,7 +27,7 @@ export default function Todo() {
 
 	const fetcher = (url: string) => fetch(url).then((res) => res.json())
 	const { isLoading, data } = useSWR(
-		`/api/todo?userId=${session?.user.id}&item=${sortKey}`,
+		`/api/todo?userId=${session?.user.id}`,
 		fetcher
 	)
 
@@ -39,6 +39,10 @@ export default function Todo() {
 		setIsEdit(true)
 		setItemIndex((e as any).target.value)
 	}
+
+	const numItems: number = useMemo(() => {
+		return !isLoading ? data.length : 0
+	}, [data])
 
 	return (
 		<div className='h-full w-full flex flex-col items-center gap-10 p-10 border-l-2'>
@@ -63,10 +67,13 @@ export default function Todo() {
 								<th className='w-full flex justify-start font-semibold'>
 									Priority
 								</th>
-								<th className='w-1/2 flex justify-start font-semibold'>
+								<th className='w-1/3 flex justify-start font-semibold'>
 									<p className='hidden'>HIDDEN</p>
 								</th>
-								<th className='w-1/2 flex justify-start font-semibold'>
+								<th className='w-1/3 flex justify-start font-semibold'>
+									<p className='hidden'>HIDDEN</p>
+								</th>
+								<th className='w-1/3 flex justify-start font-semibold'>
 									<p className='hidden'>HIDDEN</p>
 								</th>
 							</tr>
@@ -89,7 +96,7 @@ export default function Todo() {
 														)}
 													></span>
 												</td>
-												<td className='w-1/2'>
+												<td className='w-1/3'>
 													<input
 														className='bg-orange-500 flex items-end justify-center px-2 rounded-md hover:bg-orange-600 hover:cursor-pointer'
 														key={record.item}
@@ -98,7 +105,7 @@ export default function Todo() {
 														value='Edit'
 													/>
 												</td>
-												<td className='w-1/2'>
+												<td className='w-1/3'>
 													<input
 														className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
 														key={record.item}
@@ -114,7 +121,7 @@ export default function Todo() {
 						</tbody>
 					</table>
 				)}
-				<ToDoAddForm />
+				<ToDoAddForm userId={session?.user.id} numItems={numItems} />
 			</div>
 
 			<div className='h-full w-full'>
