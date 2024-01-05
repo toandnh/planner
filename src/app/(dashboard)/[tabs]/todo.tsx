@@ -185,12 +185,13 @@ export default function Todo() {
 														/>
 													</div>
 												</div>
-												{showItems.get(datum.task!) && (
-													<TaskItemsUpdateForm
-														userId={session?.user.id}
-														datum={datum}
-													/>
-												)}
+												{showItems.get(datum.task!) &&
+													!showEdits.get(datum.task!) && (
+														<TaskItemsUpdateForm
+															userId={session?.user.id}
+															datum={datum}
+														/>
+													)}
 												{showEdits.get(datum.task!) && (
 													<TodoUpdateForm
 														userId={session?.user.id}

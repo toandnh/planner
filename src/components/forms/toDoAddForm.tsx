@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 
@@ -34,6 +34,11 @@ export default function TodoAddForm({
 		fetcher,
 		{ revalidate: true }
 	)
+
+	useEffect(() => {
+		// If taskName has been set, then enable the trigger button
+		setStateChanged(taskName ? true : false)
+	}, [taskName])
 
 	const toggleDrawer = (e: React.KeyboardEvent | React.MouseEvent) => {
 		// Keyboard stuff here
@@ -98,9 +103,14 @@ export default function TodoAddForm({
 			priority: `${taskPriority}`,
 			completed: false
 		})
+
+		// Empty input fields
+		setTaskName('')
+		setTaskItems(Array(numRowLimit).fill(''))
+		setTaskPriority(5)
 	}
 
-	const AddMoreButton = () => (
+	const AddMoreButton: React.ReactNode = (
 		<div className='w-full flex justify-center'>
 			<input
 				className='w-1/2 bg-green-500 flex items-center justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
@@ -111,7 +121,7 @@ export default function TodoAddForm({
 		</div>
 	)
 
-	const Form = () => (
+	const Form: React.ReactNode = (
 		<div className='bg-gray-400 flex flex-col justify-center gap-5 p-5'>
 			<div className='w-full flex justify-end'>
 				<button onClick={toggleDrawer}>
@@ -132,6 +142,7 @@ export default function TodoAddForm({
 					<div className='w-full'>
 						<select
 							className='w-1/2'
+							value={taskPriority}
 							onChange={handleTaskPriorityChange}
 							name='priority'
 						>
@@ -179,8 +190,8 @@ export default function TodoAddForm({
 
 	return (
 		<>
-			{!opened && <AddMoreButton />}
-			{opened && <Form />}
+			{!opened && AddMoreButton}
+			{opened && Form}
 		</>
 	)
 }

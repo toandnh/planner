@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 export default function TodoUpdateForm({
@@ -44,6 +44,11 @@ export default function TodoUpdateForm({
 		parseInt(datum.priority as string)
 	)
 	const [taskItems, setTaskItems] = useState(items)
+
+	useEffect(() => {
+		// If any of the dependencies changed, then enable the trigger button
+		setStateChanged(taskName && taskItems.length ? true : false)
+	}, [taskName, taskItems, taskPriority])
 
 	const handleAddMoreItems = (e: React.KeyboardEvent | React.MouseEvent) => {
 		// Keyboard stuff here
