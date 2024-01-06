@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
+
 export default function TodoUpdateForm({
 	userId,
 	datum
@@ -36,6 +37,7 @@ export default function TodoUpdateForm({
 	}, [datum])
 
 	const [stateChanged, setStateChanged] = useState(false)
+	const [firstTime, setFirstTime] = useState(true)
 
 	const [totalRowLimit, setTotalRowLimit] = useState(numRowLimit)
 
@@ -47,7 +49,8 @@ export default function TodoUpdateForm({
 
 	useEffect(() => {
 		// If any of the dependencies changed, then enable the trigger button
-		setStateChanged(taskName && taskItems.length ? true : false)
+		setStateChanged(!firstTime && taskName && taskItems.length ? true : false)
+		setFirstTime(false)
 	}, [taskName, taskItems, taskPriority])
 
 	const handleAddMoreItems = (e: React.KeyboardEvent | React.MouseEvent) => {

@@ -4,7 +4,8 @@ import {
 	DynamoDBClient,
 	QueryCommand,
 	PutItemCommand,
-	UpdateItemCommand
+	UpdateItemCommand,
+	DeleteItemCommand
 } from '@aws-sdk/client-dynamodb'
 
 import type { AttributeValue } from '@aws-sdk/client-dynamodb'
@@ -111,10 +112,12 @@ export async function PUT(req: Request) {
 	const { item, task, taskItems, priority, completed } = data
 
 	let taskItemsObj: { [key: string]: { BOOL: boolean } } = {}
-	// Each item in taskItems is in the form [string, boolean]
-	taskItems.map((item: (string | boolean)[]) => {
-		taskItemsObj[item[0] as string] = { BOOL: item[1] as boolean }
-	})
+	if (taskItems) {
+		// Each item in taskItems is in the form [string, boolean]
+		taskItems.map((item: (string | boolean)[]) => {
+			taskItemsObj[item[0] as string] = { BOOL: item[1] as boolean }
+		})
+	}
 
 	const { Attributes } = await client.send(
 		new UpdateItemCommand({
@@ -132,6 +135,30 @@ export async function PUT(req: Request) {
 				':tc': { BOOL: completed }
 			},
 			ReturnValues: 'ALL_NEW'
+		})
+	)
+
+	return NextResponse.json(Attributes)
+}
+
+export async function DELETE(req: Request) {
+	const data = await req.json()
+
+	const searchParams = new URL(req.url as string).searchParams
+	const userId = searchParams.get('userId') as string
+
+	const { item } = data
+
+	if (!userId || !item) NextResponse.json({ message: 'Missing data!' })
+
+	const { Attributes } = await client.send(
+		new DeleteItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			ReturnValues: 'ALL_OLD'
 		})
 	)
 
