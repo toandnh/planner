@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
-import clsx from 'clsx'
-
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -9,6 +7,8 @@ import TaskItemsUpdateForm from '@/components/todo/taskItemsUpdateForm'
 
 import TodoAddForm from '@/components/todo/todoAddForm'
 import TodoUpdateForm from '@/components/todo/todoUpdateForm'
+
+import TodoTaskPriorityName from './todoTaskPriorityName'
 
 import TodoDeleteButton from '@/components/todo/todoDeleteButton'
 import TodoCompleteButton from '@/components/todo/todoCompleteButton'
@@ -24,14 +24,17 @@ const priorityMapping = new Map<string, string>([
 export default function TodoInProgress({
 	isLoading,
 	data,
+	handleShowMoreClick,
+	showItems,
 	userId
 }: {
 	isLoading: boolean
 	data: TodoDatum[]
+	handleShowMoreClick: Function
+	showItems: Map<string, boolean>
 	userId: string
 }) {
 	const [showEdits, setShowEdits] = useState<Map<string, boolean>>(new Map())
-	const [showItems, setShowItems] = useState<Map<string, boolean>>(new Map())
 	const [completeness, setCompleteness] = useState<Map<string, number>>(
 		new Map()
 	)
@@ -78,31 +81,26 @@ export default function TodoInProgress({
 			setShowEdits(updatedShowEditMap)
 		}
 
-	const handleShowMoreClick =
-		(taskName: string) => (e: React.MouseEvent<HTMLInputElement>) => {
-			let updatedShowItemsMap = new Map(
-				showItems.set(taskName, !showItems.get(taskName))
-			)
-			setShowItems(updatedShowItemsMap)
-		}
-
 	return (
 		<div className='h-full w-full flex flex-col gap-10'>
 			<h3 className='justify-start text-xl font-semibold'>In Progress</h3>
 			{!isLoading && (
 				<div className='flex flex-col justify-center gap-10 pl-5 pt-5'>
 					<div className='flex'>
-						<div className='w-full flex justify-start font-semibold'>Task</div>
-						<div className='w-full flex justify-start font-semibold'>
-							Priority
-						</div>
-						<div className='w-full flex justify-start font-semibold'>
-							Progress
-						</div>
 						<div className='w-1/3 flex justify-start font-semibold'>
 							<p className='hidden'>HIDDEN</p>
 						</div>
-						<div className='w-1/3 flex justify-start font-semibold'>
+						<div className='w-full flex justify-start font-semibold'>Task</div>
+						<div className='w-full flex justify-start font-semibold'>
+							Progress
+						</div>
+						<div className='w-1/3'>
+							<p className='hidden'>HIDDEN</p>
+						</div>
+						<div className='w-1/3'>
+							<p className='hidden'>HIDDEN</p>
+						</div>
+						<div className='w-1/3'>
 							<p className='hidden'>HIDDEN</p>
 						</div>
 					</div>
@@ -113,43 +111,19 @@ export default function TodoInProgress({
 									{!datum.completed && (
 										<>
 											<div key={datum.item} className='h-full flex'>
-												<div className='w-full'>
-													{!datum.taskItems && (
-														<p key={datum.item}>{datum.task}</p>
-													)}
-													{datum.taskItems && (
-														<input
-															className='hover:cursor-pointer'
-															key={datum.item}
-															type='button'
-															onClick={handleShowMoreClick(datum.task!)}
-															value={`${datum.task}`}
-														/>
-													)}
-												</div>
-												<div className='w-full'>
-													<span
-														key={datum.item}
-														className={clsx(
-															priorityMapping.get(datum.priority!),
-															'inline-block h-full w-1/2'
-														)}
-													></span>
-												</div>
+												<TodoTaskPriorityName
+													datum={datum}
+													handleShowMoreClick={handleShowMoreClick}
+													color={priorityMapping.get(datum.priority!)!}
+												/>
 												<div className='w-full flex flex-row gap-5'>
-													<div
-														// Something is very wrong here with the conic-gradient...
-														className={clsx(
-															'w-[30px] h-[30px] rounded-full',
-															`bg-[radial-gradient(closest-side,_white_75%,_transparent_80%_100%),_conic-gradient(hotpink_${completeness.get(
-																datum.task!
-															)}%,_pink_0)]`
-														)}
+													<progress
+														className='w-2/3 rounded-md'
+														max='100'
+														value={completeness.get(datum.task!)}
 													>
-														<p className='w-full h-full flex justify-center items-center text-xs'>
-															{completeness.get(datum.task!)}%
-														</p>
-													</div>
+														{`${completeness.get(datum.task!)}%`}
+													</progress>
 												</div>
 												<div className='w-1/3'>
 													<button onClick={handleShowEditClick(datum.task!)}>

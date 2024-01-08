@@ -2,6 +2,8 @@
 
 import useSWRMutation from 'swr/mutation'
 
+import DoneAllIcon from '@mui/icons-material/DoneAll'
+
 export default function TodoCompleteButton({
 	userId,
 	datum
@@ -19,7 +21,7 @@ export default function TodoCompleteButton({
 	})
 
 	const handleComplete =
-		(item: string) => async (e: React.MouseEvent<HTMLInputElement>) => {
+		(item: string) => async (e: React.MouseEvent<HTMLButtonElement>) => {
 			await trigger({
 				item: datum.item,
 				task: datum.task,
@@ -31,13 +33,9 @@ export default function TodoCompleteButton({
 
 	return (
 		<>
-			<input
-				className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
-				key={datum.item}
-				type='button'
-				onClick={handleComplete(datum.item!)}
-				value='Done'
-			/>
+			<button onClick={handleComplete(datum.item!)}>
+				<DoneAllIcon fontSize='large' />
+			</button>
 		</>
 	)
 }

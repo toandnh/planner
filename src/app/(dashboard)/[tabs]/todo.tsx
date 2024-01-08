@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 import { useSession } from 'next-auth/react'
 
 import useSWR from 'swr'
@@ -16,6 +18,16 @@ export default function Todo() {
 		fetcher
 	)
 
+	const [showItems, setShowItems] = useState<Map<string, boolean>>(new Map())
+
+	const handleShowMoreClick =
+		(taskName: string) => (e: React.MouseEvent<HTMLInputElement>) => {
+			let updatedShowItemsMap = new Map(
+				showItems.set(taskName, !showItems.get(taskName))
+			)
+			setShowItems(updatedShowItemsMap)
+		}
+
 	return (
 		<div className='h-full w-full flex flex-col items-center gap-10 p-10 border-l-2'>
 			<h2 className='text-xl font-semibold'>To-do List</h2>
@@ -28,9 +40,16 @@ export default function Todo() {
 			<TodoInProgress
 				isLoading={isLoading}
 				data={data}
+				handleShowMoreClick={handleShowMoreClick}
+				showItems={showItems}
 				userId={session?.user.id}
 			/>
-			<TodoCompleted isLoading={isLoading} data={data} />
+			<TodoCompleted
+				isLoading={isLoading}
+				data={data}
+				handleShowMoreClick={handleShowMoreClick}
+				showItems={showItems}
+			/>
 		</div>
 	)
 }
