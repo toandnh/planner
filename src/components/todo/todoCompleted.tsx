@@ -43,9 +43,18 @@ export default function TodoCompleted({
 											</div>
 										</div>
 										{showItems.get(datum.task!) &&
-											datum.taskItems.map((taskItem: (string | boolean)[]) => {
-												return <div className='flex pl-10'>{taskItem[0]}</div>
-											})}
+											datum.taskItems.map(
+												(taskItem: (string | boolean)[], i: number) => {
+													return (
+														<div
+															key={`taskItems#${i}#${datum.task}`}
+															className='flex pl-10'
+														>
+															{taskItem[0]}
+														</div>
+													)
+												}
+											)}
 									</>
 								)}
 							</React.Fragment>

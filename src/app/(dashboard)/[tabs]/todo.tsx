@@ -38,11 +38,11 @@ export default function Todo() {
 				placeholder='Search...'
 			/>
 			<TodoInProgress
+				userId={session?.user.id}
 				isLoading={isLoading}
 				data={data}
 				handleShowMoreClick={handleShowMoreClick}
 				showItems={showItems}
-				userId={session?.user.id}
 			/>
 			<TodoCompleted
 				isLoading={isLoading}
