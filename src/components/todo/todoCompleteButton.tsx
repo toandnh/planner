@@ -20,20 +20,19 @@ export default function TodoCompleteButton({
 		revalidate: true
 	})
 
-	const handleComplete =
-		(item: string) => async (e: React.MouseEvent<HTMLButtonElement>) => {
-			await trigger({
-				item: datum.item,
-				task: datum.task,
-				taskItems: datum.taskItems,
-				priority: `${datum.priority}`,
-				completed: true
-			})
-		}
+	const handleComplete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		await trigger({
+			item: datum.item,
+			task: datum.task,
+			taskItems: datum.taskItems,
+			priority: `${datum.priority}`,
+			completed: true
+		})
+	}
 
 	return (
 		<>
-			<button onClick={handleComplete(datum.item!)}>
+			<button onClick={handleComplete}>
 				<DoneAllIcon fontSize='large' />
 			</button>
 		</>

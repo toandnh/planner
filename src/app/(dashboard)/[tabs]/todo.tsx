@@ -45,6 +45,7 @@ export default function Todo() {
 				showItems={showItems}
 			/>
 			<TodoCompleted
+				userId={session?.user.id}
 				isLoading={isLoading}
 				data={data}
 				handleShowMoreClick={handleShowMoreClick}
