@@ -42,7 +42,7 @@ export default function TodosAddForm({
 	}
 
 	const AddMoreButton: React.ReactNode = (
-		<div className='w-full flex justify-center'>
+		<div className='w-full flex justify-center pb-5'>
 			<input
 				className='w-1/2 bg-green-500 flex items-center justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
 				type='button'

@@ -20,9 +20,9 @@ export default function TodosCompleted({
 	const inResults = useAppSelector(inSearchResults)
 
 	return (
-		<div className='h-full w-full'>
-			<h3 className='justify-start text-xl font-semibold pb-5'>Completed</h3>
-			<div className='flex flex-col gap-3 pl-5'>
+		<div className='h-full w-full flex flex-col gap-5'>
+			<h3 className='justify-start text-xl font-semibold'>Completed</h3>
+			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&
 					data.map((datum: any) => {
 						return (

@@ -40,7 +40,7 @@ export default function TodosSearchResults({
 					<CloseIcon fontSize='large' />
 				</button>
 			</div>
-			<div className='flex flex-col gap-5 pl-5 pt-5'>
+			<div className='flex flex-col gap-5 pl-5 pt-5 pb-5'>
 				<h4 className='text-lg font-semibold'>In Progress</h4>
 				<div className='flex flex-col gap-5'>
 					{searchResults.map((result: TodoDatum) => {

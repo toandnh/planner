@@ -25,10 +25,10 @@ export default function TodosInProgress({
 	}, [data])
 
 	return (
-		<div className='h-full w-full flex flex-col gap-10'>
+		<div className='h-full w-full flex flex-col gap-5'>
 			<h3 className='justify-start text-xl font-semibold'>In Progress</h3>
 			{!isLoading && (
-				<div className='flex flex-col justify-center gap-10 pl-5 pt-5'>
+				<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
 					<div className='flex'>
 						<div className='w-1/3 flex justify-start font-semibold'>
 							<p className='hidden'>HIDDEN</p>
