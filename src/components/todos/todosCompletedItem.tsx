@@ -40,37 +40,30 @@ export default function TodosCompletedItem({
 
 	return (
 		<>
-			{datum.completed && (
-				<>
-					<div className='min-h-[35px] flex'>
-						<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
-						<button onClick={() => handleRestoreClick(datum)}>
-							<RestoreIcon fontSize='large' />
-						</button>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
+			<div className='min-h-[35px] flex'>
+				<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
+				<button onClick={() => handleRestoreClick(datum)}>
+					<RestoreIcon fontSize='large' />
+				</button>
+				<div className='w-1/3'>
+					<p className='hidden'>HIDDEN</p>
+				</div>
+				<div className='w-1/3'>
+					<p className='hidden'>HIDDEN</p>
+				</div>
+				<div className='w-1/3'>
+					<p className='hidden'>HIDDEN</p>
+				</div>
+			</div>
+			{showItems.get(datum.task!) &&
+				datum.taskItems &&
+				datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
+					return (
+						<div key={`taskItems#${i}#${datum.task}`} className='flex pl-10'>
+							{taskItem[0]}
 						</div>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
-						</div>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
-						</div>
-					</div>
-					{showItems.get(datum.task!) &&
-						datum.taskItems &&
-						datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
-							return (
-								<div
-									key={`taskItems#${i}#${datum.task}`}
-									className='flex pl-10'
-								>
-									{taskItem[0]}
-								</div>
-							)
-						})}
-				</>
-			)}
+					)
+				})}
 		</>
 	)
 }

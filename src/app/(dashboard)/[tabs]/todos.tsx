@@ -1,5 +1,7 @@
 'use client'
 
+import { useMemo } from 'react'
+
 import { useSession } from 'next-auth/react'
 
 import useSWR from 'swr'
@@ -10,6 +12,11 @@ import TodosSearch from '@/components/todos/todosSearch'
 import TodosInProgress from '@/components/todos/todosInProgress'
 import TodosCompleted from '@/components/todos/todosCompleted'
 
+import {
+	getInProgressData,
+	getCompletedData
+} from '@/components/utilities/utilities'
+
 export default function Todos() {
 	const { data: session, status } = useSession()
 
@@ -19,6 +26,16 @@ export default function Todos() {
 		fetcher
 	)
 
+	const inProgressData: TodoDatum[] = useMemo(
+		() => getInProgressData(data, isLoading),
+		[data]
+	)
+
+	const completedData: TodoDatum[] = useMemo(
+		() => getCompletedData(data, isLoading),
+		[data]
+	)
+
 	let content = (
 		<div className='h-full w-full flex flex-col items-center gap-10 p-10 border-l-2'>
 			<h2 className='text-xl font-semibold'>To-do List</h2>
@@ -26,12 +43,12 @@ export default function Todos() {
 			<TodosInProgress
 				userId={session?.user.id}
 				isLoading={isLoading}
-				data={data}
+				data={inProgressData}
 			/>
 			<TodosCompleted
 				userId={session?.user.id}
 				isLoading={isLoading}
-				data={data}
+				data={completedData}
 			/>
 		</div>
 	)

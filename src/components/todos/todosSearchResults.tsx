@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -14,6 +14,11 @@ import {
 import TodosInProgressItem from './todosInProgressItem'
 import TodosCompletedItem from './todosCompletedItem'
 
+import {
+	getInProgressData,
+	getCompletedData
+} from '@/components/utilities/utilities'
+
 export default function TodosSearchResults({
 	userId,
 	searchQuery,
@@ -24,6 +29,16 @@ export default function TodosSearchResults({
 	searchResults: TodoDatum[]
 }) {
 	const dispatch = useAppDispatch()
+
+	const inProgressData: TodoDatum[] = useMemo(
+		() => getInProgressData(searchResults, false),
+		[searchResults]
+	)
+
+	const completedData: TodoDatum[] = useMemo(
+		() => getCompletedData(searchResults, false),
+		[searchResults]
+	)
 
 	const handleClose = () => {
 		dispatch(clearInSearchResults())
@@ -43,7 +58,7 @@ export default function TodosSearchResults({
 			<div className='flex flex-col gap-5 pl-5 pt-5 pb-5'>
 				<h4 className='text-lg font-semibold'>In Progress</h4>
 				<div className='flex flex-col gap-5'>
-					{searchResults.map((result: TodoDatum) => {
+					{inProgressData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>
 								<TodosInProgressItem userId={userId} datum={result} />
@@ -53,7 +68,7 @@ export default function TodosSearchResults({
 				</div>
 				<h4 className='text-lg font-semibold'>Completed</h4>
 				<div className='flex flex-col gap-5'>
-					{searchResults.map((result: TodoDatum) => {
+					{completedData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>
 								<TodosCompletedItem userId={userId} datum={result} />

@@ -68,45 +68,41 @@ export default function TodosInProgressItem({
 
 	return (
 		<>
-			{!datum.completed && (
-				<>
-					<div key={datum.item} className='h-full flex'>
-						<TodosTaskPriorityName
-							datum={datum}
-							color={priorityMapping.get(datum.priority!)!}
-						/>
-						<div className='w-full flex flex-row gap-5'>
-							<progress
-								className='w-2/3 rounded-md'
-								max='100'
-								value={completePercentage}
-							>
-								{`${completePercentage}%`}
-							</progress>
-						</div>
-						<div className='w-1/3'>
-							<button onClick={handleShowEditClick(datum.task!)}>
-								{showEdits.get(datum.task!) ? (
-									<CloseIcon fontSize='large' />
-								) : (
-									<EditIcon fontSize='large' />
-								)}
-							</button>
-						</div>
-						<div className='w-1/3'>
-							<TodosDeleteButton userId={userId} item={datum.item!} />
-						</div>
-						<div className='w-1/3 flex justify-center items-center'>
-							<TodosCompleteButton userId={userId} datum={datum} />
-						</div>
-					</div>
-					{showItems.get(datum.task!) && !showEdits.get(datum.task!) && (
-						<TaskItemsUpdateForm userId={userId} datum={datum} />
-					)}
-					{showEdits.get(datum.task!) && (
-						<TodosUpdateForm userId={userId} datum={datum} />
-					)}
-				</>
+			<div key={datum.item} className='h-full flex'>
+				<TodosTaskPriorityName
+					datum={datum}
+					color={priorityMapping.get(datum.priority!)!}
+				/>
+				<div className='w-full flex flex-row gap-5'>
+					<progress
+						className='w-2/3 rounded-md'
+						max='100'
+						value={completePercentage}
+					>
+						{`${completePercentage}%`}
+					</progress>
+				</div>
+				<div className='w-1/3'>
+					<button onClick={handleShowEditClick(datum.task!)}>
+						{showEdits.get(datum.task!) ? (
+							<CloseIcon fontSize='large' />
+						) : (
+							<EditIcon fontSize='large' />
+						)}
+					</button>
+				</div>
+				<div className='w-1/3'>
+					<TodosDeleteButton userId={userId} item={datum.item!} />
+				</div>
+				<div className='w-1/3 flex justify-center items-center'>
+					<TodosCompleteButton userId={userId} datum={datum} />
+				</div>
+			</div>
+			{showItems.get(datum.task!) && !showEdits.get(datum.task!) && (
+				<TaskItemsUpdateForm userId={userId} datum={datum} />
+			)}
+			{showEdits.get(datum.task!) && (
+				<TodosUpdateForm userId={userId} datum={datum} />
 			)}
 		</>
 	)
