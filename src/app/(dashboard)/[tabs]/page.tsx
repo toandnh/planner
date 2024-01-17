@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 
-import Todo from './todo'
+import Todos from './todos'
 import HealthHome from './health'
 import Calendar from './calendar'
 import SpendingHome from './spending'
@@ -11,7 +11,7 @@ export default function TabHome() {
 	const searchParams = useSearchParams()
 	const tab = searchParams.get('tab')
 
-	let content = <Todo />
+	let content = <Todos />
 	if (tab === 'health') {
 		content = <HealthHome />
 	} else if (tab === 'calendar') {

@@ -1,14 +1,31 @@
 import clsx from 'clsx'
 
-export default function TodoTaskPriorityName({
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+
+import {
+	showTaskItems,
+	updateShowTaskItems
+} from '@/lib/features/todos/todosSlice'
+
+export default function TodosTaskPriorityName({
 	datum,
-	handleShowMoreClick,
 	color
 }: {
 	datum: TodoDatum
-	handleShowMoreClick: Function
 	color: string
 }) {
+	const showItems = useAppSelector(showTaskItems)
+	const dispatch = useAppDispatch()
+
+	const handleShowMoreClick = (taskName: string) => {
+		dispatch(
+			updateShowTaskItems({
+				taskName,
+				taskOpened: !showItems.get(taskName)
+			})
+		)
+	}
+
 	return (
 		<>
 			<div className='w-1/3'>
@@ -27,7 +44,7 @@ export default function TodoTaskPriorityName({
 						className='underline hover:text-blue-400 hover:cursor-pointer'
 						key={datum.item}
 						type='button'
-						onClick={handleShowMoreClick(datum.task!)}
+						onClick={() => handleShowMoreClick(datum.task!)}
 						value={`${datum.task}`}
 					/>
 				)}

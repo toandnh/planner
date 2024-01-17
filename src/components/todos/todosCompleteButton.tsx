@@ -4,7 +4,7 @@ import useSWRMutation from 'swr/mutation'
 
 import DoneAllIcon from '@mui/icons-material/DoneAll'
 
-export default function TodoCompleteButton({
+export default function TodosCompleteButton({
 	userId,
 	datum
 }: {

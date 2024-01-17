@@ -1,6 +1,8 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
-export default function TodoForm({
+export default function TodosForm({
 	initialData,
 	trigger,
 	index,
@@ -23,14 +25,14 @@ export default function TodoForm({
 		let taskNameChanged = taskName !== initialData.task
 		let taskPriorityChanged = taskPriority !== initialData.priority
 		// So that pressing "Add more items" button will not enable the button
-		let taskItemsChanged = compareArray(initialData.taskItems, taskItems)
+		let taskItemsChanged = isEqualArray(initialData.taskItems, taskItems)
 
 		let dataChanged = taskNameChanged || taskPriorityChanged || taskItemsChanged
 		// If any of the dependencies changed, then enable the trigger button
 		setStateChanged(taskName && dataChanged ? true : false)
 	}, [taskName, taskItems, taskPriority])
 
-	const compareArray = (arr1: string[], arr2: string[]) => {
+	const isEqualArray = (arr1: string[], arr2: string[]) => {
 		// arr1 should always be in the form ['data1', 'data2', '', '', '']
 
 		let hasChanged = false

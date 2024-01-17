@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 
-import TodoForm from './todoForm'
+import TodosForm from './todosForm'
 
-export default function TodoUpdateForm({
+export default function TodosUpdateForm({
 	userId,
 	datum
 }: {
@@ -40,7 +40,7 @@ export default function TodoUpdateForm({
 
 	return (
 		<div className='bg-gray-400 flex flex-col justify-center gap-5 p-5'>
-			<TodoForm
+			<TodosForm
 				initialData={{
 					task: datum.task!,
 					priority: parseInt(datum.priority!),

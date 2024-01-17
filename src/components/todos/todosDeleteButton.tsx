@@ -4,7 +4,7 @@ import useSWRMutation from 'swr/mutation'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
-export default function TodoDeleteButton({
+export default function TodosDeleteButton({
 	userId,
 	item
 }: {

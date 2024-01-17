@@ -6,9 +6,9 @@ import useSWRMutation from 'swr/mutation'
 
 import CloseIcon from '@mui/icons-material/Close'
 
-import TodoForm from './todoForm'
+import TodosForm from './todosForm'
 
-export default function TodoAddForm({
+export default function TodosAddForm({
 	userId,
 	nextIndex
 }: {
@@ -65,7 +65,7 @@ export default function TodoAddForm({
 					<CloseIcon fontSize='large' />
 				</button>
 			</div>
-			<TodoForm
+			<TodosForm
 				initialData={initialData}
 				trigger={trigger}
 				index={nextIndex}
