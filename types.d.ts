@@ -4,4 +4,5 @@ type TodoDatum = {
 	taskItems: (string | boolean)[][] | undefined
 	priority: string | undefined
 	completed: boolean | undefined
+	[key: string]: string
 }

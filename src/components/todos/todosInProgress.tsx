@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
+
+import SwapVertIcon from '@mui/icons-material/SwapVert'
 
 import { useAppSelector } from '@/lib/hooks'
 
@@ -8,6 +10,13 @@ import { inSearchResults } from '@/lib/features/todos/todosSlice'
 
 import TodosInProgressItem from './todosInProgressItem'
 import TodosAddForm from './todosAddForm'
+
+import {
+	sortByTaskNameAsc,
+	sortByTaskNameDsc,
+	sortByTaskPriorityAsc,
+	sortByTaskPriorityDsc
+} from '../utilities/utilities'
 
 export default function TodosInProgress({
 	userId,
@@ -18,11 +27,35 @@ export default function TodosInProgress({
 	isLoading: boolean
 	data: TodoDatum[]
 }) {
+	const [taskNameAsc, setTaskNameAsc] = useState(false)
+	const [taskPriorityAsc, setTaskPriorityAsc] = useState(false)
+
 	const inResults = useAppSelector(inSearchResults)
 
 	const totalNumTasks: number = useMemo(() => {
 		return !isLoading ? data.length : 0
 	}, [data])
+
+	let sortedData: TodoDatum[] = useMemo(
+		() => sortByTaskPriorityDsc(data),
+		[data]
+	)
+
+	const handlePrioritySort = () => {
+		sortedData = taskPriorityAsc
+			? sortByTaskPriorityDsc(data)
+			: sortByTaskPriorityAsc(data)
+		setTaskPriorityAsc(!taskPriorityAsc)
+		// So that next click on sortTaskName data will render in ascending order
+		setTaskNameAsc(false)
+	}
+
+	const handleTaskNameSort = () => {
+		sortedData = taskNameAsc ? sortByTaskNameDsc(data) : sortByTaskNameAsc(data)
+		setTaskNameAsc(!taskNameAsc)
+		// So that next click on sortTaskPriority data will render in descending order
+		setTaskPriorityAsc(true)
+	}
 
 	return (
 		<div className='h-full w-full flex flex-col gap-5'>
@@ -31,9 +64,16 @@ export default function TodosInProgress({
 				<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
 					<div className='flex'>
 						<div className='w-1/3 flex justify-start font-semibold'>
-							<p className='hidden'>HIDDEN</p>
+							<button onClick={handlePrioritySort}>
+								<SwapVertIcon fontSize='small' />
+							</button>
 						</div>
-						<div className='w-full flex justify-start font-semibold'>Task</div>
+						<div className='w-full flex justify-start gap-3 font-semibold'>
+							Task
+							<button onClick={handleTaskNameSort}>
+								<SwapVertIcon fontSize='small' />
+							</button>
+						</div>
 						<div className='w-full flex justify-start font-semibold'>
 							Progress
 						</div>
@@ -48,7 +88,7 @@ export default function TodosInProgress({
 						</div>
 					</div>
 					<div className='flex flex-col gap-5'>
-						{data.map((datum: TodoDatum) => {
+						{sortedData.map((datum: TodoDatum) => {
 							return (
 								<React.Fragment key={datum.item}>
 									{!inResults.has(datum.task!) && (
