@@ -30,21 +30,29 @@ export default function TodosInProgress({
 	const [taskNameAsc, setTaskNameAsc] = useState(false)
 	const [taskPriorityAsc, setTaskPriorityAsc] = useState(false)
 
+	const [sortBy, setSortBy] = useState('tasK-priority')
+
 	const inResults = useAppSelector(inSearchResults)
 
 	const totalNumTasks: number = useMemo(() => {
 		return !isLoading ? data.length : 0
 	}, [data])
 
-	let sortedData: TodoDatum[] = useMemo(
-		() => sortByTaskPriorityDsc(data),
-		[data]
-	)
+	let sortedData: TodoDatum[] = useMemo(() => {
+		if (sortBy == 'task-name') {
+			return taskNameAsc ? sortByTaskNameAsc(data) : sortByTaskNameDsc(data)
+		} else {
+			return taskPriorityAsc
+				? sortByTaskPriorityAsc(data)
+				: sortByTaskPriorityDsc(data)
+		}
+	}, [data])
 
 	const handlePrioritySort = () => {
 		sortedData = taskPriorityAsc
 			? sortByTaskPriorityDsc(data)
 			: sortByTaskPriorityAsc(data)
+		setSortBy('task-priority')
 		setTaskPriorityAsc(!taskPriorityAsc)
 		// So that next click on sortTaskName data will render in ascending order
 		setTaskNameAsc(false)
@@ -52,6 +60,7 @@ export default function TodosInProgress({
 
 	const handleTaskNameSort = () => {
 		sortedData = taskNameAsc ? sortByTaskNameDsc(data) : sortByTaskNameAsc(data)
+		setSortBy('task-name')
 		setTaskNameAsc(!taskNameAsc)
 		// So that next click on sortTaskPriority data will render in descending order
 		setTaskPriorityAsc(true)
