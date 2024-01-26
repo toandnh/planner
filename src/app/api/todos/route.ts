@@ -18,7 +18,8 @@ export async function GET(req: Request) {
 	const searchParams = new URL(req.url as string).searchParams
 	const userId = searchParams.get('userId')
 
-	if (!userId) return NextResponse.json({ message: 'Missing data!' })
+	if (!userId || userId === null)
+		return NextResponse.json({ message: 'Missing userID!' })
 
 	const { Items } = await client.send(
 		new QueryCommand({
@@ -30,14 +31,13 @@ export async function GET(req: Request) {
 			},
 			ExpressionAttributeNames: {
 				'#uid': 'UserID',
-				'#i': 'Item',
-				'#n': 'Name'
+				'#i': 'Item'
 			},
-			ProjectionExpression: '#i, #n, Completed, Priority, Task, TaskItems'
+			ProjectionExpression: '#i, Completed, Priority, Task, TaskItems'
 		})
 	)
 
-	if (!Items) {
+	if (!Items || Object.keys(Items).length <= 0) {
 		return NextResponse.json({
 			message: `Item '${item}' from user '${userId}' not found!`
 		})
@@ -54,11 +54,11 @@ export async function GET(req: Request) {
 		}
 
 		let currItem = {
-			item: item.Item ? item.Item.S : undefined,
-			completed: item.Completed ? item.Completed.BOOL : undefined,
-			priority: item.Priority ? item.Priority.N : undefined,
-			task: item.Task ? item.Task.S : undefined,
-			taskItems: taskItemsArr.length ? taskItemsArr : undefined
+			item: item.Item.S!,
+			completed: item.Completed.BOOL!,
+			priority: item.Priority.N!,
+			task: item.Task.S!,
+			taskItems: taskItemsArr
 		}
 		results.push(currItem)
 	})
@@ -72,7 +72,8 @@ export async function POST(req: Request) {
 	const searchParams = new URL(req.url as string).searchParams
 	const userId = searchParams.get('userId')
 
-	if (!userId) NextResponse.json({ message: 'Missing data!' })
+	if (!userId || userId === null)
+		NextResponse.json({ message: 'Missing data!' })
 
 	const { item, task, taskItems, priority, completed } = data
 
@@ -107,7 +108,8 @@ export async function PUT(req: Request) {
 	const searchParams = new URL(req.url as string).searchParams
 	const userId = searchParams.get('userId') as string
 
-	if (!userId) NextResponse.json({ message: 'Missing data!' })
+	if (!userId || userId === null)
+		NextResponse.json({ message: 'Missing data!' })
 
 	const { item, task, taskItems, priority, completed } = data
 
@@ -149,7 +151,8 @@ export async function DELETE(req: Request) {
 
 	const { item } = data
 
-	if (!userId || !item) NextResponse.json({ message: 'Missing data!' })
+	if (!userId || userId === null || !item || item === null)
+		NextResponse.json({ message: 'Missing data!' })
 
 	const { Attributes } = await client.send(
 		new DeleteItemCommand({

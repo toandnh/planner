@@ -1,20 +1,49 @@
-function getData(data: TodoDatum[], isLoading: boolean, type: string) {
+function getTodosData(data: TodoDatum[], isLoading: boolean, type: string) {
 	let returnData: TodoDatum[] = []
 	if (!isLoading) {
-		data.map((datum: TodoDatum) => {
-			if (type == 'completed' ? datum.completed : !datum.completed)
-				returnData.push(datum)
-		})
+		// If there is data
+		if (data.length > 0) {
+			data.map((datum: TodoDatum) => {
+				if (type == 'completed' ? datum.completed : !datum.completed)
+					returnData.push(datum)
+			})
+		}
 	}
 	return returnData
 }
 
 export function getInProgressData(data: TodoDatum[], isLoading: boolean) {
-	return getData(data, isLoading, 'inProgress')
+	return getTodosData(data, isLoading, 'in-progress')
 }
 
 export function getCompletedData(data: TodoDatum[], isLoading: boolean) {
-	return getData(data, isLoading, 'completed')
+	return getTodosData(data, isLoading, 'completed')
+}
+
+function getCalorieData(
+	data: CalorieDatum[],
+	isLoading: boolean,
+	type: string
+) {
+	let returnData: CalorieDatum[] = []
+	if (!isLoading) {
+		// If there is data
+		if (data.length > 0) {
+			data.map((datum: CalorieDatum) => {
+				if (type == 'consumed' ? datum.consumed : !datum.consumed)
+					returnData.push(datum)
+			})
+		}
+	}
+	return returnData
+}
+
+export function getComsumedData(data: CalorieDatum[], isLoading: boolean) {
+	return getCalorieData(data, isLoading, 'consumed')
+}
+
+export function getBurntData(data: CalorieDatum[], isLoading: boolean) {
+	return getCalorieData(data, isLoading, 'burnt')
 }
 
 function sort(data: TodoDatum[], sortBy: string, asc: boolean) {

@@ -97,7 +97,7 @@ export default function TodosForm({
 		})
 
 		await trigger({
-			item: `todo#${index}`,
+			item: `todos#${index}`,
 			task: taskName,
 			taskItems: taskItemTuples,
 			priority: `${taskPriority}`,

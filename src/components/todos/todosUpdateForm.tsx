@@ -18,7 +18,7 @@ export default function TodosUpdateForm({
 			method: 'PUT',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { trigger } = useSWRMutation(`/api/todo?userId=${userId}`, fetcher, {
+	const { trigger } = useSWRMutation(`/api/todos?userId=${userId}`, fetcher, {
 		revalidate: true
 	})
 

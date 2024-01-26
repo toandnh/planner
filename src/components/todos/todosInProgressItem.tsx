@@ -39,14 +39,13 @@ export default function TodosInProgressItem({
 
 	const completePercentage: number = useMemo(() => {
 		let percent: number = 0
-		if (datum.taskItems) {
+		// taskItems return empty array if there are no items
+		if (datum.taskItems.length > 0) {
 			let count = 0
 			datum.taskItems.map((taskItem: (string | boolean)[]) => {
 				if (taskItem[1] as boolean) count++
 			})
 			percent = Math.round((count / datum.taskItems.length) * 100)
-		} else {
-			percent = 0
 		}
 		return percent
 	}, [datum])

@@ -22,7 +22,7 @@ export default function Todos() {
 
 	const fetcher = (url: string) => fetch(url).then((res) => res.json())
 	const { isLoading, data } = useSWR(
-		`/api/todo?userId=${session?.user.id}`,
+		`/api/todos?userId=${session?.user.id}`,
 		fetcher
 	)
 
