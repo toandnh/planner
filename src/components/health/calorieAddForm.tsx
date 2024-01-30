@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
+import { mutate } from 'swr'
+
 import useSWRMutation from 'swr/mutation'
 
 export default function CalorieAddForm({
@@ -49,6 +51,13 @@ export default function CalorieAddForm({
 			amount: amount,
 			date: new Date().getTime().toString()
 		})
+
+		// Revalidate all data from 'api/health/calorie...'
+		mutate(
+			(key) =>
+				typeof key === 'string' &&
+				key.startsWith(`/api/health/calorie?userId=${userId}`)
+		)
 
 		// Reset values
 		setActivity('')

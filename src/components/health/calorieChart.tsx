@@ -20,7 +20,7 @@ export default function CalorieChart({ userId }: { userId: string }) {
 
 	return (
 		<div className='flex flex-col justify-center gap-5'>
-			<h2 className='text-xl font-semibold'>Calorie Chart</h2>
+			<h3 className='text-xl font-semibold'>Calorie Chart</h3>
 			<div className='flex justify-center'>
 				<input
 					className={clsx(

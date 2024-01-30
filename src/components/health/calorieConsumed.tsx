@@ -16,7 +16,7 @@ export default function CalorieConsumed({
 }) {
 	const totalCalorie = useMemo(() => {
 		let total = 0
-		data.map((datum) => {
+		data.map((datum: CalorieDatum) => {
 			total += parseInt(datum.amount)
 		})
 		return total
@@ -24,9 +24,9 @@ export default function CalorieConsumed({
 
 	return (
 		<div>
-			<h2 className='text-xl font-semibold'>
+			<h3 className='text-xl font-semibold'>
 				Calorie Consumed: {totalCalorie} kcal
-			</h2>
+			</h3>
 			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&
 					data.map((datum: CalorieDatum) => {

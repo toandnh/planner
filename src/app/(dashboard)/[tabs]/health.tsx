@@ -11,7 +11,7 @@ import CalorieBurnt from '@/components/health/calorieBurnt'
 
 import CalorieChart from '@/components/health/calorieChart'
 
-import { getComsumedData, getBurntData } from '@/components/utilities/utilities'
+import { getConsumedData, getBurntData } from '@/components/utilities/utilities'
 
 export default function HealthHome() {
 	const millisecInDay = 24 * 60 * 60 * 1000
@@ -32,6 +32,8 @@ export default function HealthHome() {
 		}&start-time=${startTime}&end-time=${startTime + millisecInDay}`,
 		fetcher
 	)
+
+	console.log(isCalorieLoading)
 
 	const multiplier = useMemo(() => {
 		if (!isHealthLoading) {
@@ -65,10 +67,10 @@ export default function HealthHome() {
 		} else {
 			return 0
 		}
-	}, [calorieData])
+	}, [healthData, calorieData])
 
 	const calorieComsumed: CalorieDatum[] = useMemo(
-		() => getComsumedData(calorieData, isCalorieLoading),
+		() => getConsumedData(calorieData, isCalorieLoading),
 		[calorieData]
 	)
 
@@ -79,13 +81,13 @@ export default function HealthHome() {
 
 	return (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
-			<h2 className='text-xl font-semibold'>
+			<h3 className='text-xl font-semibold'>
 				Calorie Remaining: {calorieRemaining} kcal{' '}
 				{!isHealthLoading &&
 					`(${Math.round(
 						multiplier! * healthData.weight
 					)} kcal Recommended Daily)`}
-			</h2>
+			</h3>
 			<CalorieConsumed
 				userId={session?.user.id}
 				data={calorieComsumed}

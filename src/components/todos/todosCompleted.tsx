@@ -28,7 +28,7 @@ export default function TodosCompleted({
 			<h3 className='justify-start text-xl font-semibold'>Completed</h3>
 			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&
-					sortedData.map((datum: any) => {
+					sortedData.map((datum: TodoDatum) => {
 						return (
 							<React.Fragment key={datum.item}>
 								{!inResults.has(datum.task!) && (

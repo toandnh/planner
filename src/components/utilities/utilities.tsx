@@ -48,7 +48,7 @@ function getCalorieData(
 	return returnData
 }
 
-export function getComsumedData(
+export function getConsumedData(
 	data: CalorieDatum[],
 	isLoading: boolean
 ): CalorieDatum[] {

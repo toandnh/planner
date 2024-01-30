@@ -24,9 +24,9 @@ export default function CalorieBurnt({
 
 	return (
 		<div>
-			<h2 className='text-xl font-semibold'>
+			<h3 className='text-xl font-semibold'>
 				Calorie Burnt: {totalCalorie} kcal
-			</h2>
+			</h3>
 			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&
 					data.map((datum) => {
