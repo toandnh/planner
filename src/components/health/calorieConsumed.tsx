@@ -25,7 +25,7 @@ export default function CalorieConsumed({
 	return (
 		<div>
 			<h2 className='text-xl font-semibold'>
-				Calorie Consumed: {totalCalorie}kcal
+				Calorie Consumed: {totalCalorie} kcal
 			</h2>
 			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&

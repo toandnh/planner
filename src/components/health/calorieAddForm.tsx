@@ -46,8 +46,13 @@ export default function CalorieAddForm({
 			item: `health#calorie#${new Date().getTime()}`,
 			activity: activity,
 			consumed: consumed,
-			amount: amount
+			amount: amount,
+			date: new Date().getTime().toString()
 		})
+
+		// Reset values
+		setActivity('')
+		setAmount('')
 	}
 
 	return (

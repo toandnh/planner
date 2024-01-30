@@ -9,9 +9,13 @@ import useSWR from 'swr'
 import CalorieConsumed from '@/components/health/calorieConsumed'
 import CalorieBurnt from '@/components/health/calorieBurnt'
 
+import CalorieChart from '@/components/health/calorieChart'
+
 import { getComsumedData, getBurntData } from '@/components/utilities/utilities'
 
 export default function HealthHome() {
+	const millisecInDay = 24 * 60 * 60 * 1000
+
 	// The time from the beginning of the day
 	const startTime = new Date(new Date().toDateString()).getTime()
 
@@ -23,7 +27,9 @@ export default function HealthHome() {
 		fetcher
 	)
 	const { isLoading: isCalorieLoading, data: calorieData } = useSWR(
-		`/api/health/calorie?userId=${session?.user.id}&time-period=day&start-time=${startTime}`,
+		`/api/health/calorie?userId=${
+			session?.user.id
+		}&start-time=${startTime}&end-time=${startTime + millisecInDay}`,
 		fetcher
 	)
 
@@ -74,11 +80,11 @@ export default function HealthHome() {
 	return (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			<h2 className='text-xl font-semibold'>
-				Calorie Remaining: {calorieRemaining}kcal{' '}
+				Calorie Remaining: {calorieRemaining} kcal{' '}
 				{!isHealthLoading &&
 					`(${Math.round(
 						multiplier! * healthData.weight
-					)}kcal Recommended Daily)`}
+					)} kcal Recommended Daily)`}
 			</h2>
 			<CalorieConsumed
 				userId={session?.user.id}
@@ -90,6 +96,7 @@ export default function HealthHome() {
 				data={calorieBurnt}
 				isLoading={isCalorieLoading}
 			/>
+			<CalorieChart userId={session?.user.id} />
 		</div>
 	)
 }

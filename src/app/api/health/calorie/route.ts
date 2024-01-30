@@ -12,7 +12,6 @@ const client = new DynamoDBClient({})
 
 export async function GET(req: Request) {
 	const item = 'health#calorie'
-	const MilliSecInADay = 24 * 60 * 60 * 1000
 
 	const searchParams = new URL(req.url as string).searchParams
 	const userId = searchParams.get('userId')
@@ -20,27 +19,8 @@ export async function GET(req: Request) {
 	if (!userId || userId === null)
 		return NextResponse.json({ message: 'Missing userID!' })
 
-	const timePeriod = searchParams.get('time-period')
-
 	const startTime = searchParams.get('start-time') as string
-
-	let tempTime
-	switch (timePeriod) {
-		case 'month':
-			tempTime = parseInt(startTime) + 30 * MilliSecInADay - 1
-			break
-		case 'week':
-			tempTime = parseInt(startTime) + 7 * MilliSecInADay - 1
-			break
-		case 'day':
-			tempTime = parseInt(startTime) + 1 * MilliSecInADay - 1
-			break
-		default:
-			tempTime = parseInt(startTime)
-			break
-	}
-
-	const endTime = new Date(tempTime).getTime().toString()
+	const endTime = searchParams.get('end-time') as string
 
 	const { Items } = await client.send(
 		new QueryCommand({
@@ -59,7 +39,7 @@ export async function GET(req: Request) {
 				'#date': 'Date',
 				'#c': 'Consumed'
 			},
-			ProjectionExpression: '#i, Activity, #c, Amount'
+			ProjectionExpression: '#i, Activity, #c, Amount, #date'
 		})
 	)
 
@@ -75,7 +55,8 @@ export async function GET(req: Request) {
 			item: item.Item.S!,
 			consumed: item.Consumed.BOOL!,
 			activity: item.Activity.S!,
-			amount: item.Amount.N!
+			amount: item.Amount.N!,
+			date: item.Date.N!
 		}
 		results.push(currItem)
 	})
@@ -92,7 +73,7 @@ export async function POST(req: Request) {
 	if (!userId || userId === null)
 		NextResponse.json({ message: 'Missing data!' })
 
-	const { item, activity, consumed, amount } = data
+	const { item, activity, consumed, amount, date } = data
 
 	await client.send(
 		new PutItemCommand({
@@ -102,7 +83,8 @@ export async function POST(req: Request) {
 				Item: { S: item as string },
 				Activity: { S: activity as string },
 				Consumed: { BOOL: consumed as boolean },
-				Amount: { N: `${amount}` as string }
+				Amount: { N: `${amount}` as string },
+				Date: { N: `${date}` as string }
 			}
 		})
 	)
