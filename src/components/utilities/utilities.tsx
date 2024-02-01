@@ -101,41 +101,12 @@ export function getSunday(day: Date): number {
 	return new Date(new Date(day.setDate(diff)).toDateString()).getTime()
 }
 
-export function getFirstDayOfMonth(day: Date): number {
-	return new Date(day.getFullYear(), day.getMonth(), 1).getTime()
+export function getFirstDayOfYear(day: Date): number {
+	return new Date(day.getFullYear(), 0, 1).getTime()
 }
 
-export function getLastDayOfMonth(day: Date): number {
-	return new Date(day.getFullYear(), day.getMonth() + 1, 0).getTime()
-}
-
-export function getCalorieArr(
-	data: CalorieDatum[],
-	isLoading: boolean,
-	arrSize: number
-): number[][] {
-	// In the form: [[in, out], [in, out], ...]
-	let arr: number[][] = Array(arrSize)
-		.fill(null)
-		.map(() => Array(2).fill(0))
-
-	if (!isLoading) {
-		// Server will send empty object if there is no data
-		if (data.length > 0) {
-			for (let datum of data) {
-				let firstIndex = getIndex(arrSize, datum.date)
-				let secondIndex = datum.consumed ? 0 : 1
-				arr[firstIndex][secondIndex] += parseInt(datum.amount)
-			}
-		}
-	}
-
-	return arr
-}
-
-function getIndex(arrSize: number, date: string): number {
-	const day = new Date(parseInt(date))
-	return arrSize == 7 ? day.getDay() : day.getMonth()
+export function getLastDayOfYear(day: Date): number {
+	return new Date(day.getFullYear() + 1, 0, 0).getTime()
 }
 
 export function getAverage(

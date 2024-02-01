@@ -33,8 +33,6 @@ export default function HealthHome() {
 		fetcher
 	)
 
-	console.log(isCalorieLoading)
-
 	const multiplier = useMemo(() => {
 		if (!isHealthLoading) {
 			switch (healthData.goal) {

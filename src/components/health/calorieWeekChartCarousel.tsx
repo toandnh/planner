@@ -8,7 +8,7 @@ import CalorieChartItem from './calorieChartItem'
 
 import CalorieWeekChart from './calorieWeekChart'
 
-import { getSunday, getCalorieArr, getAverage } from '../utilities/utilities'
+import { getSunday, getAverage } from '../utilities/utilities'
 
 export default function CalorieWeekChartCarousel({
 	userId
@@ -54,10 +54,25 @@ export default function CalorieWeekChartCarousel({
 		}
 	}, [data])
 
-	const dailyCalorie: number[][] = useMemo(
-		() => getCalorieArr(data, isLoading, 7),
-		[data]
-	)
+	const dailyCalorie: number[][] = useMemo(() => {
+		// In the form: [[in, out], [in, out], ...]
+		let arr: number[][] = Array(7)
+			.fill(null)
+			.map(() => Array(2).fill(0))
+
+		if (!isLoading) {
+			// Server will send empty object if there is no data
+			if (data.length > 0) {
+				for (let datum of data) {
+					let firstIndex = new Date(parseInt(datum.date)).getDay()
+					let secondIndex = datum.consumed ? 0 : 1
+					arr[firstIndex][secondIndex] += parseInt(datum.amount)
+				}
+			}
+		}
+
+		return arr
+	}, [data])
 
 	const weekAverage: number[] = useMemo(
 		() => getAverage(dailyCalorie, isLoading),
