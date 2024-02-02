@@ -109,7 +109,7 @@ export function getLastDayOfYear(day: Date): number {
 	return new Date(day.getFullYear() + 1, 0, 0).getTime()
 }
 
-export function getAverage(
+export function getCalorieAverage(
 	calorieArr: number[][],
 	isLoading: boolean
 ): number[] {

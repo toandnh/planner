@@ -8,7 +8,7 @@ import CalorieChartItem from './calorieChartItem'
 
 import CalorieWeekChart from './calorieWeekChart'
 
-import { getSunday, getAverage } from '../utilities/utilities'
+import { getSunday, getCalorieAverage } from '../utilities/utilities'
 
 export default function CalorieWeekChartCarousel() {
 	const millisecInWeek = 7 * 24 * 60 * 60 * 1000
@@ -72,7 +72,7 @@ export default function CalorieWeekChartCarousel() {
 	}, [data])
 
 	const weekAverage: number[] = useMemo(
-		() => getAverage(dailyCalorie, isLoading),
+		() => getCalorieAverage(dailyCalorie, isLoading),
 		[dailyCalorie]
 	)
 

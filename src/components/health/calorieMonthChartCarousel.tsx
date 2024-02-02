@@ -11,7 +11,7 @@ import CalorieMonthChart from './calorieMonthChart'
 import {
 	getFirstDayOfYear,
 	getLastDayOfYear,
-	getAverage
+	getCalorieAverage
 } from '../utilities/utilities'
 
 export default function CalorieMonthChartCarousel() {
@@ -112,7 +112,7 @@ export default function CalorieMonthChartCarousel() {
 	}, [data])
 
 	const monthAverage: number[] = useMemo(
-		() => getAverage(monthlyCalorie, isLoading),
+		() => getCalorieAverage(monthlyCalorie, isLoading),
 		[monthlyCalorie]
 	)
 
