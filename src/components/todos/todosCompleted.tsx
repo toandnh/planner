@@ -25,7 +25,7 @@ export default function TodosCompleted({
 
 	return (
 		<div className='h-full w-full flex flex-col gap-5'>
-			<h3 className='justify-start text-xl font-semibold'>Completed</h3>
+			<h3 className='text-xl font-semibold'>Completed</h3>
 			<div className='flex flex-col gap-3 pl-5 pt-5 pb-5'>
 				{!isLoading &&
 					sortedData.map((datum: TodoDatum) => {

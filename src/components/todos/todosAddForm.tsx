@@ -8,13 +8,7 @@ import TodosForm from './todosForm'
 
 import { useToggle } from '@/hooks/useToggle'
 
-export default function TodosAddForm({
-	userId,
-	nextIndex
-}: {
-	userId: string
-	nextIndex: number
-}) {
+export default function TodosAddForm({ userId }: { userId: string }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
 			method: 'POST',
@@ -40,6 +34,7 @@ export default function TodosAddForm({
 	)
 
 	const initialData = {
+		item: `todos#${new Date().getTime()}`,
 		task: '',
 		priority: 5,
 		taskItems: Array(numRowLimit).fill('')
@@ -55,7 +50,6 @@ export default function TodosAddForm({
 			<TodosForm
 				initialData={initialData}
 				trigger={trigger}
-				index={nextIndex}
 				numRowLimit={numRowLimit}
 			/>
 		</div>

@@ -33,12 +33,12 @@ export default function TodosTaskPriorityName({
 
 	return (
 		<>
-			<div className='w-1/3'>
+			<div className='w-1/3 min-h-[25px] flex justify-start items-center'>
 				<span
 					key={datum.item}
 					className={clsx(
 						`${color}`,
-						'inline-block h-2/3 aspect-square rounded-full'
+						'inline-block h-[20px] aspect-square rounded-full'
 					)}
 				></span>
 			</div>

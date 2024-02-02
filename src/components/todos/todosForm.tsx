@@ -2,15 +2,20 @@
 
 import { useEffect, useState } from 'react'
 
+type InitialData = {
+	item: string
+	task: string
+	priority: number
+	taskItems: string[]
+}
+
 export default function TodosForm({
 	initialData,
 	trigger,
-	index,
 	numRowLimit
 }: {
-	initialData: { task: string; taskItems: string[]; priority: number }
+	initialData: InitialData
 	trigger: Function
-	index: number
 	numRowLimit: number
 }) {
 	const [stateChanged, setStateChanged] = useState(false)
@@ -88,7 +93,7 @@ export default function TodosForm({
 		})
 
 		await trigger({
-			item: `todos#${index}`,
+			item: initialData.item,
 			task: taskName,
 			taskItems: taskItemTuples,
 			priority: `${taskPriority}`,

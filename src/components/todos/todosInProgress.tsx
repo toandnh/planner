@@ -34,10 +34,6 @@ export default function TodosInProgress({
 
 	const inResults = useAppSelector(inSearchResults)
 
-	const totalNumTasks: number = useMemo(() => {
-		return !isLoading ? data.length : 0
-	}, [data])
-
 	let sortedData: TodoDatum[] = useMemo(() => {
 		if (sortBy == 'task-name') {
 			return taskNameAsc ? sortByTaskNameAsc(data) : sortByTaskNameDsc(data)
@@ -68,7 +64,7 @@ export default function TodosInProgress({
 
 	return (
 		<div className='h-full w-full flex flex-col gap-5'>
-			<h3 className='justify-start text-xl font-semibold'>In Progress</h3>
+			<h3 className='text-xl font-semibold'>In Progress</h3>
 			{!isLoading && (
 				<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
 					<div className='flex'>
@@ -109,7 +105,7 @@ export default function TodosInProgress({
 					</div>
 				</div>
 			)}
-			<TodosAddForm userId={userId} nextIndex={totalNumTasks} />
+			<TodosAddForm userId={userId} />
 		</div>
 	)
 }

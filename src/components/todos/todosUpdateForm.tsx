@@ -24,10 +24,6 @@ export default function TodosUpdateForm({
 
 	const numRowLimit = 3
 
-	let index: number = useMemo(() => {
-		return parseInt(datum.item!.split('#')[1])
-	}, [datum])
-
 	let items: string[] = useMemo(() => {
 		let arr: string[] = []
 		if (datum.taskItems) {
@@ -38,16 +34,18 @@ export default function TodosUpdateForm({
 		return arr.concat(Array(numRowLimit).fill(''))
 	}, [datum])
 
+	const initialData = {
+		item: datum.item,
+		task: datum.task!,
+		priority: parseInt(datum.priority!),
+		taskItems: items
+	}
+
 	return (
 		<div className='bg-gray-400 flex flex-col justify-center gap-5 p-5'>
 			<TodosForm
-				initialData={{
-					task: datum.task!,
-					priority: parseInt(datum.priority!),
-					taskItems: items
-				}}
+				initialData={initialData}
 				trigger={trigger}
-				index={index}
 				numRowLimit={numRowLimit}
 			/>
 		</div>

@@ -63,7 +63,10 @@ export default function TodosInProgressItem({
 
 	return (
 		<>
-			<div key={datum.item} className='h-full flex'>
+			<div
+				key={datum.item}
+				className='h-full min-h-[35px] flex justify-center items-center'
+			>
 				<TodosTaskPriorityName
 					datum={datum}
 					color={priorityMapping.get(datum.priority!)!}
