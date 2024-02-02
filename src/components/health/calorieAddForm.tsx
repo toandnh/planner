@@ -65,14 +65,16 @@ export default function CalorieAddForm({
 	}
 
 	return (
-		<div className='flex gap-5'>
+		<div className='w-full flex gap-5'>
 			<input
+				className='w-1/3'
 				type='text'
 				value={activity}
 				onChange={handleActivityChange}
 				placeholder='Something'
 			/>
 			<input
+				className='w-1/3'
 				type='text'
 				value={amount}
 				onChange={handleAmountChange}

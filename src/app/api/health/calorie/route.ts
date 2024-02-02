@@ -95,9 +95,56 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-	//
+	const data = await req.json()
+
+	const searchParams = new URL(req.url as string).searchParams
+	const userId = searchParams.get('userId') as string
+
+	if (!userId || userId === null)
+		NextResponse.json({ message: 'Missing data!' })
+
+	const { item, activity, amount } = data
+
+	const { Attributes } = await client.send(
+		new UpdateItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			UpdateExpression: 'SET Activity = :ac, Amount = :am',
+			ExpressionAttributeValues: {
+				':ac': { S: activity },
+				':am': { N: amount }
+			},
+			ReturnValues: 'ALL_NEW'
+		})
+	)
+
+	return NextResponse.json(Attributes)
 }
 
 export async function DELETE(req: Request) {
-	//
+	const data = await req.json()
+
+	const searchParams = new URL(req.url as string).searchParams
+	const userId = searchParams.get('userId') as string
+
+	const { item } = data
+
+	if (!userId || userId === null || !item || item === null)
+		NextResponse.json({ message: 'Missing data!' })
+
+	const { Attributes } = await client.send(
+		new DeleteItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			ReturnValues: 'ALL_OLD'
+		})
+	)
+
+	return NextResponse.json(Attributes)
 }

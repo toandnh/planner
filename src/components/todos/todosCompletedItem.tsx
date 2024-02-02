@@ -26,7 +26,10 @@ export default function TodosCompletedItem({
 		revalidate: true
 	})
 
-	const showItems = useAppSelector(showTaskItems)
+	const showItems: boolean =
+		useAppSelector(showTaskItems).get(datum.task!) || false
+
+	const hasTaskItems = datum.taskItems.length > 0
 
 	const handleRestoreClick = async (datum: TodoDatum) => {
 		await trigger({
@@ -43,7 +46,7 @@ export default function TodosCompletedItem({
 			<div className='min-h-[35px] flex'>
 				<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
 				<button onClick={() => handleRestoreClick(datum)}>
-					<RestoreIcon fontSize='large' />
+					<RestoreIcon fontSize='medium' />
 				</button>
 				<div className='w-1/3'>
 					<p className='hidden'>HIDDEN</p>
@@ -55,8 +58,8 @@ export default function TodosCompletedItem({
 					<p className='hidden'>HIDDEN</p>
 				</div>
 			</div>
-			{showItems.get(datum.task!) &&
-				datum.taskItems &&
+			{showItems &&
+				hasTaskItems &&
 				datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
 					return (
 						<div key={`taskItems#${i}#${datum.task}`} className='flex pl-10'>

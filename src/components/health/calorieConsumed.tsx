@@ -32,7 +32,7 @@ export default function CalorieConsumed({
 					data.map((datum: CalorieDatum) => {
 						return (
 							<React.Fragment key={datum.item}>
-								<CalorieItem datum={datum} />
+								<CalorieItem userId={userId} datum={datum} />
 							</React.Fragment>
 						)
 					})}

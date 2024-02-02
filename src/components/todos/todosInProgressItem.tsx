@@ -1,13 +1,17 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { useAppSelector } from '@/lib/hooks'
+import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 
-import { showTaskItems } from '@/lib/features/todos/todosSlice'
+import {
+	showTaskItems,
+	showEdits,
+	updateShowEdits
+} from '@/lib/features/todos/todosSlice'
 
 import TaskItemsUpdateForm from './taskItemsUpdateForm'
 
@@ -15,8 +19,9 @@ import TodosUpdateForm from './todosUpdateForm'
 
 import TodosTaskPriorityName from './todosTaskPriorityName'
 
-import TodosDeleteButton from './todosDeleteButton'
 import TodosCompleteButton from './todosCompleteButton'
+
+import DeleteButton from '@/buttons/deleteButton'
 
 const priorityMapping = new Map<string, string>([
 	['1', 'bg-green-600'],
@@ -33,9 +38,11 @@ export default function TodosInProgressItem({
 	userId: string
 	datum: TodoDatum
 }) {
-	const showItems = useAppSelector(showTaskItems)
+	const showItems: boolean =
+		useAppSelector(showTaskItems).get(datum.task!) || false
+	const showEdit = useAppSelector(showEdits).get(datum.task!) || false
 
-	const [showEdits, setShowEdits] = useState<Map<string, boolean>>(new Map())
+	const dispatch = useAppDispatch()
 
 	const completePercentage: number = useMemo(() => {
 		let percent: number = 0
@@ -50,20 +57,9 @@ export default function TodosInProgressItem({
 		return percent
 	}, [datum])
 
-	const handleShowEditClick =
-		(taskName: string) => (e: React.MouseEvent<HTMLButtonElement>) => {
-			// Clone the current map and toggle the current key
-			let updatedShowEditMap = new Map(
-				showEdits.set(taskName, !showEdits.get(taskName))
-			)
-			// Set all others key to false
-			updatedShowEditMap.forEach((value: boolean, key: string) => {
-				if (key != taskName) {
-					updatedShowEditMap.set(key, false)
-				}
-			})
-			setShowEdits(updatedShowEditMap)
-		}
+	const handleShowEdit = (taskName: string) => {
+		dispatch(updateShowEdits({ taskName, editOpened: !showEdit }))
+	}
 
 	return (
 		<>
@@ -82,27 +78,28 @@ export default function TodosInProgressItem({
 					</progress>
 				</div>
 				<div className='w-1/3'>
-					<button onClick={handleShowEditClick(datum.task!)}>
-						{showEdits.get(datum.task!) ? (
-							<CloseIcon fontSize='large' />
+					<button onClick={() => handleShowEdit(datum.task!)}>
+						{showEdit ? (
+							<CloseIcon fontSize='medium' />
 						) : (
-							<EditIcon fontSize='large' />
+							<EditIcon fontSize='medium' />
 						)}
 					</button>
 				</div>
 				<div className='w-1/3'>
-					<TodosDeleteButton userId={userId} item={datum.item!} />
+					<DeleteButton
+						url={`/api/todos?userId=${userId}`}
+						item={datum.item!}
+					/>
 				</div>
 				<div className='w-1/3 flex justify-center items-center'>
 					<TodosCompleteButton userId={userId} datum={datum} />
 				</div>
 			</div>
-			{showItems.get(datum.task!) && !showEdits.get(datum.task!) && (
+			{showItems && !showEdit && (
 				<TaskItemsUpdateForm userId={userId} datum={datum} />
 			)}
-			{showEdits.get(datum.task!) && (
-				<TodosUpdateForm userId={userId} datum={datum} />
-			)}
+			{showEdit && <TodosUpdateForm userId={userId} datum={datum} />}
 		</>
 	)
 }

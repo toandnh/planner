@@ -54,16 +54,7 @@ export default function TodosForm({
 		return hasChanged
 	}
 
-	const handleAddMoreItems = (e: React.KeyboardEvent | React.MouseEvent) => {
-		// Keyboard stuff here
-		if (
-			e.type === 'keydown' &&
-			((e as React.KeyboardEvent).key === 'Tab' ||
-				(e as React.KeyboardEvent).key === 'Shift')
-		) {
-			return
-		}
-
+	const handleAddMoreItems = () => {
 		// Set new limit every time the function is called
 		setTotalRowLimit(totalRowLimit + numRowLimit)
 		// Increase the limit of the taskItems array

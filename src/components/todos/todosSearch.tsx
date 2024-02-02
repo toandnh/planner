@@ -24,6 +24,7 @@ export default function TodosSearch({
 	const [searchResults, setSearchResults] = useState<TodoDatum[]>([])
 
 	const queryCleared = useAppSelector(clearedSearchQuery)
+
 	const dispatch = useAppDispatch()
 
 	const hasSubString = (str: string, subStr: string) => {

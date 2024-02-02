@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
@@ -14,14 +16,17 @@ export default function TodosTaskPriorityName({
 	datum: TodoDatum
 	color: string
 }) {
-	const showItems = useAppSelector(showTaskItems)
+	const hasTaskItems = datum.taskItems.length > 0
+
+	const showItems = useAppSelector(showTaskItems).get(datum.task!) || false
+
 	const dispatch = useAppDispatch()
 
 	const handleShowMoreClick = (taskName: string) => {
 		dispatch(
 			updateShowTaskItems({
 				taskName,
-				taskOpened: !showItems.get(taskName)
+				taskOpened: !showItems
 			})
 		)
 	}
@@ -38,8 +43,8 @@ export default function TodosTaskPriorityName({
 				></span>
 			</div>
 			<div className='w-full'>
-				{!datum.taskItems && <p key={datum.item}>{datum.task}</p>}
-				{datum.taskItems && (
+				{!hasTaskItems && <p key={datum.item}>{datum.task}</p>}
+				{hasTaskItems && (
 					<input
 						className='underline hover:text-blue-400 hover:cursor-pointer'
 						key={datum.item}

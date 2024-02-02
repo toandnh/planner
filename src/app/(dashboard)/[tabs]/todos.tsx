@@ -26,6 +26,8 @@ export default function Todos() {
 		fetcher
 	)
 
+	console.log(data)
+
 	const inProgressData: TodoDatum[] = useMemo(
 		() => getInProgressData(data, isLoading),
 		[data]

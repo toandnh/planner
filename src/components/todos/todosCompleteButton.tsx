@@ -20,7 +20,7 @@ export default function TodosCompleteButton({
 		revalidate: true
 	})
 
-	const handleComplete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleComplete = async () => {
 		await trigger({
 			item: datum.item,
 			task: datum.task,
@@ -33,7 +33,7 @@ export default function TodosCompleteButton({
 	return (
 		<>
 			<button onClick={handleComplete}>
-				<DoneAllIcon fontSize='large' />
+				<DoneAllIcon fontSize='medium' />
 			</button>
 		</>
 	)

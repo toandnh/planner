@@ -26,26 +26,25 @@ export default function TaskItemsUpdateForm({
 		})
 	)
 
-	const handleTicked =
-		(index: number) => async (e: React.ChangeEvent<HTMLInputElement>) => {
-			let updatedTickedArr = ticked.map((item, i) => {
-				return i === index ? !item : item
-			})
-			setTicked(updatedTickedArr)
+	const handleTicked = async (index: number) => {
+		let updatedTickedArr = ticked.map((item, i) => {
+			return i === index ? !item : item
+		})
+		setTicked(updatedTickedArr)
 
-			const taskItemTuples: (string | boolean)[][] = new Array()
-			datum.taskItems!.map((taskItem: (string | boolean)[], i: number) => {
-				taskItemTuples.push([taskItem[0], updatedTickedArr[i]])
-			})
+		const taskItemTuples: (string | boolean)[][] = new Array()
+		datum.taskItems!.map((taskItem: (string | boolean)[], i: number) => {
+			taskItemTuples.push([taskItem[0], updatedTickedArr[i]])
+		})
 
-			await trigger({
-				item: datum.item,
-				task: datum.task,
-				taskItems: taskItemTuples,
-				priority: datum.priority,
-				completed: datum.completed
-			})
-		}
+		await trigger({
+			item: datum.item,
+			task: datum.task,
+			taskItems: taskItemTuples,
+			priority: datum.priority,
+			completed: datum.completed
+		})
+	}
 
 	return (
 		<>
@@ -62,7 +61,7 @@ export default function TaskItemsUpdateForm({
 								id={`taskItem#${i}`}
 								name='taskItem'
 								checked={ticked[i]}
-								onChange={handleTicked(i)}
+								onChange={() => handleTicked(i)}
 							/>
 						</div>
 					</div>

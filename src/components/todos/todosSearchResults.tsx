@@ -52,7 +52,7 @@ export default function TodosSearchResults({
 					Search Results for '{searchQuery}'
 				</h3>
 				<button className='w-1/2 flex justify-end' onClick={handleClose}>
-					<CloseIcon fontSize='large' />
+					<CloseIcon fontSize='medium' />
 				</button>
 			</div>
 			<div className='flex flex-col gap-5 pl-5 pt-5 pb-5'>
