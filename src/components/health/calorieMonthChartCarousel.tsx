@@ -14,12 +14,17 @@ import {
 	getAverage
 } from '../utilities/utilities'
 
-export default function CalorieMonthChartCarousel({
-	userId
-}: {
-	userId: string
-}) {
+export default function CalorieMonthChartCarousel() {
 	const [startTime, setStartTime] = useState(getFirstDayOfYear(new Date()))
+
+	const fetcher = (url: string) => fetch(url).then((res) => res.json())
+	const { isLoading, data } = useSWR(
+		`/api/health/calorie?start-time=${startTime}&end-time=${getLastDayOfYear(
+			new Date(startTime)
+		)}`,
+		fetcher
+	)
+
 	const [prevClickDisabled, setPrevClickDisabled] = useState(false)
 	const [nextClickDisabled, setNextClickDisabled] = useState(false)
 	const [fforwardClickDisabled, setFForwardClickDisabled] = useState(true)
@@ -47,14 +52,6 @@ export default function CalorieMonthChartCarousel({
 	const handleFastForwardClick = () => {
 		setStartTime(getFirstDayOfYear(new Date()))
 	}
-
-	const fetcher = (url: string) => fetch(url).then((res) => res.json())
-	const { isLoading, data } = useSWR(
-		`/api/health/calorie?userId=${userId}&start-time=${startTime}&end-time=${getLastDayOfYear(
-			new Date(startTime)
-		)}`,
-		fetcher
-	)
 
 	useEffect(() => {
 		if (!isLoading) {

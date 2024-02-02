@@ -6,11 +6,9 @@ import CalorieItem from './calorieItem'
 import CalorieAddForm from './calorieAddForm'
 
 export default function CalorieConsumed({
-	userId,
 	data,
 	isLoading
 }: {
-	userId: string
 	data: CalorieDatum[]
 	isLoading: boolean
 }) {
@@ -32,11 +30,11 @@ export default function CalorieConsumed({
 					data.map((datum: CalorieDatum) => {
 						return (
 							<React.Fragment key={datum.item}>
-								<CalorieItem userId={userId} datum={datum} />
+								<CalorieItem datum={datum} />
 							</React.Fragment>
 						)
 					})}
-				<CalorieAddForm userId={userId} consumed={true} />
+				<CalorieAddForm consumed={true} />
 			</div>
 		</div>
 	)

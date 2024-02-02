@@ -9,13 +9,7 @@ import DeleteButton from '@/buttons/deleteButton'
 
 import { useToggle } from '@/hooks/useToggle'
 
-export default function CalorieItem({
-	userId,
-	datum
-}: {
-	userId: string
-	datum: CalorieDatum
-}) {
+export default function CalorieItem({ datum }: { datum: CalorieDatum }) {
 	const [editOpened, toggle] = useToggle(false)
 
 	return (
@@ -30,12 +24,9 @@ export default function CalorieItem({
 						<EditIcon fontSize='medium' />
 					)}
 				</button>
-				<DeleteButton
-					url={`/api/health/calorie?userId=${userId}`}
-					item={datum.item}
-				/>
+				<DeleteButton url={'/api/health/calorie'} item={datum.item} />
 			</div>
-			{editOpened && <CalorieUpdateForm userId={userId} datum={datum} />}
+			{editOpened && <CalorieUpdateForm datum={datum} />}
 		</div>
 	)
 }

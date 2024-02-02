@@ -11,11 +11,9 @@ import TodosCompletedItem from './todosCompletedItem'
 import { sortByTaskNameAsc } from '../utilities/utilities'
 
 export default function TodosCompleted({
-	userId,
 	isLoading,
 	data
 }: {
-	userId: string
 	isLoading: boolean
 	data: TodoDatum[]
 }) {
@@ -32,7 +30,7 @@ export default function TodosCompleted({
 						return (
 							<React.Fragment key={datum.item}>
 								{!inResults.has(datum.task!) && (
-									<TodosCompletedItem userId={userId} datum={datum} />
+									<TodosCompletedItem datum={datum} />
 								)}
 							</React.Fragment>
 						)

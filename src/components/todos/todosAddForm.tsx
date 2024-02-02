@@ -8,13 +8,13 @@ import TodosForm from './todosForm'
 
 import { useToggle } from '@/hooks/useToggle'
 
-export default function TodosAddForm({ userId }: { userId: string }) {
+export default function TodosAddForm() {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { trigger } = useSWRMutation(`/api/todos?userId=${userId}`, fetcher, {
+	const { trigger } = useSWRMutation('/api/todos', fetcher, {
 		revalidate: true
 	})
 

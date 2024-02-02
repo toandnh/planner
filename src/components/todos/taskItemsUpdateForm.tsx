@@ -4,19 +4,13 @@ import { useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 
-export default function TaskItemsUpdateForm({
-	userId,
-	datum
-}: {
-	userId: string
-	datum: TodoDatum
-}) {
+export default function TaskItemsUpdateForm({ datum }: { datum: TodoDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
 			method: 'PUT',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { trigger } = useSWRMutation(`/api/todos?userId=${userId}`, fetcher, {
+	const { trigger } = useSWRMutation('/api/todos', fetcher, {
 		revalidate: true
 	})
 

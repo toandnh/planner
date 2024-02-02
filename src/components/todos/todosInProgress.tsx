@@ -19,11 +19,9 @@ import {
 } from '../utilities/utilities'
 
 export default function TodosInProgress({
-	userId,
 	isLoading,
 	data
 }: {
-	userId: string
 	isLoading: boolean
 	data: TodoDatum[]
 }) {
@@ -97,7 +95,7 @@ export default function TodosInProgress({
 							return (
 								<React.Fragment key={datum.item}>
 									{!inResults.has(datum.task!) && (
-										<TodosInProgressItem userId={userId} datum={datum} />
+										<TodosInProgressItem datum={datum} />
 									)}
 								</React.Fragment>
 							)
@@ -105,7 +103,7 @@ export default function TodosInProgress({
 					</div>
 				</div>
 			)}
-			<TodosAddForm userId={userId} />
+			<TodosAddForm />
 		</div>
 	)
 }

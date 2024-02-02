@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import CalorieWeekChartCarousel from './calorieWeekChartCarousel'
 import CalorieMonthChartCarousel from './calorieMonthChartCarousel'
 
-export default function CalorieChart({ userId }: { userId: string }) {
+export default function CalorieChart() {
 	const [currChartType, setCurrChartType] = useState('week')
 
 	const handleWeekChart = () => {
@@ -41,10 +41,8 @@ export default function CalorieChart({ userId }: { userId: string }) {
 					value='Month'
 				/>
 			</div>
-			{currChartType === 'week' && <CalorieWeekChartCarousel userId={userId} />}
-			{currChartType === 'month' && (
-				<CalorieMonthChartCarousel userId={userId} />
-			)}
+			{currChartType === 'week' && <CalorieWeekChartCarousel />}
+			{currChartType === 'month' && <CalorieMonthChartCarousel />}
 		</div>
 	)
 }

@@ -6,25 +6,15 @@ import { mutate } from 'swr'
 
 import useSWRMutation from 'swr/mutation'
 
-export default function CalorieUpdateForm({
-	userId,
-	datum
-}: {
-	userId: string
-	datum: CalorieDatum
-}) {
+export default function CalorieUpdateForm({ datum }: { datum: CalorieDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: CalorieDatum }) =>
 		fetch(url, {
 			method: 'PUT',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { trigger } = useSWRMutation(
-		`/api/health/calorie?userId=${userId}`,
-		fetcher,
-		{
-			revalidate: true
-		}
-	)
+	const { trigger } = useSWRMutation('/api/health/calorie', fetcher, {
+		revalidate: true
+	})
 
 	const [stateChanged, setStateChanged] = useState(false)
 
@@ -70,9 +60,7 @@ export default function CalorieUpdateForm({
 
 		// Revalidate all data from 'api/health/calorie...'
 		mutate(
-			(key) =>
-				typeof key === 'string' &&
-				key.startsWith(`/api/health/calorie?userId=${userId}`)
+			(key) => typeof key === 'string' && key.startsWith('/api/health/calorie')
 		)
 	}
 

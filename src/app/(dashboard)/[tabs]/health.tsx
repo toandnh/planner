@@ -2,8 +2,6 @@
 
 import { useMemo } from 'react'
 
-import { useSession } from 'next-auth/react'
-
 import useSWR from 'swr'
 
 import CalorieConsumed from '@/components/health/calorieConsumed'
@@ -16,20 +14,19 @@ import { getConsumedData, getBurntData } from '@/components/utilities/utilities'
 export default function HealthHome() {
 	const millisecInDay = 24 * 60 * 60 * 1000
 
+	const fetcher = (url: string) => fetch(url).then((res) => res.json())
+	const { isLoading: isHealthLoading, data: healthData } = useSWR(
+		'/api/health',
+		fetcher
+	)
+
 	// The time from the beginning of the day
 	const startTime = new Date(new Date().toDateString()).getTime()
 
-	const { data: session, status } = useSession()
-
-	const fetcher = (url: string) => fetch(url).then((res) => res.json())
-	const { isLoading: isHealthLoading, data: healthData } = useSWR(
-		`/api/health?userId=${session?.user.id}`,
-		fetcher
-	)
 	const { isLoading: isCalorieLoading, data: calorieData } = useSWR(
-		`/api/health/calorie?userId=${
-			session?.user.id
-		}&start-time=${startTime}&end-time=${startTime + millisecInDay}`,
+		`/api/health/calorie?start-time=${startTime}&end-time=${
+			startTime + millisecInDay
+		}`,
 		fetcher
 	)
 
@@ -86,17 +83,9 @@ export default function HealthHome() {
 						multiplier! * healthData.weight
 					)} kcal Recommended Daily)`}
 			</h3>
-			<CalorieConsumed
-				userId={session?.user.id}
-				data={calorieComsumed}
-				isLoading={isCalorieLoading}
-			/>
-			<CalorieBurnt
-				userId={session?.user.id}
-				data={calorieBurnt}
-				isLoading={isCalorieLoading}
-			/>
-			<CalorieChart userId={session?.user.id} />
+			<CalorieConsumed data={calorieComsumed} isLoading={isCalorieLoading} />
+			<CalorieBurnt data={calorieBurnt} isLoading={isCalorieLoading} />
+			<CalorieChart />
 		</div>
 	)
 }

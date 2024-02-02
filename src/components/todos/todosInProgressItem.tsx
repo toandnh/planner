@@ -31,13 +31,7 @@ const priorityMapping = new Map<string, string>([
 	['5', 'bg-red-600']
 ])
 
-export default function TodosInProgressItem({
-	userId,
-	datum
-}: {
-	userId: string
-	datum: TodoDatum
-}) {
+export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {
 	const showItems: boolean =
 		useAppSelector(showTaskItems).get(datum.task!) || false
 	const showEdit = useAppSelector(showEdits).get(datum.task!) || false
@@ -90,19 +84,14 @@ export default function TodosInProgressItem({
 					</button>
 				</div>
 				<div className='w-1/3'>
-					<DeleteButton
-						url={`/api/todos?userId=${userId}`}
-						item={datum.item!}
-					/>
+					<DeleteButton url={'/api/todos'} item={datum.item!} />
 				</div>
 				<div className='w-1/3 flex justify-center items-center'>
-					<TodosCompleteButton userId={userId} datum={datum} />
+					<TodosCompleteButton datum={datum} />
 				</div>
 			</div>
-			{showItems && !showEdit && (
-				<TaskItemsUpdateForm userId={userId} datum={datum} />
-			)}
-			{showEdit && <TodosUpdateForm userId={userId} datum={datum} />}
+			{showItems && !showEdit && <TaskItemsUpdateForm datum={datum} />}
+			{showEdit && <TodosUpdateForm datum={datum} />}
 		</>
 	)
 }

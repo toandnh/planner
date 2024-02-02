@@ -13,13 +13,7 @@ import {
 
 import TodosSearchResults from './todosSearchResults'
 
-export default function TodosSearch({
-	userId,
-	data
-}: {
-	userId: string
-	data: TodoDatum[]
-}) {
+export default function TodosSearch({ data }: { data: TodoDatum[] }) {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [searchResults, setSearchResults] = useState<TodoDatum[]>([])
 
@@ -79,7 +73,6 @@ export default function TodosSearch({
 			</div>
 			{searchQuery && (
 				<TodosSearchResults
-					userId={userId}
 					searchQuery={searchQuery}
 					searchResults={searchResults}
 				/>

@@ -6,13 +6,15 @@ import {
 	UpdateItemCommand
 } from '@aws-sdk/client-dynamodb'
 
+import { auth } from '@/auth'
+
 const client = new DynamoDBClient({})
 
 export async function GET(req: Request) {
 	const item = 'details'
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId')
+	const session = await auth()
+	const userId = session?.user.id
 
 	// userId type is (string | null),
 	// !userId checks for empty string,
@@ -50,12 +52,13 @@ export async function GET(req: Request) {
 }
 
 export async function PUT(req: Request) {
+	const item = 'details'
+
 	const data = await req.json()
 	const { name } = data
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId')
-	const item = searchParams.get('item')
+	const session = await auth()
+	const userId = session?.user.id
 
 	if (!userId || !item) return NextResponse.json({ message: 'Missing data!' })
 

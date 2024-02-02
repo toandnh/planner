@@ -20,11 +20,9 @@ import {
 } from '@/components/utilities/utilities'
 
 export default function TodosSearchResults({
-	userId,
 	searchQuery,
 	searchResults
 }: {
-	userId: string
 	searchQuery: string
 	searchResults: TodoDatum[]
 }) {
@@ -61,7 +59,7 @@ export default function TodosSearchResults({
 					{inProgressData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>
-								<TodosInProgressItem userId={userId} datum={result} />
+								<TodosInProgressItem datum={result} />
 							</React.Fragment>
 						)
 					})}
@@ -71,7 +69,7 @@ export default function TodosSearchResults({
 					{completedData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>
-								<TodosCompletedItem userId={userId} datum={result} />
+								<TodosCompletedItem datum={result} />
 							</React.Fragment>
 						)
 					})}

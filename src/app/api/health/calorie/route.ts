@@ -8,17 +8,20 @@ import {
 	DeleteItemCommand
 } from '@aws-sdk/client-dynamodb'
 
+import { auth } from '@/auth'
+
 const client = new DynamoDBClient({})
 
 export async function GET(req: Request) {
 	const item = 'health#calorie'
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId')
+	const session = await auth()
+	const userId = session?.user.id
 
 	if (!userId || userId === null)
 		return NextResponse.json({ message: 'Missing userID!' })
 
+	const searchParams = new URL(req.url as string).searchParams
 	const startTime = searchParams.get('start-time') as string
 	const endTime = searchParams.get('end-time') as string
 
@@ -67,8 +70,8 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
 	const data = await req.json()
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId')
+	const session = await auth()
+	const userId = session?.user.id
 
 	if (!userId || userId === null)
 		NextResponse.json({ message: 'Missing data!' })
@@ -97,8 +100,8 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
 	const data = await req.json()
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId') as string
+	const session = await auth()
+	const userId = session?.user.id
 
 	if (!userId || userId === null)
 		NextResponse.json({ message: 'Missing data!' })
@@ -127,8 +130,8 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
 	const data = await req.json()
 
-	const searchParams = new URL(req.url as string).searchParams
-	const userId = searchParams.get('userId') as string
+	const session = await auth()
+	const userId = session?.user.id
 
 	const { item } = data
 

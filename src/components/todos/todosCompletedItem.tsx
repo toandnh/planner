@@ -12,19 +12,13 @@ import TodosTaskPriorityName from './todosTaskPriorityName'
 
 import DeleteButton from '@/buttons/deleteButton'
 
-export default function TodosCompletedItem({
-	userId,
-	datum
-}: {
-	userId: string
-	datum: TodoDatum
-}) {
+export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
 			method: 'PUT',
 			body: JSON.stringify(arg)
 		}).then((res) => res.json())
-	const { trigger } = useSWRMutation(`/api/todos?userId=${userId}`, fetcher, {
+	const { trigger } = useSWRMutation('/api/todos', fetcher, {
 		revalidate: true
 	})
 
@@ -51,7 +45,7 @@ export default function TodosCompletedItem({
 					<RestoreIcon fontSize='medium' />
 				</button>
 				<div className='w-1/3 flex justify-center items-center'>
-					<DeleteButton url={`/api/todos?userId=${userId}`} item={datum.item} />
+					<DeleteButton url={'/api/todos'} item={datum.item} />
 				</div>
 				<div className='w-1/3'>
 					<p className='hidden'>HIDDEN</p>
