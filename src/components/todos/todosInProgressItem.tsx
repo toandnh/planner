@@ -34,7 +34,7 @@ const priorityMapping = new Map<string, string>([
 export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {
 	const showItems: boolean =
 		useAppSelector(showTaskItems).get(datum.task!) || false
-	const showEdit = useAppSelector(showEdits).get(datum.task!) || false
+	const showEdit: boolean = useAppSelector(showEdits).get(datum.task!) || false
 
 	const dispatch = useAppDispatch()
 
@@ -51,9 +51,8 @@ export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {
 		return percent
 	}, [datum])
 
-	const handleShowEdit = (taskName: string) => {
-		dispatch(updateShowEdits({ taskName, editOpened: !showEdit }))
-	}
+	const handleShowEdit = () =>
+		dispatch(updateShowEdits({ taskName: datum.task, editOpened: !showEdit }))
 
 	return (
 		<>
@@ -75,7 +74,7 @@ export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {
 					</progress>
 				</div>
 				<div className='w-1/3'>
-					<button onClick={() => handleShowEdit(datum.task!)}>
+					<button onClick={handleShowEdit}>
 						{showEdit ? (
 							<CloseIcon fontSize='medium' />
 						) : (

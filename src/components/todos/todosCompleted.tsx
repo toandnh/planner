@@ -17,9 +17,9 @@ export default function TodosCompleted({
 	isLoading: boolean
 	data: TodoDatum[]
 }) {
-	const inResults = useAppSelector(inSearchResults)
+	const inResults: Set<string> = useAppSelector(inSearchResults)
 
-	const sortedData = useMemo(() => sortByTaskNameAsc(data), [data])
+	const sortedData: TodoDatum[] = useMemo(() => sortByTaskNameAsc(data), [data])
 
 	return (
 		<div className='h-full w-full flex flex-col gap-5'>

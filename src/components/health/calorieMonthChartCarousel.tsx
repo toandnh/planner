@@ -67,7 +67,7 @@ export default function CalorieMonthChartCarousel() {
 		}
 	}, [data])
 
-	const monthlyCalorie = useMemo(() => {
+	const monthlyCalorie: number[][] = useMemo(() => {
 		// In the form: [[in, out], [in, out], ...]
 		let arr: number[][] = Array(12)
 			.fill(null)
@@ -111,7 +111,7 @@ export default function CalorieMonthChartCarousel() {
 		return arr
 	}, [data])
 
-	const monthAverage = useMemo(
+	const monthAverage: number[] = useMemo(
 		() => getAverage(monthlyCalorie, isLoading),
 		[monthlyCalorie]
 	)

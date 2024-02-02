@@ -12,7 +12,7 @@ export default function CalorieConsumed({
 	data: CalorieDatum[]
 	isLoading: boolean
 }) {
-	const totalCalorie = useMemo(() => {
+	const totalCalorie: number = useMemo(() => {
 		let total = 0
 		data.map((datum: CalorieDatum) => {
 			total += parseInt(datum.amount)

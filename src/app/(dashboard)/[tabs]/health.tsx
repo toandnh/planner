@@ -4,6 +4,8 @@ import { useMemo } from 'react'
 
 import useSWR from 'swr'
 
+import StoreProvider from '@/app/StoreProvider'
+
 import CalorieConsumed from '@/components/health/calorieConsumed'
 import CalorieBurnt from '@/components/health/calorieBurnt'
 
@@ -74,7 +76,7 @@ export default function HealthHome() {
 		[calorieData]
 	)
 
-	return (
+	let content = (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			<h3 className='text-xl font-semibold'>
 				Calorie Remaining: {calorieRemaining} kcal{' '}
@@ -88,4 +90,6 @@ export default function HealthHome() {
 			<CalorieChart />
 		</div>
 	)
+
+	return <StoreProvider children={content} />
 }

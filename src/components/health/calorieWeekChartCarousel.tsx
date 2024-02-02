@@ -10,18 +10,14 @@ import CalorieWeekChart from './calorieWeekChart'
 
 import { getSunday, getAverage } from '../utilities/utilities'
 
-export default function CalorieWeekChartCarousel({
-	userId
-}: {
-	userId: string
-}) {
+export default function CalorieWeekChartCarousel() {
 	const millisecInWeek = 7 * 24 * 60 * 60 * 1000
 
 	const [startTime, setStartTime] = useState(getSunday(new Date()))
 
 	const fetcher = (url: string) => fetch(url).then((res) => res.json())
 	const { isLoading, data } = useSWR(
-		`/api/health/calorie?userId=${userId}&start-time=${startTime}&end-time=${
+		`/api/health/calorie?start-time=${startTime}&end-time=${
 			startTime + millisecInWeek
 		}`,
 		fetcher

@@ -17,7 +17,7 @@ export default function TodosSearch({ data }: { data: TodoDatum[] }) {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [searchResults, setSearchResults] = useState<TodoDatum[]>([])
 
-	const queryCleared = useAppSelector(clearedSearchQuery)
+	const queryCleared: boolean = useAppSelector(clearedSearchQuery)
 
 	const dispatch = useAppDispatch()
 

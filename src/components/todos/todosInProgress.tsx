@@ -30,7 +30,7 @@ export default function TodosInProgress({
 
 	const [sortBy, setSortBy] = useState('tasK-priority')
 
-	const inResults = useAppSelector(inSearchResults)
+	const inResults: Set<string> = useAppSelector(inSearchResults)
 
 	let sortedData: TodoDatum[] = useMemo(() => {
 		if (sortBy == 'task-name') {

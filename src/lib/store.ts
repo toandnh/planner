@@ -3,13 +3,15 @@ import { configureStore } from '@reduxjs/toolkit'
 import { enableMapSet } from 'immer'
 
 import todosReducer from './features/todos/todosSlice'
+import healthReducer from './features/health/healthSlice'
 
 enableMapSet()
 
 export const makeStore = () => {
 	return configureStore({
 		reducer: {
-			todos: todosReducer
+			todos: todosReducer,
+			health: healthReducer
 		},
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware({

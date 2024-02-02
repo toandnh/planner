@@ -16,16 +16,17 @@ export default function TodosTaskPriorityName({
 	datum: TodoDatum
 	color: string
 }) {
-	const hasTaskItems = datum.taskItems.length > 0
-
-	const showItems = useAppSelector(showTaskItems).get(datum.task!) || false
+	const showItems: boolean =
+		useAppSelector(showTaskItems).get(datum.task!) || false
 
 	const dispatch = useAppDispatch()
 
-	const handleShowMoreClick = (taskName: string) => {
+	const hasTaskItems: boolean = datum.taskItems.length > 0
+
+	const handleShowMoreClick = () => {
 		dispatch(
 			updateShowTaskItems({
-				taskName,
+				taskName: datum.task,
 				taskOpened: !showItems
 			})
 		)
@@ -49,7 +50,7 @@ export default function TodosTaskPriorityName({
 						className='underline hover:text-blue-400 hover:cursor-pointer'
 						key={datum.item}
 						type='button'
-						onClick={() => handleShowMoreClick(datum.task!)}
+						onClick={handleShowMoreClick}
 						value={`${datum.task}`}
 					/>
 				)}

@@ -25,9 +25,9 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 	const showItems: boolean =
 		useAppSelector(showTaskItems).get(datum.task!) || false
 
-	const hasTaskItems = datum.taskItems.length > 0
+	const hasTaskItems: boolean = datum.taskItems.length > 0
 
-	const handleRestoreClick = async (datum: TodoDatum) => {
+	const handleRestoreClick = async () => {
 		await trigger({
 			item: datum.item,
 			task: datum.task,
@@ -41,7 +41,7 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 		<>
 			<div className='min-h-[35px] flex justify-center items-center'>
 				<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
-				<button className='w-1/3' onClick={() => handleRestoreClick(datum)}>
+				<button className='w-1/3' onClick={handleRestoreClick}>
 					<RestoreIcon fontSize='medium' />
 				</button>
 				<div className='w-1/3 flex justify-center items-center'>
