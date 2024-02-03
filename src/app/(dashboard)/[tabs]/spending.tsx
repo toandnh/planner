@@ -1,59 +1,31 @@
+'use client'
+
+import useSWR from 'swr'
+
+import SpendingChart from '@/components/spending/spendingChart'
+import SpendingItemList from '@/components/spending/spendingItemList'
+
 export default function SpendingHome() {
+	const millisecInDay = 24 * 60 * 60 * 1000
+	// The time from the beginning of the day
+	const startTime = new Date(new Date().toDateString()).getTime()
+
+	const fetcher = (url: string) => fetch(url).then((res) => res.json())
+	const { isLoading, data } = useSWR(
+		`/api/spending?start-time=${startTime}&end-time=${
+			startTime + millisecInDay
+		}`,
+		fetcher
+	)
+
 	return (
-		<div className='h-full w-full flex flex-col items-center gap-10 p-10'>
-			<div className='flex gap-5'>
-				<input
-					className='bg-neutral-500 p-2 rounded-md hover:bg-neutral-600 hover:cursor-pointer'
-					type='button'
-					value='Day'
-				/>
-				<input
-					className='bg-neutral-500 p-2 rounded-md hover:bg-neutral-600 hover:cursor-pointer'
-					type='button'
-					value='Week'
-				/>
-				<input
-					className='bg-neutral-500 p-2 rounded-md hover:bg-neutral-600 hover:cursor-pointer'
-					type='button'
-					value='Month'
-				/>
-				<input
-					className='bg-neutral-500 p-2 rounded-md hover:bg-neutral-600 hover:cursor-pointer'
-					type='button'
-					value='Year'
-				/>
-			</div>
-
-			<div className='flex gap-5'>
-				<div>
-					<p>Grocery: </p>
-					<p>Book: </p>
-					<input type='text' placeholder='Add more' />
-				</div>
-				<div>
-					<p>300CAD</p>
-					<p>300CAD</p>
-					<input type='text' placeholder='10000CAD' />
-				</div>
-				<div className='flex items-end'>
-					<input
-						className='bg-green-500 flex items-end px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
-						type='submit'
-						value='Add'
-					/>
-				</div>
-			</div>
-
-			<div className='flex gap-5'>
-				<div>
-					<p>Total Today:</p>
-					<p>Total This Month:</p>
-				</div>
-				<div>
-					<p>600CAD</p>
-					<p>1600CAD</p>
-				</div>
-			</div>
+		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
+			{!isLoading && (
+				<>
+					<SpendingChart data={data} />
+					<SpendingItemList data={data} />
+				</>
+			)}
 		</div>
 	)
 }

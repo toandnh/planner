@@ -10,7 +10,7 @@ import { showTaskItems } from '@/lib/features/todos/todosSlice'
 
 import TodosTaskPriorityName from './todosTaskPriorityName'
 
-import DeleteButton from '@/buttons/deleteButton'
+import DeleteButton from '@/components/buttons/deleteButton'
 
 export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>

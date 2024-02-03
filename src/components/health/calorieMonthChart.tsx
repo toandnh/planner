@@ -26,8 +26,8 @@ export default function CalorieMonthChart({
 	data: CalorieDatum[]
 	calorieArr: number[][]
 }) {
-	const dataset: ChartData[] = useMemo(() => {
-		let set: ChartData[] = []
+	const dataset: CalorieChartData[] = useMemo(() => {
+		let set: CalorieChartData[] = []
 		monthlyCalorie.map((datum, i) => {
 			let currObj = {
 				consumed: datum[0],

@@ -1,6 +1,10 @@
 import { axisClasses, BarChart } from '@mui/x-charts'
 
-export default function CalorieBarChart({ dataset }: { dataset: ChartData[] }) {
+export default function CalorieBarChart({
+	dataset
+}: {
+	dataset: CalorieChartData[]
+}) {
 	const chartSetting = {
 		yAxis: [
 			{

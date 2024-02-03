@@ -9,7 +9,7 @@ import { showEdits, updateShowEdits } from '@/lib/features/health/healthSlice'
 
 import CalorieUpdateForm from './calorieUpdateForm'
 
-import DeleteButton from '@/buttons/deleteButton'
+import DeleteButton from '@/components/buttons/deleteButton'
 
 export default function CalorieItem({ datum }: { datum: CalorieDatum }) {
 	const editOpened: boolean =

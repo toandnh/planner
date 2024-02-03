@@ -13,8 +13,8 @@ export default function CalorieWeekChart({
 	data: CalorieDatum[]
 	calorieArr: number[][]
 }) {
-	const dataset: ChartData[] = useMemo(() => {
-		let set: ChartData[] = []
+	const dataset: CalorieChartData[] = useMemo(() => {
+		let set: CalorieChartData[] = []
 		dailyCalorie.map((datum, i) => {
 			let currObj = {
 				consumed: datum[0],

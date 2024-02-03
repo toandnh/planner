@@ -24,8 +24,22 @@ type CalorieDatum = {
 	date: string
 }
 
-type ChartData = {
+type SpendingDatum = {
+	[key: string]: string
+	item: string
+	spending: string
+	amount: string
+	category: string
+	date: string
+}
+
+type CalorieChartData = {
 	consumed: number
 	burnt: number
 	time: string
+}
+
+type SpendingChartData = {
+	value: number
+	label: string
 }

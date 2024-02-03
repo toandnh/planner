@@ -21,7 +21,7 @@ import TodosTaskPriorityName from './todosTaskPriorityName'
 
 import TodosCompleteButton from './todosCompleteButton'
 
-import DeleteButton from '@/buttons/deleteButton'
+import DeleteButton from '@/components/buttons/deleteButton'
 
 const priorityMapping = new Map<string, string>([
 	['1', 'bg-green-600'],
