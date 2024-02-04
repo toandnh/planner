@@ -15,6 +15,7 @@ export default function SpendingPieChart({
 				}
 			]}
 			height={300}
+			width={500}
 		/>
 	)
 }

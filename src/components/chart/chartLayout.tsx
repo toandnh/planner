@@ -2,36 +2,36 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
-import CalorieAverage from './calorieAverage'
-
-export default function CalorieChartItem({
+export default function ChartLayout({
 	data,
-	CalorieTimeChart,
-	calorieArr,
-	timeAverage,
+	Chart,
 	handlePrevClick,
 	handleNextClick,
 	handleFastForwardClick,
 	prevClickDisabled,
 	nextClickDisabled,
-	fforwardClickDisabled
+	fforwardClickDisabled,
+	tabName,
+	startTime,
+	endTime
 }: {
 	data: CalorieDatum[]
-	CalorieTimeChart: React.FunctionComponent<{
-		data: CalorieDatum[]
-		calorieArr: number[][]
-	}>
-	calorieArr: number[][]
-	timeAverage: number[]
+	Chart: React.FunctionComponent<any>
 	handlePrevClick: React.MouseEventHandler<HTMLButtonElement>
 	handleNextClick: React.MouseEventHandler<HTMLButtonElement>
 	handleFastForwardClick: React.MouseEventHandler<HTMLButtonElement>
 	prevClickDisabled: boolean
 	nextClickDisabled: boolean
 	fforwardClickDisabled: boolean
+	tabName: string
+	startTime: string
+	endTime: string
 }) {
 	return (
 		<>
+			<div className='p-5'>
+				{startTime} - {endTime}
+			</div>
 			<div className='flex justify-center items-center gap-5'>
 				<button onClick={handlePrevClick} disabled={prevClickDisabled}>
 					<KeyboardArrowLeftIcon
@@ -39,7 +39,7 @@ export default function CalorieChartItem({
 						sx={{ color: prevClickDisabled ? 'grey' : 'black' }}
 					/>
 				</button>
-				<CalorieTimeChart data={data} calorieArr={calorieArr} />
+				<Chart data={data} tabName={tabName} />
 				<button onClick={handleNextClick} disabled={nextClickDisabled}>
 					<KeyboardArrowRightIcon
 						fontSize='large'
@@ -56,7 +56,6 @@ export default function CalorieChartItem({
 					/>
 				</button>
 			</div>
-			<CalorieAverage average={timeAverage} />
 		</>
 	)
 }

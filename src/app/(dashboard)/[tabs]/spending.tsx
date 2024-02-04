@@ -22,8 +22,8 @@ export default function SpendingHome() {
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			{!isLoading && (
 				<>
-					<SpendingChart data={data} />
-					<SpendingItemList data={data} />
+					<SpendingChart />
+					<SpendingItemList data={data} isLoading={isLoading} />
 				</>
 			)}
 		</div>

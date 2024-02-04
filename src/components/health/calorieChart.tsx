@@ -4,8 +4,11 @@ import { useState } from 'react'
 
 import clsx from 'clsx'
 
-import CalorieWeekChartCarousel from './calorieWeekChartCarousel'
-import CalorieMonthChartCarousel from './calorieMonthChartCarousel'
+import WeekChart from '../chart/weekChart'
+import CalorieWeekChart from './calorieWeekChart'
+
+import MonthChart from '../chart/monthChart'
+import CalorieMonthChart from './calorieMonthChart'
 
 export default function CalorieChart() {
 	const [currChartType, setCurrChartType] = useState('week')
@@ -41,8 +44,12 @@ export default function CalorieChart() {
 					value='Month'
 				/>
 			</div>
-			{currChartType === 'week' && <CalorieWeekChartCarousel />}
-			{currChartType === 'month' && <CalorieMonthChartCarousel />}
+			{currChartType === 'week' && (
+				<WeekChart Chart={CalorieWeekChart} tabName={'health/calorie'} />
+			)}
+			{currChartType === 'month' && (
+				<MonthChart Chart={CalorieMonthChart} tabName={'health/calorie'} />
+			)}
 		</div>
 	)
 }

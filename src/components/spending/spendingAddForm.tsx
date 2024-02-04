@@ -53,7 +53,7 @@ export default function SpendingAddForm() {
 		// Reset values
 		setSpending('')
 		setAmount('')
-		setCategory('others')
+		setCategory('Others')
 	}
 
 	return (

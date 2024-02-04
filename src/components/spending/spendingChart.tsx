@@ -2,33 +2,14 @@
 
 import { useMemo } from 'react'
 
-import SpendingPieChart from '../chart/spendingPieChart'
+import SpendingWeekChart from './spendingWeekChart'
+import WeekChart from '../chart/weekChart'
 
-export default function SpendingChart({ data }: { data: SpendingDatum[] }) {
-	const categorySum: Map<string, number> = useMemo(() => {
-		let sum: Map<string, number> = new Map()
-		data.map((datum) => {
-			let newValue = parseInt(datum.amount)
-			let existingValue = sum.get(datum.category)
-			sum.set(
-				datum.category,
-				existingValue ? existingValue + newValue : newValue
-			)
-		})
-		return sum
-	}, [data])
-
-	const dataset: SpendingChartData[] = useMemo(() => {
-		let set: SpendingChartData[] = []
-		categorySum.forEach((value: number, key: string) => {
-			let currObj = {
-				value,
-				label: key
-			}
-			set.push(currObj)
-		})
-		return set
-	}, [categorySum])
-
-	return <SpendingPieChart dataset={dataset} />
+export default function SpendingChart() {
+	return (
+		<div className='flex flex-col justify-center gap-5'>
+			<h3 className='text-xl font-semibold'>Spending Chart</h3>
+			<WeekChart Chart={SpendingWeekChart} tabName={'spending'} />
+		</div>
+	)
 }

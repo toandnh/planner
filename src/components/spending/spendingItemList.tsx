@@ -3,7 +3,13 @@ import React from 'react'
 import SpendingAddForm from './spendingAddForm'
 import SpendingItem from './spendingItem'
 
-export default function SpendingItemList({ data }: { data: SpendingDatum[] }) {
+export default function SpendingItemList({
+	data,
+	isLoading
+}: {
+	data: SpendingDatum[]
+	isLoading: boolean
+}) {
 	return (
 		<>
 			<h2 className='text-xl font-semibold'>Today Spending</h2>
@@ -13,11 +19,13 @@ export default function SpendingItemList({ data }: { data: SpendingDatum[] }) {
 				<h3 className='w-1/3 font-semibold'>Category</h3>
 			</div>
 			<div className='flex flex-col gap-5'>
-				{data.map((datum: SpendingDatum) => (
-					<React.Fragment key={datum.item}>
-						<SpendingItem datum={datum} />
-					</React.Fragment>
-				))}
+				{!isLoading &&
+					data.length > 0 &&
+					data.map((datum: SpendingDatum) => (
+						<React.Fragment key={datum.item}>
+							<SpendingItem datum={datum} />
+						</React.Fragment>
+					))}
 				<SpendingAddForm />
 			</div>
 		</>
