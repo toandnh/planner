@@ -2,6 +2,8 @@
 
 import useSWR from 'swr'
 
+import StoreProvider from '@/app/StoreProvider'
+
 import SpendingChart from '@/components/spending/spendingChart'
 import SpendingItemList from '@/components/spending/spendingItemList'
 
@@ -18,7 +20,7 @@ export default function SpendingHome() {
 		fetcher
 	)
 
-	return (
+	let content = (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			{!isLoading && (
 				<>
@@ -28,4 +30,6 @@ export default function SpendingHome() {
 			)}
 		</div>
 	)
+
+	return <StoreProvider children={content} />
 }

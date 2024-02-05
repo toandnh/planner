@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 import SpendingPieChart from '../chart/spendingPieChart'
 
-export default function SpendingWeekChart({
+export default function SpendingTimeChart({
 	data,
 	isLoading
 }: {
@@ -14,8 +14,7 @@ export default function SpendingWeekChart({
 	const categorySum: Map<string, number> = useMemo(() => {
 		let sum: Map<string, number> = new Map()
 		if (!isLoading) {
-			// Something is wrong here, data is undefined after finished loading?
-			if (data && data.length > 0) {
+			if (data.length > 0) {
 				data.map((datum) => {
 					let newValue = parseInt(datum.amount)
 					let existingValue = sum.get(datum.category)

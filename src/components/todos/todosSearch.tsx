@@ -13,6 +13,16 @@ import {
 
 import TodosSearchResults from './todosSearchResults'
 
+const hasSubString = (str: string, subStr: string) => {
+	// Return true if subStr matches the first letters of any word in the string
+	let strArr = str.split(' ')
+	let subStrLen = subStr.length
+	for (let word of strArr) {
+		if (word.toLowerCase().substring(0, subStrLen) == subStr) return true
+	}
+	return false
+}
+
 export default function TodosSearch({ data }: { data: TodoDatum[] }) {
 	const [searchQuery, setSearchQuery] = useState('')
 	const [searchResults, setSearchResults] = useState<TodoDatum[]>([])
@@ -20,16 +30,6 @@ export default function TodosSearch({ data }: { data: TodoDatum[] }) {
 	const queryCleared: boolean = useAppSelector(clearedSearchQuery)
 
 	const dispatch = useAppDispatch()
-
-	const hasSubString = (str: string, subStr: string) => {
-		// Return true if subStr matches the first letters of any word in the string
-		let strArr = str.split(' ')
-		let subStrLen = subStr.length
-		for (let word of strArr) {
-			if (word.toLowerCase().substring(0, subStrLen) == subStr) return true
-		}
-		return false
-	}
 
 	useEffect(() => {
 		if (queryCleared) {

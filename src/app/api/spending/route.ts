@@ -97,9 +97,57 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-	//
+	const data = await req.json()
+
+	const session = await auth()
+	const userId = session?.user.id
+
+	if (!userId || userId === null)
+		NextResponse.json({ message: 'Missing data!' })
+
+	const { item, spending, amount, category } = data
+
+	const { Attributes } = await client.send(
+		new UpdateItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			UpdateExpression: 'SET Spending = :sp, Amount = :am, Category = :cat',
+			ExpressionAttributeValues: {
+				':sp': { S: spending },
+				':am': { N: amount },
+				':cat': { S: category }
+			},
+			ReturnValues: 'ALL_NEW'
+		})
+	)
+
+	return NextResponse.json(Attributes)
 }
 
 export async function DELETE(req: Request) {
-	//
+	const data = await req.json()
+
+	const session = await auth()
+	const userId = session?.user.id
+
+	const { item } = data
+
+	if (!userId || userId === null || !item || item === null)
+		NextResponse.json({ message: 'Missing data!' })
+
+	const { Attributes } = await client.send(
+		new DeleteItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			ReturnValues: 'ALL_OLD'
+		})
+	)
+
+	return NextResponse.json(Attributes)
 }

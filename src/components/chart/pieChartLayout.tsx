@@ -2,8 +2,9 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
-export default function ChartLayout({
+export default function PieChartLayout({
 	data,
+	isLoading,
 	Chart,
 	handlePrevClick,
 	handleNextClick,
@@ -11,11 +12,11 @@ export default function ChartLayout({
 	prevClickDisabled,
 	nextClickDisabled,
 	fforwardClickDisabled,
-	tabName,
 	startTime,
 	endTime
 }: {
 	data: CalorieDatum[]
+	isLoading: boolean
 	Chart: React.FunctionComponent<any>
 	handlePrevClick: React.MouseEventHandler<HTMLButtonElement>
 	handleNextClick: React.MouseEventHandler<HTMLButtonElement>
@@ -23,7 +24,6 @@ export default function ChartLayout({
 	prevClickDisabled: boolean
 	nextClickDisabled: boolean
 	fforwardClickDisabled: boolean
-	tabName: string
 	startTime: string
 	endTime: string
 }) {
@@ -39,7 +39,7 @@ export default function ChartLayout({
 						sx={{ color: prevClickDisabled ? 'grey' : 'black' }}
 					/>
 				</button>
-				<Chart data={data} tabName={tabName} />
+				<Chart isLoading={isLoading} data={data} />
 				<button onClick={handleNextClick} disabled={nextClickDisabled}>
 					<KeyboardArrowRightIcon
 						fontSize='large'

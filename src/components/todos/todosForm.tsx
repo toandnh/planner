@@ -9,6 +9,28 @@ type InitialData = {
 	taskItems: string[]
 }
 
+const isEqualArray = (arr1: string[], arr2: string[]) => {
+	// arr1 should always be in the form ['data1', 'data2', '', '', '']
+
+	let hasChanged = false
+	let index = 0
+
+	// Compare all the non-empty data in arr1 with arr2
+	for (const item of arr1) {
+		if (item == '') break
+		hasChanged = item !== arr2[index]
+		index++
+	}
+	if (hasChanged) return true
+
+	// If arr2 has non-empty data beyond 'index'
+	for (let i = index; i < arr2.length; i++) {
+		if (arr2[i] !== '') return true
+	}
+
+	return hasChanged
+}
+
 export default function TodosForm({
 	initialData,
 	trigger,
@@ -36,28 +58,6 @@ export default function TodosForm({
 		// If any of the dependencies changed, then enable the trigger button
 		setStateChanged(taskName && dataChanged ? true : false)
 	}, [taskName, taskItems, taskPriority])
-
-	const isEqualArray = (arr1: string[], arr2: string[]) => {
-		// arr1 should always be in the form ['data1', 'data2', '', '', '']
-
-		let hasChanged = false
-		let index = 0
-
-		// Compare all the non-empty data in arr1 with arr2
-		for (const item of arr1) {
-			if (item == '') break
-			hasChanged = item !== arr2[index]
-			index++
-		}
-		if (hasChanged) return true
-
-		// If arr2 has non-empty data beyond 'index'
-		for (let i = index; i < arr2.length; i++) {
-			if (arr2[i] !== '') return true
-		}
-
-		return hasChanged
-	}
 
 	const handleAddMoreItems = () => {
 		// Set new limit every time the function is called

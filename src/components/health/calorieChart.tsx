@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import clsx from 'clsx'
 
-import WeekChart from '../chart/weekChart'
+import WeekChart from '../chart/weekPieChart'
 import CalorieWeekChart from './calorieWeekChart'
 
-import MonthChart from '../chart/monthChart'
+import MonthChart from '../chart/monthPieChart'
 import CalorieMonthChart from './calorieMonthChart'
 
 export default function CalorieChart() {

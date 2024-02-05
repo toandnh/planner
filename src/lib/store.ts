@@ -4,6 +4,7 @@ import { enableMapSet } from 'immer'
 
 import todosReducer from './features/todos/todosSlice'
 import healthReducer from './features/health/healthSlice'
+import spendingReducer from './features/spending/spendingSlice'
 
 enableMapSet()
 
@@ -11,7 +12,8 @@ export const makeStore = () => {
 	return configureStore({
 		reducer: {
 			todos: todosReducer,
-			health: healthReducer
+			health: healthReducer,
+			spending: spendingReducer
 		},
 		middleware: (getDefaultMiddleware) =>
 			getDefaultMiddleware({

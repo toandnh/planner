@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
-import ChartLayout from './chartLayout'
+import PieChartLayout from './pieChartLayout'
 
 import { getSunday } from '../utilities/utilities'
 
-export default function WeekChart({
+export default function WeekPieChart({
 	Chart,
 	tabName
 }: {
-	Chart: React.FunctionComponent<any>
+	Chart: React.FunctionComponent<{ data: any[]; isLoading: boolean }>
 	tabName: string
 }) {
 	const millisecInWeek = 7 * 24 * 60 * 60 * 1000
@@ -56,8 +56,9 @@ export default function WeekChart({
 	}, [data])
 
 	return (
-		<ChartLayout
+		<PieChartLayout
 			data={data}
+			isLoading={isLoading}
 			Chart={Chart}
 			handlePrevClick={handlePrevClick}
 			handleNextClick={handleNextClick}
@@ -65,7 +66,6 @@ export default function WeekChart({
 			prevClickDisabled={prevClickDisabled}
 			nextClickDisabled={nextClickDisabled}
 			fforwardClickDisabled={fforwardClickDisabled}
-			tabName={tabName}
 			startTime={new Date(startTime).toDateString()}
 			endTime={new Date(startTime + millisecInWeek).toDateString()}
 		/>

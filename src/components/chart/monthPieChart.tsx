@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
-import ChartLayout from './chartLayout'
+import PieChartLayout from './pieChartLayout'
 
 import { getFirstDayOfYear, getLastDayOfYear } from '../utilities/utilities'
 
-export default function MonthChart({
+export default function MonthPieChart({
 	Chart,
 	tabName
 }: {
@@ -68,8 +68,9 @@ export default function MonthChart({
 	}, [data])
 
 	return (
-		<ChartLayout
+		<PieChartLayout
 			data={data}
+			isLoading={isLoading}
 			Chart={Chart}
 			handlePrevClick={handlePrevClick}
 			handleNextClick={handleNextClick}
@@ -77,7 +78,6 @@ export default function MonthChart({
 			prevClickDisabled={prevClickDisabled}
 			nextClickDisabled={nextClickDisabled}
 			fforwardClickDisabled={fforwardClickDisabled}
-			tabName={tabName}
 			startTime={new Date(startTime).toDateString()}
 			endTime={new Date(getLastDayOfYear(new Date(startTime))).toDateString()}
 		/>
