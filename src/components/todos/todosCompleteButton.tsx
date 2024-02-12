@@ -25,10 +25,8 @@ export default function TodosCompleteButton({ datum }: { datum: TodoDatum }) {
 	}
 
 	return (
-		<>
-			<button onClick={handleComplete}>
-				<DoneAllIcon fontSize='medium' />
-			</button>
-		</>
+		<button onClick={handleComplete}>
+			<DoneAllIcon fontSize='medium' />
+		</button>
 	)
 }

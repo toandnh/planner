@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
@@ -31,17 +31,17 @@ export default function WeekPieChart({
 	const [nextClickDisabled, setNextClickDisabled] = useState(false)
 	const [fforwardClickDisabled, setFForwardClickDisabled] = useState(true)
 
-	const handlePrevClick = () => {
+	const handlePrevClick = useCallback(() => {
 		setStartTime(startTime - millisecInWeek)
-	}
+	}, [setStartTime])
 
-	const handleNextClick = () => {
+	const handleNextClick = useCallback(() => {
 		setStartTime(startTime + millisecInWeek)
-	}
+	}, [setStartTime])
 
-	const handleFastForwardClick = () => {
+	const handleFastForwardClick = useCallback(() => {
 		setStartTime(getSunday(new Date()))
-	}
+	}, [setStartTime])
 
 	useEffect(() => {
 		if (!isLoading) {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
@@ -29,7 +29,7 @@ export default function MonthPieChart({
 	const [nextClickDisabled, setNextClickDisabled] = useState(false)
 	const [fforwardClickDisabled, setFForwardClickDisabled] = useState(true)
 
-	const handlePrevClick = () => {
+	const handlePrevClick = useCallback(() => {
 		const day = new Date(startTime)
 		const prevYear = new Date(
 			day.getFullYear() - 1,
@@ -37,9 +37,9 @@ export default function MonthPieChart({
 			day.getDate()
 		).getTime()
 		setStartTime(prevYear)
-	}
+	}, [setStartTime])
 
-	const handleNextClick = () => {
+	const handleNextClick = useCallback(() => {
 		const day = new Date(startTime)
 		const nextYear = new Date(
 			day.getFullYear() + 1,
@@ -47,11 +47,11 @@ export default function MonthPieChart({
 			day.getDate()
 		).getTime()
 		setStartTime(nextYear)
-	}
+	}, [setStartTime])
 
-	const handleFastForwardClick = () => {
+	const handleFastForwardClick = useCallback(() => {
 		setStartTime(getFirstDayOfYear(new Date()))
-	}
+	}, [setStartTime])
 
 	useEffect(() => {
 		if (!isLoading) {

@@ -34,7 +34,7 @@ export default function CalendarForm({
 		setTitle(e.target.value)
 	}
 
-	const handleAllDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleAllDayChange = () => {
 		toggleAllDay()
 	}
 
