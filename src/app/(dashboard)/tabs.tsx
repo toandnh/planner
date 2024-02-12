@@ -17,12 +17,26 @@ export default function Tabs() {
 			<div className='h-full w-1/5 flex flex-col items-center'>
 				<Link
 					className='w-full border-b-2 p-5'
-					href={{ pathname: '/', query: { tab: 'todo' } }}
+					href={{ pathname: '/', query: { tab: 'calendar' } }}
 				>
 					<h2
 						className={clsx(
 							'text-black text-center font-semibold',
-							tab == 'todo' || tab == null
+							tab == 'calendar' ? 'font-bold underline underline-offset-2' : ''
+						)}
+					>
+						Calendar
+					</h2>
+				</Link>
+
+				<Link
+					className='w-full border-b-2 p-5'
+					href={{ pathname: '/', query: { tab: 'todos' } }}
+				>
+					<h2
+						className={clsx(
+							'text-black text-center font-semibold',
+							tab == 'todos' || tab == null
 								? 'font-bold underline underline-offset-2'
 								: ''
 						)}
@@ -42,20 +56,6 @@ export default function Tabs() {
 						)}
 					>
 						Health
-					</h2>
-				</Link>
-
-				<Link
-					className='w-full border-b-2 p-5'
-					href={{ pathname: '/', query: { tab: 'calendar' } }}
-				>
-					<h2
-						className={clsx(
-							'text-black text-center font-semibold',
-							tab == 'calendar' ? 'font-bold underline underline-offset-2' : ''
-						)}
-					>
-						Calendar
 					</h2>
 				</Link>
 

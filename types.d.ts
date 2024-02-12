@@ -33,6 +33,24 @@ type SpendingDatum = {
 	date: string
 }
 
+type CalendarDatum = {
+	[key: string]: string | boolean
+	item: string
+	event: string
+	start: string
+	end: string
+	allDay: boolean
+}
+
+type EventType = {
+	[key: string]: string | Date | boolean
+	item: string
+	title: string
+	start: Date
+	end: Date
+	allDay: boolean
+}
+
 type CalorieChartData = {
 	consumed: number
 	burnt: number

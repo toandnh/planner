@@ -101,6 +101,14 @@ export function getSunday(day: Date): number {
 	return new Date(new Date(day.setDate(diff)).toDateString()).getTime()
 }
 
+export function getFirstDayOfMonth(day: Date): number {
+	return new Date(day.getFullYear(), day.getMonth(), 1).getTime()
+}
+
+export function getLastDayOfMonth(day: Date): number {
+	return new Date(day.getFullYear(), day.getMonth() + 1, 0).getTime()
+}
+
 export function getFirstDayOfYear(day: Date): number {
 	return new Date(day.getFullYear(), 0, 1).getTime()
 }

@@ -11,11 +11,11 @@ export default function TabHome() {
 	const searchParams = useSearchParams()
 	const tab = searchParams.get('tab')
 
-	let content = <Todos />
-	if (tab === 'health') {
+	let content = <Calendar />
+	if (tab === 'todos') {
+		content = <Todos />
+	} else if (tab === 'health') {
 		content = <HealthHome />
-	} else if (tab === 'calendar') {
-		content = <Calendar />
 	} else if (tab === 'spending') {
 		content = <SpendingHome />
 	}
