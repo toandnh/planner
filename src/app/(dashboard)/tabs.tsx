@@ -22,7 +22,9 @@ export default function Tabs() {
 					<h2
 						className={clsx(
 							'text-black text-center font-semibold',
-							tab == 'calendar' ? 'font-bold underline underline-offset-2' : ''
+							tab == 'calendar' || tab == null
+								? 'font-bold underline underline-offset-2'
+								: ''
 						)}
 					>
 						Calendar
@@ -36,9 +38,7 @@ export default function Tabs() {
 					<h2
 						className={clsx(
 							'text-black text-center font-semibold',
-							tab == 'todos' || tab == null
-								? 'font-bold underline underline-offset-2'
-								: ''
+							tab == 'todos' ? 'font-bold underline underline-offset-2' : ''
 						)}
 					>
 						Todo
