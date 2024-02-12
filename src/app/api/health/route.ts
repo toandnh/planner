@@ -3,9 +3,7 @@ import { NextResponse } from 'next/server'
 import {
 	DynamoDBClient,
 	QueryCommand,
-	PutItemCommand,
-	UpdateItemCommand,
-	DeleteItemCommand
+	UpdateItemCommand
 } from '@aws-sdk/client-dynamodb'
 
 import { auth } from '@/auth'
@@ -33,7 +31,7 @@ export async function GET(req: Request) {
 				'#uid': 'UserID',
 				'#i': 'Item'
 			},
-			ProjectionExpression: 'Height, Weight, Goal, Amount'
+			ProjectionExpression: 'Gender, Height, Weight, Goal, Amount'
 		})
 	)
 
@@ -44,6 +42,7 @@ export async function GET(req: Request) {
 	}
 
 	let result: HealthDatum = {
+		gender: Items[0].Gender.S!,
 		height: Items[0].Height.N!,
 		weight: Items[0].Weight.N!,
 		goal: Items[0].Goal.S!,
@@ -53,14 +52,36 @@ export async function GET(req: Request) {
 	return NextResponse.json(result)
 }
 
-export async function POST(req: Request) {
-	//
-}
-
 export async function PUT(req: Request) {
-	//
-}
+	const data = await req.json()
 
-export async function DELETE(req: Request) {
-	//
+	const session = await auth()
+	const userId = session?.user.id
+
+	if (!userId || userId === null)
+		NextResponse.json({ message: 'Missing data!' })
+
+	const { item, gender, height, weight, goal, amount } = data
+
+	const { Attributes } = await client.send(
+		new UpdateItemCommand({
+			TableName: process.env.TABLE_NAME,
+			Key: {
+				UserID: { S: userId },
+				Item: { S: item }
+			},
+			UpdateExpression:
+				'SET Gender = :gd, Height = :h, Weight = :w, Goal = :go, Amount = :am',
+			ExpressionAttributeValues: {
+				':gd': { S: gender },
+				':h': { N: height },
+				':w': { N: weight },
+				':go': { S: goal },
+				':am': { N: amount }
+			},
+			ReturnValues: 'ALL_NEW'
+		})
+	)
+
+	return NextResponse.json(Attributes)
 }

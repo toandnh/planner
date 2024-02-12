@@ -9,6 +9,7 @@ type TodoDatum = {
 
 type HealthDatum = {
 	[key: string]: string
+	gender: string
 	height: string
 	weight: string
 	goal: string

@@ -28,7 +28,7 @@ export default function AccountPopover() {
 	)
 
 	return (
-		<Popover className='relative'>
+		<Popover className='relative z-10'>
 			{({ open }) => (
 				<>
 					<Popover.Button>

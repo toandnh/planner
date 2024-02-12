@@ -47,7 +47,7 @@ export default function SpendingAddForm() {
 			date: new Date().getTime().toString()
 		})
 
-		// Revalidate all data from 'api/health/calorie...'
+		// Revalidate all data from 'api/spending...'
 		mutate((key) => typeof key === 'string' && key.startsWith('/api/spending'))
 
 		// Reset values
