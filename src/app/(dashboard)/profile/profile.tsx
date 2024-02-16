@@ -119,7 +119,7 @@ export default function Profile({ data }: { data: HealthData }) {
 
 				<div className='flex gap-5'>
 					<div className='grid grid-flow-row gap-5'>
-						<p>Birth Year: </p>
+						<p>Birthyear: </p>
 						<label>Weight: </label>
 						<label>Activity Level: </label>
 					</div>

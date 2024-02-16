@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 
 import useSWR from 'swr'
 
+import Name from './name'
 import Profile from './profile'
 
 export default function ProfilePage() {
@@ -14,9 +15,7 @@ export default function ProfilePage() {
 
 	return (
 		<div className='bg-slate-100 min-h-[80vh] flex flex-col p-10'>
-			<h2 className='h-full w-full flex justify-center items-center text-xl font-semibold pb-10'>
-				{session?.user.name}
-			</h2>
+			{session?.user && <Name name={session?.user.name} />}
 
 			{!isLoading && <Profile data={data} />}
 		</div>
