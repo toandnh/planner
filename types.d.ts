@@ -1,3 +1,13 @@
+type HealthData = {
+	[key: string]: string
+	gender: string
+	birthYear: string
+	height: string
+	weight: string
+	goal: string
+	activity: string
+}
+
 type TodoDatum = {
 	[key: string]: string | (string | boolean)[][] | boolean
 	item: string
@@ -5,15 +15,6 @@ type TodoDatum = {
 	taskItems: (string | boolean)[][]
 	priority: string
 	completed: boolean
-}
-
-type HealthDatum = {
-	[key: string]: string
-	gender: string
-	height: string
-	weight: string
-	goal: string
-	amount: string
 }
 
 type CalorieDatum = {

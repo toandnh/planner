@@ -13,6 +13,14 @@ import CalorieChart from '@/components/health/calorieChart'
 
 import { getConsumedData, getBurntData } from '@/components/utilities/utilities'
 
+const activityLevelMap: Map<string, number> = new Map([
+	['Sedentary', 1.2],
+	['Lightly Active', 1.375],
+	['Moderately Active', 1.55],
+	['Active', 1.725],
+	['Very Active', 1.9]
+])
+
 export default function HealthHome() {
 	const millisecInDay = 24 * 60 * 60 * 1000
 
@@ -32,15 +40,24 @@ export default function HealthHome() {
 		fetcher
 	)
 
-	const multiplier = useMemo(() => {
+	const recommendedCalorie = useMemo(() => {
 		if (!isHealthLoading) {
+			// Mifflin-St Jeor equation
+			let MSJEquation =
+				10 * healthData.weight +
+				6.25 * healthData.height -
+				5 * (new Date().getFullYear() - healthData.birthYear)
+			MSJEquation += healthData.gender == 'Female' ? 161 : -5
+			MSJEquation *= activityLevelMap.get(healthData.activity)!
+
+			// 3500kcal roughly equal 1 pound (0.45kg)
 			switch (healthData.goal) {
 				case 'Lose':
-					return 11 * 2.2
+					return Math.round(MSJEquation) - 500
 				case 'Maintain':
-					return 15 * 2.2
+					return Math.round(MSJEquation)
 				case 'Gain':
-					return 18 * 2.2
+					return Math.round(MSJEquation) + 500
 				default:
 					return 0
 			}
@@ -51,7 +68,7 @@ export default function HealthHome() {
 		if (!isHealthLoading && !isCalorieLoading) {
 			// If there is data
 			if (calorieData.length > 0) {
-				let remained = Math.round(multiplier! * healthData.weight)
+				let remained = recommendedCalorie!
 				calorieData.map((datum: CalorieDatum) => {
 					remained = datum.consumed
 						? remained - parseInt(datum.amount)
@@ -80,14 +97,15 @@ export default function HealthHome() {
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			<h3 className='text-xl font-semibold'>
 				Calorie Remaining: {calorieRemaining} kcal{' '}
-				{!isHealthLoading &&
-					`(${Math.round(
-						multiplier! * healthData.weight
-					)} kcal Recommended Daily)`}
+				{!isHealthLoading && `(${recommendedCalorie} kcal Recommended Daily*)`}
 			</h3>
 			<CalorieConsumed data={calorieComsumed} isLoading={isCalorieLoading} />
 			<CalorieBurnt data={calorieBurnt} isLoading={isCalorieLoading} />
 			<CalorieChart />
+			<p className='text-xs font-normal'>
+				* Based on Mifflin-St Jeor equation; With the assumption of
+				gaining/losing 1/2 - 1 pound a week
+			</p>
 		</div>
 	)
 

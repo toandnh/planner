@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 				'#uid': 'UserID',
 				'#i': 'Item'
 			},
-			ProjectionExpression: 'Gender, Height, Weight, Goal, Amount'
+			ProjectionExpression: 'Gender, Birthyear, Height, Weight, Activity, Goal'
 		})
 	)
 
@@ -41,12 +41,13 @@ export async function GET(req: Request) {
 		})
 	}
 
-	let result: HealthDatum = {
+	let result: HealthData = {
 		gender: Items[0].Gender.S!,
+		birthYear: Items[0].Birthyear.N!,
 		height: Items[0].Height.N!,
 		weight: Items[0].Weight.N!,
-		goal: Items[0].Goal.S!,
-		amount: Items[0].Amount.N!
+		activity: Items[0].Activity.S!,
+		goal: Items[0].Goal.S!
 	}
 
 	return NextResponse.json(result)
@@ -61,7 +62,7 @@ export async function PUT(req: Request) {
 	if (!userId || userId === null)
 		NextResponse.json({ message: 'Missing data!' })
 
-	const { item, gender, height, weight, goal, amount } = data
+	const { item, gender, birthYear, height, weight, goal, activity } = data
 
 	const { Attributes } = await client.send(
 		new UpdateItemCommand({
@@ -71,13 +72,14 @@ export async function PUT(req: Request) {
 				Item: { S: item }
 			},
 			UpdateExpression:
-				'SET Gender = :gd, Height = :h, Weight = :w, Goal = :go, Amount = :am',
+				'SET Gender = :gd, Birthyear = :by, Height = :h, Weight = :w, Activity = :ac, Goal = :go',
 			ExpressionAttributeValues: {
 				':gd': { S: gender },
+				':by': { N: birthYear },
 				':h': { N: height },
 				':w': { N: weight },
-				':go': { S: goal },
-				':am': { N: amount }
+				':ac': { S: activity },
+				':go': { S: goal }
 			},
 			ReturnValues: 'ALL_NEW'
 		})

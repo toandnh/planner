@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { mutate } from 'swr'
 
 import useSWRMutation from 'swr/mutation'
 
-export default function Profile({ data }: { data: HealthDatum }) {
-	const fetcher = async (url: string, { arg }: { arg: HealthDatum }) =>
+export default function Profile({ data }: { data: HealthData }) {
+	const fetcher = async (url: string, { arg }: { arg: HealthData }) =>
 		fetch(url, {
 			method: 'PUT',
 			body: JSON.stringify(arg)
@@ -17,28 +17,47 @@ export default function Profile({ data }: { data: HealthDatum }) {
 	})
 
 	const [gender, setGender] = useState(data.gender)
+	const [birthYear, setBirthYear] = useState(data.birthYear)
 	const [height, setHeight] = useState(data.height)
 	const [weight, setWeight] = useState(data.weight)
 	const [goal, setGoal] = useState(data.goal)
-	const [amount, setAmount] = useState(data.amount)
+	const [activity, setActivity] = useState(data.activity)
 
 	const [canSave, setCanSave] = useState(false)
 
+	const bmi = useMemo(() => {
+		// weight in kg
+		let weight = parseInt(data.weight)
+		// height in m
+		let height = parseInt(data.height) / 100
+		return Math.round(weight / (height * height))
+	}, [data])
+
 	useEffect(() => {
 		const genderChange = gender !== data.gender
+		const birthYearChange = birthYear !== data.birthYear
 		const heightChange = height !== data.height && height !== ''
 		const weightChange = weight !== data.weight && weight !== ''
 		const goalChange = goal !== data.goal
-		const amountChange = amount !== data.amount && amount !== ''
+		const activityChange = activity !== data.activity && activity !== ''
 
 		const canUpdate =
-			genderChange || heightChange || weightChange || goalChange || amountChange
+			genderChange ||
+			birthYearChange ||
+			heightChange ||
+			weightChange ||
+			goalChange ||
+			activityChange
 
 		setCanSave(canUpdate)
-	}, [gender, height, weight, goal, amount])
+	}, [gender, birthYear, height, weight, goal, activity])
 
 	const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setGender(e.target.options[e.target.selectedIndex].text)
+	}
+
+	const handleBirthYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setBirthYear(e.target.value)
 	}
 
 	const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,18 +72,19 @@ export default function Profile({ data }: { data: HealthDatum }) {
 		setGoal(e.target.options[e.target.selectedIndex].text)
 	}
 
-	const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAmount(e.target.value)
+	const handleActivityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setActivity(e.target.options[e.target.selectedIndex].text)
 	}
 
 	const handleSubmit = async () => {
 		await trigger({
 			item: 'health',
 			gender,
+			birthYear,
 			height,
 			weight,
 			goal,
-			amount
+			activity
 		})
 
 		// Revalidate all data from 'api/health...'
@@ -91,6 +111,7 @@ export default function Profile({ data }: { data: HealthDatum }) {
 						<input type='text' value={height} onChange={handleHeightChange} />
 						<select value={goal} onChange={handleGoalChange} name='options'>
 							<option value='lose'>Lose</option>
+							<option value='maintain'>Maintain</option>
 							<option value='gain'>Gain</option>
 						</select>
 					</div>
@@ -98,18 +119,34 @@ export default function Profile({ data }: { data: HealthDatum }) {
 
 				<div className='flex gap-5'>
 					<div className='grid grid-flow-row gap-5'>
-						<p>BMI: </p>
+						<p>Birth Year: </p>
 						<label>Weight: </label>
-						<label>Amount: </label>
+						<label>Activity Level: </label>
 					</div>
 
 					<div className='grid grid-flow-row gap-5'>
-						<p>18</p>
+						<input
+							type='text'
+							value={birthYear}
+							onChange={handleBirthYearChange}
+						/>
 						<input type='text' value={weight} onChange={handleWeightChange} />
-						<input type='text' value={amount} onChange={handleAmountChange} />
+						<select
+							value={activity}
+							onChange={handleActivityChange}
+							name='options'
+						>
+							<option value='Sedentary'>Sedentary</option>
+							<option value='Lightly Active'>Lightly Active</option>
+							<option value='Moderately Active'>Moderately Active</option>
+							<option value='Active'>Active</option>
+							<option value='Very Active'>Very Active</option>
+						</select>
 					</div>
 				</div>
 			</div>
+
+			<div>BMI: {bmi}</div>
 
 			<div className='flex justify-center items-center'>
 				<input
