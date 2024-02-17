@@ -150,7 +150,7 @@ export default function Profile({ data }: { data: HealthData }) {
 
 			<div className='flex justify-center items-center'>
 				<input
-					className='w-full bg-green-500 flex items-end justify-center p-5 rounded-md hover:bg-green-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
+					className='w-full bg-green-300 flex items-end justify-center p-5 rounded-md hover:bg-green-400 hover:cursor-pointer hover:disabled:bg-green-200 hover:disabled:cursor-default disabled:bg-green-200'
 					type='submit'
 					value='Save changes'
 					onClick={handleSubmit}

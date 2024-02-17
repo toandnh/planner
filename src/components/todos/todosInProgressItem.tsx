@@ -24,11 +24,11 @@ import TodosCompleteButton from './todosCompleteButton'
 import DeleteButton from '@/components/buttons/deleteButton'
 
 const priorityMapping = new Map<string, string>([
-	['1', 'bg-green-600'],
-	['2', 'bg-lime-600'],
-	['3', 'bg-yellow-600'],
-	['4', 'bg-orange-600'],
-	['5', 'bg-red-600']
+	['1', 'bg-emerald-500'],
+	['2', 'bg-teal-500'],
+	['3', 'bg-amber-500'],
+	['4', 'bg-orange-500'],
+	['5', 'bg-red-500']
 ])
 
 export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {

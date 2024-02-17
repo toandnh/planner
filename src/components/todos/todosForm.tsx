@@ -134,7 +134,7 @@ export default function TodosForm({
 				</div>
 				<div className='w-1/2'>
 					<input
-						className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
+						className='bg-green-300 flex items-end justify-center px-2 rounded-md hover:bg-green-400 hover:cursor-pointer hover:disabled:bg-green-200 hover:disabled:cursor-default disabled:bg-green-200'
 						type='submit'
 						onClick={handleSubmit}
 						value='Update'
@@ -157,7 +157,7 @@ export default function TodosForm({
 			})}
 			<div className='w-full flex justify-center'>
 				<input
-					className='bg-green-300 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
+					className='bg-green-300 flex items-end justify-center px-2 rounded-md hover:bg-green-400 hover:cursor-pointer'
 					type='submit'
 					onClick={handleAddMoreItems}
 					value='Add more items'

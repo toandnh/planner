@@ -23,7 +23,12 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={clsx('min-h-screen min-w-screen p-10', inter.className)}>
+			<body
+				className={clsx(
+					'bg-honeydew min-h-screen min-w-screen p-10',
+					inter.className
+				)}
+			>
 				<AuthProvider>
 					<Header />
 					{children}

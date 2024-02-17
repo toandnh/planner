@@ -14,7 +14,7 @@ export default function ProfilePage() {
 	const { isLoading, data } = useSWR('api/health', fetcher)
 
 	return (
-		<div className='bg-slate-100 min-h-[80vh] flex flex-col p-10'>
+		<div className='min-h-[80vh] flex flex-col p-10'>
 			{session?.user && <Name name={session?.user.name} />}
 
 			{!isLoading && <Profile data={data} />}

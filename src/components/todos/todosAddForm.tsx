@@ -25,7 +25,7 @@ export default function TodosAddForm() {
 	const AddMoreButton: React.ReactNode = (
 		<div className='w-full flex justify-center pb-5'>
 			<input
-				className='w-1/2 bg-green-500 flex items-center justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer'
+				className='w-1/2 bg-green-300 flex items-center justify-center px-2 rounded-md hover:bg-green-400 hover:cursor-pointer'
 				type='button'
 				onClick={toggle}
 				value='Add More'
@@ -41,7 +41,7 @@ export default function TodosAddForm() {
 	}
 
 	const Form: React.ReactNode = (
-		<div className='bg-gray-400 flex flex-col justify-center gap-5 p-5'>
+		<div className='bg-bone/70 flex flex-col justify-center rounded-md gap-5 p-5'>
 			<div className='w-full flex justify-end'>
 				<button onClick={toggle}>
 					<CloseIcon fontSize='medium' />

@@ -13,7 +13,7 @@ export default function Tabs() {
 	const tab = searchParams.get('tab')
 
 	return (
-		<div className='bg-slate-100 min-h-screen w-full flex flex-row gap-2'>
+		<div className='min-h-screen w-full flex flex-row gap-2'>
 			<div className='h-full w-1/5 flex flex-col items-center'>
 				<Link
 					className='w-full border-b-2 p-5'

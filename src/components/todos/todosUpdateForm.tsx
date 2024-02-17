@@ -36,7 +36,7 @@ export default function TodosUpdateForm({ datum }: { datum: TodoDatum }) {
 	}
 
 	return (
-		<div className='bg-gray-400 flex flex-col justify-center gap-5 p-5'>
+		<div className='bg-bone/70 flex flex-col justify-center rounded-md gap-5 p-5'>
 			<TodosForm
 				initialData={initialData}
 				trigger={trigger}
