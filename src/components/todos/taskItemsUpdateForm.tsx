@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 import useSWRMutation from 'swr/mutation'
 
+import clsx from 'clsx'
+
 export default function TaskItemsUpdateForm({ datum }: { datum: TodoDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
@@ -41,10 +43,16 @@ export default function TaskItemsUpdateForm({ datum }: { datum: TodoDatum }) {
 	}
 
 	return (
-		<>
+		<div className='flex flex-col gap-3'>
 			{datum.taskItems!.map((taskItem: (string | boolean)[], i: number) => {
 				return (
-					<div key={`taskItems#${i}#${datum.task}`} className='pl-10'>
+					<div
+						key={`taskItems#${i}#${datum.task}`}
+						className={clsx(
+							'pl-10 rounded-md',
+							i % 2 == 0 ? 'bg-red-100' : 'bg-amber-100'
+						)}
+					>
 						<div className='flex'>
 							<label htmlFor={`taskItem#${i}`} className='w-1/2'>
 								{taskItem[0]}
@@ -61,6 +69,6 @@ export default function TaskItemsUpdateForm({ datum }: { datum: TodoDatum }) {
 					</div>
 				)
 			})}
-		</>
+		</div>
 	)
 }

@@ -21,10 +21,8 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold',
-							tab == 'calendar' || tab == null
-								? 'font-bold underline underline-offset-2'
-								: ''
+							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							tab == 'calendar' || tab == null ? 'bg-rose-200' : ''
 						)}
 					>
 						Calendar
@@ -37,8 +35,8 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold',
-							tab == 'todos' ? 'font-bold underline underline-offset-2' : ''
+							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							tab == 'todos' ? 'bg-rose-200' : ''
 						)}
 					>
 						Todo
@@ -51,8 +49,8 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold',
-							tab == 'health' ? 'font-bold underline underline-offset-2' : ''
+							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							tab == 'health' ? 'bg-rose-200' : ''
 						)}
 					>
 						Health
@@ -65,8 +63,8 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold',
-							tab == 'spending' ? 'font-bold underline underline-offset-2' : ''
+							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							tab == 'spending' ? 'bg-rose-200' : ''
 						)}
 					>
 						Spending

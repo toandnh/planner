@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
-import PieChartLayout from './pieChartLayout'
+import ChartLayout from './chartLayout'
 
-import { getFirstDayOfMonth, getLastDayOfMonth } from '../utilities/utilities'
+import { getFirstDayOfYear, getLastDayOfYear } from '../utilities/utilities'
 
 export default function MonthPieChart({
 	Chart,
@@ -15,11 +15,11 @@ export default function MonthPieChart({
 	Chart: React.FunctionComponent<any>
 	tabName: string
 }) {
-	const [startTime, setStartTime] = useState(getFirstDayOfMonth(new Date()))
+	const [startTime, setStartTime] = useState(getFirstDayOfYear(new Date()))
 
 	const fetcher = (url: string) => fetch(url).then((res) => res.json())
 	const { isLoading, data } = useSWR(
-		`/api/${tabName}?start-time=${startTime}&end-time=${getLastDayOfMonth(
+		`/api/${tabName}?start-time=${startTime}&end-time=${getLastDayOfYear(
 			new Date(startTime)
 		)}`,
 		fetcher
@@ -32,8 +32,8 @@ export default function MonthPieChart({
 	const handlePrevClick = useCallback(() => {
 		const day = new Date(startTime)
 		const prevMonth = new Date(
-			day.getFullYear(),
-			day.getMonth() - 1,
+			day.getFullYear() - 1,
+			day.getMonth(),
 			day.getDate()
 		).getTime()
 		setStartTime(prevMonth)
@@ -42,15 +42,15 @@ export default function MonthPieChart({
 	const handleNextClick = useCallback(() => {
 		const day = new Date(startTime)
 		const nextMonth = new Date(
-			day.getFullYear(),
-			day.getMonth() + 1,
+			day.getFullYear() + 1,
+			day.getMonth(),
 			day.getDate()
 		).getTime()
 		setStartTime(nextMonth)
 	}, [startTime, setStartTime])
 
 	const handleFastForwardClick = useCallback(() => {
-		setStartTime(getFirstDayOfMonth(new Date()))
+		setStartTime(getFirstDayOfYear(new Date()))
 	}, [startTime, setStartTime])
 
 	useEffect(() => {
@@ -62,13 +62,13 @@ export default function MonthPieChart({
 				startTime > new Date().getTime() && data.message ? true : false
 			)
 			setFForwardClickDisabled(
-				startTime < getFirstDayOfMonth(new Date()) ? false : true
+				startTime < getFirstDayOfYear(new Date()) ? false : true
 			)
 		}
 	}, [data])
 
 	return (
-		<PieChartLayout
+		<ChartLayout
 			data={data}
 			isLoading={isLoading}
 			Chart={Chart}
@@ -79,7 +79,7 @@ export default function MonthPieChart({
 			nextClickDisabled={nextClickDisabled}
 			fforwardClickDisabled={fforwardClickDisabled}
 			startTime={new Date(startTime).toDateString()}
-			endTime={new Date(getLastDayOfMonth(new Date(startTime))).toDateString()}
+			endTime={new Date(getLastDayOfYear(new Date(startTime))).toDateString()}
 		/>
 	)
 }

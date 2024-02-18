@@ -4,11 +4,11 @@ import { useState } from 'react'
 
 import clsx from 'clsx'
 
-import WeekPieChart from '../chart/weekPieChart'
+import WeekChart from '../chart/weekChart'
 import CalorieWeekChart from './calorieWeekChart'
 
-import MonthPieChart from '../chart/monthPieChart'
-import CalorieMonthChart from './calorieMonthChart'
+import YearChart from '../chart/yearChart'
+import CalorieYearChart from './calorieYearChart'
 
 export default function CalorieChart() {
 	const [currChartType, setCurrChartType] = useState('week')
@@ -17,8 +17,8 @@ export default function CalorieChart() {
 		setCurrChartType('week')
 	}
 
-	const handleMonthChart = () => {
-		setCurrChartType('month')
+	const handleYearChart = () => {
+		setCurrChartType('year')
 	}
 
 	return (
@@ -27,7 +27,7 @@ export default function CalorieChart() {
 			<div className='flex justify-center'>
 				<input
 					className={clsx(
-						'bg-neutral-500 flex items-center justify-center px-2 rounded-l-md hover:bg-neutral-600 hover:cursor-pointer',
+						'bg-orange-200 flex items-center justify-center px-2 rounded-l-md hover:bg-orange-300 hover:cursor-pointer',
 						currChartType === 'week' ? 'underline' : ''
 					)}
 					type='button'
@@ -36,19 +36,19 @@ export default function CalorieChart() {
 				/>
 				<input
 					className={clsx(
-						'bg-neutral-500 flex items-center justify-center px-2 rounded-r-md border-l-2 hover:bg-neutral-600 hover:cursor-pointer',
-						currChartType === 'month' ? 'underline' : ''
+						'bg-orange-200 flex items-center justify-center px-2 rounded-r-md border-l-2 hover:bg-orange-300 hover:cursor-pointer',
+						currChartType === 'year' ? 'underline' : ''
 					)}
 					type='button'
-					onClick={handleMonthChart}
-					value='Month'
+					onClick={handleYearChart}
+					value='Year'
 				/>
 			</div>
 			{currChartType === 'week' && (
-				<WeekPieChart Chart={CalorieWeekChart} tabName={'health/calorie'} />
+				<WeekChart Chart={CalorieWeekChart} tabName={'health/calorie'} />
 			)}
-			{currChartType === 'month' && (
-				<MonthPieChart Chart={CalorieMonthChart} tabName={'health/calorie'} />
+			{currChartType === 'year' && (
+				<YearChart Chart={CalorieYearChart} tabName={'health/calorie'} />
 			)}
 		</div>
 	)

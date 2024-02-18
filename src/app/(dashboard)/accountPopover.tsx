@@ -12,7 +12,7 @@ export default function AccountPopover() {
 			<Popover.Button
 				as={Link}
 				href='/profile'
-				className='w-full h-full flex justify-center p-4 rounded-md hover:cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800'
+				className='w-full h-full flex justify-center p-4 rounded-md hover:cursor-pointer hover:bg-rose-200 hover:dark:bg-rose-300'
 			>
 				Profile
 			</Popover.Button>
@@ -21,7 +21,7 @@ export default function AccountPopover() {
 				onClick={async () => {
 					await logout()
 				}}
-				className='w-full h-full p-4 rounded-md hover:cursor-pointer hover:bg-neutral-200 hover:dark:bg-neutral-800'
+				className='w-full h-full p-4 rounded-md hover:cursor-pointer hover:bg-rose-200 hover:dark:bg-rose-300'
 				value='Sign out'
 			/>
 		</div>
@@ -36,7 +36,7 @@ export default function AccountPopover() {
 					</Popover.Button>
 					{open && (
 						<Popover.Panel className='absolute left-full w-screen max-w-xs -translate-x-full transform px-4 sm:px-0 mt-3'>
-							<div className='bg-white dark:bg-neutral-700 flex flex-col justify-center items-center rounded-md overflow-hidden'>
+							<div className='bg-rose-200 dark:bg-rose-200 flex flex-col justify-center items-center rounded-md overflow-hidden'>
 								{content}
 							</div>
 						</Popover.Panel>

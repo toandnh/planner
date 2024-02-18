@@ -83,10 +83,10 @@ export default function TodosInProgressItem({ datum }: { datum: TodoDatum }) {
 					</button>
 				</div>
 				<div className='w-1/3'>
-					<DeleteButton url={'/api/todos'} item={datum.item!} />
+					<TodosCompleteButton datum={datum} />
 				</div>
 				<div className='w-1/3 flex justify-center items-center'>
-					<TodosCompleteButton datum={datum} />
+					<DeleteButton url={'/api/todos'} item={datum.item!} />
 				</div>
 			</div>
 			{showItems && !showEdit && <TaskItemsUpdateForm datum={datum} />}

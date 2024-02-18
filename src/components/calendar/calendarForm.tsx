@@ -54,7 +54,7 @@ export default function CalendarForm({
 	}
 
 	return (
-		<div className='bg-neutral-700 w-2/3 h-2/3 flex flex-col justify-center items-center gap-5 p-5 rounded-md'>
+		<div className='bg-neutral-500 w-2/3 h-2/3 flex flex-col justify-center items-center gap-5 p-5 rounded-md'>
 			<input
 				className='w-full'
 				type='text'
@@ -72,7 +72,7 @@ export default function CalendarForm({
 				/>
 			</div>
 			<input
-				className='w-full bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
+				className='w-full bg-green-400 flex items-end justify-center px-2 rounded-md hover:bg-green-500 hover:cursor-pointer hover:disabled:bg-green-300 hover:disabled:cursor-default disabled:bg-green-300'
 				type='button'
 				onClick={handleSubmit}
 				value={event.event ? 'Update' : 'Add'}

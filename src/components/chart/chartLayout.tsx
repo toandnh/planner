@@ -2,7 +2,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 
-export default function PieChartLayout({
+export default function ChartLayout({
 	data,
 	isLoading,
 	Chart,

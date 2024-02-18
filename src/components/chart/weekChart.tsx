@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 
 import useSWR from 'swr'
 
-import PieChartLayout from './pieChartLayout'
+import ChartLayout from './chartLayout'
 
 import { getSunday } from '../utilities/utilities'
 
-export default function WeekPieChart({
+export default function WeekChart({
 	Chart,
 	tabName
 }: {
@@ -56,7 +56,7 @@ export default function WeekPieChart({
 	}, [data])
 
 	return (
-		<PieChartLayout
+		<ChartLayout
 			data={data}
 			isLoading={isLoading}
 			Chart={Chart}

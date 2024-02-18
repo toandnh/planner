@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import WeekPieChart from '../chart/weekPieChart'
-import MonthPieChart from '../chart/monthPieChart'
+import WeekPieChart from '../chart/weekChart'
+import MonthPieChart from '../chart/monthChart'
 
 import SpendingTimeChart from './spendingTimeChart'
 

@@ -4,6 +4,8 @@ import useSWRMutation from 'swr/mutation'
 
 import RestoreIcon from '@mui/icons-material/Restore'
 
+import clsx from 'clsx'
+
 import { useAppSelector } from '@/lib/hooks'
 
 import { showTaskItems } from '@/lib/features/todos/todosSlice'
@@ -54,15 +56,23 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 					<p className='hidden'>HIDDEN</p>
 				</div>
 			</div>
-			{showItems &&
-				hasTaskItems &&
-				datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
-					return (
-						<div key={`taskItems#${i}#${datum.task}`} className='flex pl-10'>
-							{taskItem[0]}
-						</div>
-					)
-				})}
+			{showItems && hasTaskItems && (
+				<div className='flex flex-col gap-3'>
+					{datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
+						return (
+							<div
+								key={`taskItems#${i}#${datum.task}`}
+								className={clsx(
+									'pl-10 rounded-md',
+									i % 2 == 0 ? 'bg-neutral-400' : 'bg-neutral-300'
+								)}
+							>
+								{taskItem[0]}
+							</div>
+						)
+					})}
+				</div>
+			)}
 		</>
 	)
 }

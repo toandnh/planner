@@ -31,7 +31,7 @@ export default function CalendarDeleteButton({
 
 	return (
 		<input
-			className='w-full bg-red-500 flex items-end justify-center px-2 rounded-md hover:bg-red-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
+			className='w-full bg-red-400 flex items-end justify-center px-2 rounded-md hover:bg-red-500 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
 			type='button'
 			onClick={handleDelete}
 			value='Delete'

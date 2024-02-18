@@ -23,7 +23,7 @@ const month = [
 	'Dec'
 ]
 
-export default function CalorieMonthChart({
+export default function CalorieYearChart({
 	data,
 	isLoading
 }: {
