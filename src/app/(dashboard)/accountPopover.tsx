@@ -16,6 +16,7 @@ export default function AccountPopover() {
 			>
 				Profile
 			</Popover.Button>
+			<span className='bg-pink-300/70 w-full h-[1px]'></span>
 			<input
 				type='button'
 				onClick={async () => {

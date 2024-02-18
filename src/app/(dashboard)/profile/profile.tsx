@@ -94,7 +94,7 @@ export default function Profile({ data }: { data: HealthData }) {
 	}
 
 	return (
-		<div className='min-h-[60vh] flex flex-col justify-center items-center gap-10 border-2'>
+		<div className='min-h-[60vh] flex flex-col justify-center items-center gap-10 border-2 rounded-md'>
 			<div className='flex justify-center gap-5'>
 				<div className='flex gap-5'>
 					<div className='grid grid-flow-row gap-5'>

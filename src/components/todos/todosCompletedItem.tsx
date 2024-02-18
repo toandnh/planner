@@ -64,7 +64,7 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 								key={`taskItems#${i}#${datum.task}`}
 								className={clsx(
 									'pl-10 rounded-md',
-									i % 2 == 0 ? 'bg-neutral-400' : 'bg-neutral-300'
+									i % 2 == 0 ? 'bg-stone-500/70' : 'bg-neutral-500/70'
 								)}
 							>
 								{taskItem[0]}
