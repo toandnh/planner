@@ -33,15 +33,15 @@ export default function WeekPieChart({
 
 	const handlePrevClick = useCallback(() => {
 		setStartTime(startTime - millisecInWeek)
-	}, [setStartTime])
+	}, [startTime, setStartTime])
 
 	const handleNextClick = useCallback(() => {
 		setStartTime(startTime + millisecInWeek)
-	}, [setStartTime])
+	}, [startTime, setStartTime])
 
 	const handleFastForwardClick = useCallback(() => {
 		setStartTime(getSunday(new Date()))
-	}, [setStartTime])
+	}, [startTime, setStartTime])
 
 	useEffect(() => {
 		if (!isLoading) {

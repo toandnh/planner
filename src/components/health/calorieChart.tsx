@@ -4,10 +4,10 @@ import { useState } from 'react'
 
 import clsx from 'clsx'
 
-import WeekChart from '../chart/weekPieChart'
+import WeekPieChart from '../chart/weekPieChart'
 import CalorieWeekChart from './calorieWeekChart'
 
-import MonthChart from '../chart/monthPieChart'
+import MonthPieChart from '../chart/monthPieChart'
 import CalorieMonthChart from './calorieMonthChart'
 
 export default function CalorieChart() {
@@ -45,10 +45,10 @@ export default function CalorieChart() {
 				/>
 			</div>
 			{currChartType === 'week' && (
-				<WeekChart Chart={CalorieWeekChart} tabName={'health/calorie'} />
+				<WeekPieChart Chart={CalorieWeekChart} tabName={'health/calorie'} />
 			)}
 			{currChartType === 'month' && (
-				<MonthChart Chart={CalorieMonthChart} tabName={'health/calorie'} />
+				<MonthPieChart Chart={CalorieMonthChart} tabName={'health/calorie'} />
 			)}
 		</div>
 	)
