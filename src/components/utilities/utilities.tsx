@@ -66,15 +66,25 @@ function sort(data: TodoDatum[], sortBy: string, asc: boolean): TodoDatum[] {
 	let returnData: TodoDatum[] = data.sort((a, b) => {
 		let { [sortBy]: sortByA } = a
 		let { [sortBy]: sortByB } = b
-		return sortByA > sortByB
-			? asc
-				? 1
-				: -1
-			: sortByB > sortByA
-			? asc
-				? -1
-				: 1
-			: 0
+
+		let returnValue = 0
+		if (sortByA > sortByB) {
+			returnValue = asc ? 1 : -1
+		} else if (sortByA < sortByB) {
+			returnValue = asc ? -1 : 1
+		} else {
+			// sortByA == sortByB
+			returnValue =
+				sortBy == 'priority' // When sort by priority, break ties by name
+					? a['task'] > b['task']
+						? 1
+						: a['task'] < b['task']
+						? -1
+						: 0
+					: 0 // Sort by name
+		}
+
+		return returnValue
 	})
 	return returnData
 }
@@ -141,4 +151,12 @@ export function getCalorieAverage(
 	let calorieOutAverage = sum[2] === 0 ? 0 : Math.round(sum[2] / entryCount)
 
 	return [calorieAverage, calorieInAverage, calorieOutAverage]
+}
+
+export const getFlipKey = (data: TodoDatum[]): string => {
+	let key: string = ''
+	data.map((datum) => {
+		key += datum.item
+	})
+	return key
 }

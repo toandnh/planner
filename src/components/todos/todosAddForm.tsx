@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 import TodosForm from './todosForm'
 
-import { useToggle } from '@/hooks/useToggle'
+import { useMountTransition, useToggle } from '@/hooks/hooks'
 
 export default function TodosAddForm() {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
@@ -21,6 +21,7 @@ export default function TodosAddForm() {
 	const numRowLimit = 3
 
 	const [opened, toggle] = useToggle(false)
+	const hasTransitionedIn = useMountTransition(opened, 150)
 
 	const AddMoreButton: React.ReactNode = (
 		<div className='w-full flex justify-center pb-5'>
@@ -40,7 +41,7 @@ export default function TodosAddForm() {
 		taskItems: Array(numRowLimit).fill('')
 	}
 
-	const Form: React.ReactNode = (
+	const form: React.ReactNode = (
 		<div className='bg-bone/70 flex flex-col justify-center rounded-md gap-5 p-5'>
 			<div className='w-full flex justify-end'>
 				<button onClick={toggle}>
@@ -58,7 +59,17 @@ export default function TodosAddForm() {
 	return (
 		<>
 			{!opened && AddMoreButton}
-			{opened && Form}
+			{(hasTransitionedIn || opened) && (
+				<div
+					className={`${
+						hasTransitionedIn && opened
+							? 'opacity-100 translate-y-0 transition-{opactity} duration-200 ease-in transition-{transform} duration-200 ease-in'
+							: 'opacity-0 -translate-y-6 transition-{opactity} duration-150 ease-out transition-{transform} duration-150 ease-out'
+					}`}
+				>
+					{form}
+				</div>
+			)}
 		</>
 	)
 }

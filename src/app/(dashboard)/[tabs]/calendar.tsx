@@ -22,7 +22,7 @@ import {
 	getLastDayOfMonth
 } from '@/components/utilities/utilities'
 
-import { useToggle } from '@/hooks/useToggle'
+import { useToggle } from '@/hooks/hooks'
 
 const localizer = momentLocalizer(moment)
 

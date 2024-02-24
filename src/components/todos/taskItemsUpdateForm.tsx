@@ -43,7 +43,7 @@ export default function TaskItemsUpdateForm({ datum }: { datum: TodoDatum }) {
 	}
 
 	return (
-		<div className='flex flex-col gap-3'>
+		<div className='flex flex-col gap-3 pt-3'>
 			{datum.taskItems!.map((taskItem: (string | boolean)[], i: number) => {
 				return (
 					<div

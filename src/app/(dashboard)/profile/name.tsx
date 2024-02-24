@@ -7,7 +7,7 @@ import useSWRMutation from 'swr/mutation'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { useToggle } from '@/hooks/useToggle'
+import { useToggle } from '@/hooks/hooks'
 
 export default function Name({ name }: { name: string }) {
 	const fetcher = async (url: string, { arg }: { arg: { name: string } }) =>

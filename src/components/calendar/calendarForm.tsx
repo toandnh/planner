@@ -6,7 +6,7 @@ import { mutate } from 'swr'
 
 import CalendarDeleteButton from './calendarDeleteButton'
 
-import { useToggle } from '@/hooks/useToggle'
+import { useToggle } from '@/hooks/hooks'
 
 export default function CalendarForm({
 	event,

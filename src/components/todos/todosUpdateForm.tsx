@@ -36,12 +36,14 @@ export default function TodosUpdateForm({ datum }: { datum: TodoDatum }) {
 	}
 
 	return (
-		<div className='bg-bone/70 flex flex-col justify-center rounded-md gap-5 p-5'>
-			<TodosForm
-				initialData={initialData}
-				trigger={trigger}
-				numRowLimit={numRowLimit}
-			/>
+		<div className='pt-3'>
+			<div className='bg-bone/70 flex flex-col justify-center rounded-md gap-5 p-5'>
+				<TodosForm
+					initialData={initialData}
+					trigger={trigger}
+					numRowLimit={numRowLimit}
+				/>
+			</div>
 		</div>
 	)
 }

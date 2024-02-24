@@ -13,13 +13,13 @@ import CalorieChart from '@/components/health/calorieChart'
 
 import { getConsumedData, getBurntData } from '@/components/utilities/utilities'
 
-const activityLevelMap: Map<string, number> = new Map([
-	['Sedentary', 1.2],
-	['Lightly Active', 1.375],
-	['Moderately Active', 1.55],
-	['Active', 1.725],
-	['Very Active', 1.9]
-])
+const activityLevelMap: { [key: string]: number } = {
+	'Sedentary': 1.2,
+	'Lightly Active': 1.375,
+	'Moderately Active': 1.55,
+	'Active': 1.725,
+	'Very Active': 1.9
+}
 
 export default function HealthHome() {
 	const millisecInDay = 24 * 60 * 60 * 1000
@@ -48,7 +48,7 @@ export default function HealthHome() {
 				6.25 * healthData.height -
 				5 * (new Date().getFullYear() - healthData.birthYear)
 			MSJEquation += healthData.gender == 'Female' ? 161 : -5
-			MSJEquation *= activityLevelMap.get(healthData.activity)!
+			MSJEquation *= activityLevelMap[healthData.activity]
 
 			// 3500kcal roughly equal 1 pound (0.45kg)
 			switch (healthData.goal) {

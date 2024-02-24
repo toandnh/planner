@@ -8,6 +8,8 @@ import clsx from 'clsx'
 
 import { useAppSelector } from '@/lib/hooks'
 
+import { useMountTransition } from '@/hooks/hooks'
+
 import { showTaskItems } from '@/lib/features/todos/todosSlice'
 
 import TodosTaskPriorityName from './todosTaskPriorityName'
@@ -29,6 +31,8 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 
 	const hasTaskItems: boolean = datum.taskItems.length > 0
 
+	const hasTransitionedIn = useMountTransition(showItems, 150)
+
 	const handleRestoreClick = async () => {
 		await trigger({
 			item: datum.item,
@@ -39,8 +43,26 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 		})
 	}
 
+	let content = (
+		<div className='flex flex-col gap-3 pt-3'>
+			{datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
+				return (
+					<div
+						key={`taskItems#${i}#${datum.task}`}
+						className={clsx(
+							'pl-10 rounded-md',
+							i % 2 == 0 ? 'bg-stone-500/70' : 'bg-neutral-500/70'
+						)}
+					>
+						{taskItem[0]}
+					</div>
+				)
+			})}
+		</div>
+	)
+
 	return (
-		<>
+		<div>
 			<div className='min-h-[35px] flex justify-center items-center'>
 				<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
 				<button className='w-1/3' onClick={handleRestoreClick}>
@@ -56,23 +78,18 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 					<p className='hidden'>HIDDEN</p>
 				</div>
 			</div>
-			{showItems && hasTaskItems && (
-				<div className='flex flex-col gap-3'>
-					{datum.taskItems.map((taskItem: (string | boolean)[], i: number) => {
-						return (
-							<div
-								key={`taskItems#${i}#${datum.task}`}
-								className={clsx(
-									'pl-10 rounded-md',
-									i % 2 == 0 ? 'bg-stone-500/70' : 'bg-neutral-500/70'
-								)}
-							>
-								{taskItem[0]}
-							</div>
-						)
-					})}
+
+			{(hasTransitionedIn || (showItems && hasTaskItems)) && (
+				<div
+					className={`${
+						hasTransitionedIn && showItems && hasTaskItems
+							? 'opacity-100 translate-y-0 transition-{opactity} duration-200 ease-in transition-{transform} duration-200 ease-in'
+							: 'opacity-0 -translate-y-6 transition-{opactity} duration-150 ease-out transition-{transform} duration-150 ease-out'
+					}`}
+				>
+					{content}
 				</div>
 			)}
-		</>
+		</div>
 	)
 }
