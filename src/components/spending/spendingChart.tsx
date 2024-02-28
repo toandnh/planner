@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
-import WeekPieChart from '../chart/weekChart'
-import MonthPieChart from '../chart/monthChart'
+import WeekChart from '../chart/weekChart'
+import MonthChart from '../chart/monthChart'
 
 import SpendingTimeChart from './spendingTimeChart'
 
@@ -29,10 +29,10 @@ export default function SpendingChart() {
 				</select>
 			</div>
 			{chartType == 'Week' && (
-				<WeekPieChart Chart={SpendingTimeChart} tabName={'spending'} />
+				<WeekChart Chart={SpendingTimeChart} tabName={'spending'} />
 			)}
 			{chartType == 'Month' && (
-				<MonthPieChart Chart={SpendingTimeChart} tabName={'spending'} />
+				<MonthChart Chart={SpendingTimeChart} tabName={'spending'} />
 			)}
 		</div>
 	)

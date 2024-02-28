@@ -98,8 +98,8 @@ export async function GET(req: Request) {
 	let hasFirstItem = false
 	let hasLastItem = false
 	Items.map((item) => {
-		hasFirstItem = item.Item.S == FirstItem![0].Item.S ? true : false
-		hasLastItem = item.Item.S == LastItem![0].Item.S ? true : false
+		hasFirstItem = item.Item.S == FirstItem![0].Item.S ? true : hasFirstItem
+		hasLastItem = item.Item.S == LastItem![0].Item.S ? true : hasLastItem
 	})
 
 	const results: CalorieDatum[] = []

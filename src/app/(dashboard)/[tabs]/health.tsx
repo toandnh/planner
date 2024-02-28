@@ -67,9 +67,9 @@ export default function HealthHome() {
 	const calorieRemaining = useMemo(() => {
 		if (!isHealthLoading && !isCalorieLoading) {
 			// If there is data
-			if (calorieData.length > 0) {
+			if (calorieData?.results.length > 0) {
 				let remained = recommendedCalorie!
-				calorieData.map((datum: CalorieDatum) => {
+				calorieData.results.map((datum: CalorieDatum) => {
 					remained = datum.consumed
 						? remained - parseInt(datum.amount)
 						: remained + parseInt(datum.amount)
@@ -84,12 +84,12 @@ export default function HealthHome() {
 	}, [healthData, calorieData])
 
 	const calorieComsumed: CalorieDatum[] = useMemo(
-		() => getConsumedData(calorieData, isCalorieLoading),
+		() => getConsumedData(calorieData?.results, isCalorieLoading),
 		[calorieData]
 	)
 
 	const calorieBurnt: CalorieDatum[] = useMemo(
-		() => getBurntData(calorieData, isCalorieLoading),
+		() => getBurntData(calorieData?.results, isCalorieLoading),
 		[calorieData]
 	)
 
