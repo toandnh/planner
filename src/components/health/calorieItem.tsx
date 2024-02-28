@@ -13,7 +13,12 @@ import CalorieUpdateForm from './calorieUpdateForm'
 
 import DeleteButton from '@/components/buttons/deleteButton'
 
-export default function CalorieItem({ datum }: { datum: CalorieDatum }) {
+export default function CalorieItem({
+	datum,
+	...flippedProps
+}: {
+	datum: CalorieDatum
+}) {
 	const showEdit: boolean = useAppSelector(showEdits).get(datum.item!) || false
 	const dispatch = useAppDispatch()
 
@@ -24,7 +29,7 @@ export default function CalorieItem({ datum }: { datum: CalorieDatum }) {
 	}
 
 	return (
-		<div className='flex flex-col gap-2'>
+		<div {...flippedProps} className='flex flex-col gap-2'>
 			<div className='w-full flex gap-5'>
 				<p className='w-1/3'>{datum.activity}: </p>
 				<p className='w-1/3'>{datum.amount} kcal</p>

@@ -45,19 +45,15 @@ export default function WeekChart({
 
 	useEffect(() => {
 		if (!isLoading) {
-			setPrevClickDisabled(
-				startTime < new Date().getTime() && data.message ? true : false
-			)
-			setNextClickDisabled(
-				startTime > new Date().getTime() && data.message ? true : false
-			)
+			setPrevClickDisabled(data.hasFirstItem || false)
+			setNextClickDisabled(data.hasLastItem || false)
 			setFForwardClickDisabled(startTime < getSunday(new Date()) ? false : true)
 		}
 	}, [data])
 
 	return (
 		<ChartLayout
-			data={data}
+			data={data?.results}
 			isLoading={isLoading}
 			Chart={Chart}
 			handlePrevClick={handlePrevClick}

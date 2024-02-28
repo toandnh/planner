@@ -25,6 +25,7 @@ export async function GET(req: Request) {
 	const startTime = searchParams.get('start-time') as string
 	const endTime = searchParams.get('end-time') as string
 
+	// Get all the items in the request time period
 	const { Items } = await client.send(
 		new QueryCommand({
 			TableName: process.env.TABLE_NAME as string,
@@ -46,11 +47,60 @@ export async function GET(req: Request) {
 		})
 	)
 
+	// Get the oldest record with this sort key
+	const { Items: FirstItem } = await client.send(
+		new QueryCommand({
+			TableName: process.env.TABLE_NAME as string,
+			KeyConditionExpression: '#uid = :UserID AND begins_with(#i, :Item)',
+			ExpressionAttributeValues: {
+				':UserID': { S: userId },
+				':Item': { S: item }
+			},
+			ExpressionAttributeNames: {
+				'#uid': 'UserID',
+				'#i': 'Item',
+				'#date': 'Date',
+				'#c': 'Consumed'
+			},
+			ProjectionExpression: '#i, Activity, #c, Amount, #date',
+			ScanIndexForward: true,
+			Limit: 1
+		})
+	)
+
+	// Get the lastest record with this sort key
+	const { Items: LastItem } = await client.send(
+		new QueryCommand({
+			TableName: process.env.TABLE_NAME as string,
+			KeyConditionExpression: '#uid = :UserID AND begins_with(#i, :Item)',
+			ExpressionAttributeValues: {
+				':UserID': { S: userId },
+				':Item': { S: item }
+			},
+			ExpressionAttributeNames: {
+				'#uid': 'UserID',
+				'#i': 'Item',
+				'#date': 'Date',
+				'#c': 'Consumed'
+			},
+			ProjectionExpression: '#i, Activity, #c, Amount, #date',
+			ScanIndexForward: false,
+			Limit: 1
+		})
+	)
+
 	if (!Items || Object.keys(Items).length <= 0) {
 		return NextResponse.json({
 			message: `Items begin with '${item}' from user '${userId}' not found!`
 		})
 	}
+
+	let hasFirstItem = false
+	let hasLastItem = false
+	Items.map((item) => {
+		hasFirstItem = item.Item.S == FirstItem![0].Item.S ? true : false
+		hasLastItem = item.Item.S == LastItem![0].Item.S ? true : false
+	})
 
 	const results: CalorieDatum[] = []
 	Items.map((item) => {
@@ -64,7 +114,7 @@ export async function GET(req: Request) {
 		results.push(currItem)
 	})
 
-	return NextResponse.json(results)
+	return NextResponse.json({ results, hasFirstItem, hasLastItem })
 }
 
 export async function POST(req: Request) {
