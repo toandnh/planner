@@ -54,7 +54,7 @@ export default function Name({ name }: { name: string }) {
 						onChange={handleNameChange}
 					/>
 					<input
-						className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'
+						className='bg-green-300 flex items-end justify-center px-2 rounded-md hover:bg-green-400 hover:cursor-pointer hover:disabled:bg-green-200 hover:disabled:cursor-default disabled:bg-green-200'
 						type='submit'
 						onClick={handleSubmit}
 						value='Update'

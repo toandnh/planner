@@ -56,7 +56,9 @@ export default function MonthPieChart({
 	useEffect(() => {
 		if (!isLoading) {
 			setPrevClickDisabled(data.hasFirstItem || false)
-			setNextClickDisabled(data.hasLastItem || false)
+			setNextClickDisabled(
+				startTime < getFirstDayOfYear(new Date()) ? false : true
+			)
 			setFForwardClickDisabled(
 				startTime < getFirstDayOfYear(new Date()) ? false : true
 			)

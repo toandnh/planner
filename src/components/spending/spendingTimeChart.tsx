@@ -14,7 +14,7 @@ export default function SpendingTimeChart({
 	const categorySum: Map<string, number> = useMemo(() => {
 		let sum: Map<string, number> = new Map()
 		if (!isLoading) {
-			if (data.length > 0) {
+			if (data?.length > 0) {
 				data.map((datum) => {
 					let newValue = parseInt(datum.amount)
 					let existingValue = sum.get(datum.category)

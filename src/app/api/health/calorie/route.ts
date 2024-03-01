@@ -68,27 +68,6 @@ export async function GET(req: Request) {
 		})
 	)
 
-	// Get the lastest record with this sort key
-	const { Items: LastItem } = await client.send(
-		new QueryCommand({
-			TableName: process.env.TABLE_NAME as string,
-			KeyConditionExpression: '#uid = :UserID AND begins_with(#i, :Item)',
-			ExpressionAttributeValues: {
-				':UserID': { S: userId },
-				':Item': { S: item }
-			},
-			ExpressionAttributeNames: {
-				'#uid': 'UserID',
-				'#i': 'Item',
-				'#date': 'Date',
-				'#c': 'Consumed'
-			},
-			ProjectionExpression: '#i, Activity, #c, Amount, #date',
-			ScanIndexForward: false,
-			Limit: 1
-		})
-	)
-
 	if (!Items || Object.keys(Items).length <= 0) {
 		return NextResponse.json({
 			message: `Items begin with '${item}' from user '${userId}' not found!`
@@ -96,10 +75,8 @@ export async function GET(req: Request) {
 	}
 
 	let hasFirstItem = false
-	let hasLastItem = false
 	Items.map((item) => {
 		hasFirstItem = item.Item.S == FirstItem![0].Item.S ? true : hasFirstItem
-		hasLastItem = item.Item.S == LastItem![0].Item.S ? true : hasLastItem
 	})
 
 	const results: CalorieDatum[] = []
@@ -114,7 +91,7 @@ export async function GET(req: Request) {
 		results.push(currItem)
 	})
 
-	return NextResponse.json({ results, hasFirstItem, hasLastItem })
+	return NextResponse.json({ results, hasFirstItem })
 }
 
 export async function POST(req: Request) {

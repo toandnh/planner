@@ -67,7 +67,7 @@ export default function HealthHome() {
 	const calorieRemaining = useMemo(() => {
 		if (!isHealthLoading && !isCalorieLoading) {
 			// If there is data
-			if (calorieData?.results.length > 0) {
+			if (calorieData?.results?.length > 0) {
 				let remained = recommendedCalorie!
 				calorieData.results.map((datum: CalorieDatum) => {
 					remained = datum.consumed
