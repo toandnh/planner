@@ -6,7 +6,8 @@ import useSWR from 'swr'
 
 import {
 	Calendar as ReactBigCalendar,
-	momentLocalizer
+	momentLocalizer,
+	type View
 } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
@@ -27,13 +28,26 @@ import { useToggle } from '@/hooks/hooks'
 const localizer = momentLocalizer(moment)
 
 export default function Calendar() {
-	const startTime = getFirstDayOfMonth(new Date())
-	const endTime = getLastDayOfMonth(new Date())
+	let startTime = getFirstDayOfMonth(new Date())
+	let endTime = getLastDayOfMonth(new Date())
 
-	const fetcher = (url: string) => fetch(url).then((res) => res.json())
-	const { isLoading, data } = useSWR(
-		`/api/calendar?start-time=${startTime}&end-time=${endTime}`,
-		fetcher
+	const fetcher = ([url]: (string | number)[]) =>
+		fetch(
+			(url as string) +
+				'?' +
+				new URLSearchParams({
+					'start-time': startTime.toString(),
+					'end-time': endTime.toString()
+				})
+		).then((res) => res.json())
+	const { isLoading, data, mutate } = useSWR(
+		['/api/calendar', startTime, endTime],
+		fetcher,
+		{
+			revalidateIfStale: false,
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false
+		}
 	)
 
 	const [eventPeriod, setEventPeriod] = useState(data)
@@ -52,7 +66,7 @@ export default function Calendar() {
 	const events: EventType[] = useMemo(() => {
 		const eventArr: EventType[] = new Array<EventType>()
 		if (!isLoading) {
-			if (data.length > 0) {
+			if (data?.length > 0) {
 				data.map((datum: CalendarDatum) => {
 					eventArr.push({
 						item: datum.item,
@@ -88,6 +102,16 @@ export default function Calendar() {
 		[toggleModal]
 	)
 
+	const handleNavigate = (date: Date, view: View) => {
+		startTime = getFirstDayOfMonth(date)
+		endTime = getLastDayOfMonth(date)
+
+		// Revalidate all data from 'api/calendar'
+		mutate(
+			(key: any) => typeof key === 'string' && key.startsWith('/api/calendar')
+		)
+	}
+
 	return (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
 			<div className='min-h-[600px]'>
@@ -100,6 +124,7 @@ export default function Calendar() {
 					selectable
 					onSelectSlot={handleSelectSlot}
 					onSelectEvent={handleSelectEvent}
+					onNavigate={handleNavigate}
 				/>
 				{modalOpened && (
 					<Modal toggleModal={toggleModal}>
