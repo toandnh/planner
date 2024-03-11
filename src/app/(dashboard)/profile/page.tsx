@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 
 import useSWR from 'swr'
 
+import Loading from './loading'
 import Name from './name'
 import Profile from './profile'
 
@@ -14,10 +15,15 @@ export default function ProfilePage() {
 	const { isLoading, data } = useSWR('api/health', fetcher)
 
 	return (
-		<div className='min-h-[80vh] flex flex-col p-10'>
-			{session?.user && <Name name={session?.user.name} />}
-
-			{!isLoading && <Profile data={data} />}
-		</div>
+		<>
+			{isLoading ? (
+				<Loading />
+			) : (
+				<div className='min-h-[80vh] flex flex-col p-10'>
+					{session?.user && <Name name={session?.user.name} />}
+					<Profile data={data} />
+				</div>
+			)}
+		</>
 	)
 }

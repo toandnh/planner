@@ -25,7 +25,7 @@ export default function CalorieWeekChart({
 
 		if (!isLoading) {
 			// Server will send empty object if there is no data
-			if (data.length > 0) {
+			if (data?.length > 0) {
 				for (let datum of data) {
 					let firstIndex = new Date(parseInt(datum.date)).getDay()
 					let secondIndex = datum.consumed ? 0 : 1

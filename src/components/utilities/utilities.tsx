@@ -160,3 +160,7 @@ export const getFlipKey = (data: TodoDatum[]): string => {
 	})
 	return key
 }
+
+export const isNumeric = (value: string): boolean => {
+	return !Number.isNaN(value) && !Number.isNaN(parseFloat(value))
+}

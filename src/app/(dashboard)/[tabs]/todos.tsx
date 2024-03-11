@@ -31,10 +31,14 @@ export default function Todos() {
 
 	let content = (
 		<div className='h-full w-full flex flex-col items-center gap-10 p-10 border-l-2'>
-			<h2 className='text-xl font-semibold'>To-do List</h2>
-			<TodosSearch data={data} />
-			<TodosInProgress isLoading={isLoading} data={inProgressData} />
-			<TodosCompleted isLoading={isLoading} data={completedData} />
+			{!isLoading && (
+				<>
+					<h2 className='text-xl font-semibold'>To-do List</h2>
+					<TodosSearch data={data} />
+					<TodosInProgress isLoading={isLoading} data={inProgressData} />
+					<TodosCompleted isLoading={isLoading} data={completedData} />
+				</>
+			)}
 		</div>
 	)
 

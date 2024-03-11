@@ -22,17 +22,13 @@ export default function DeleteButton({
 		revalidate: true
 	})
 
-	const handleDelete = async (item: string) => {
+	const handleDelete = async () => {
 		await trigger({ item })
-
-		// Since delete urls contain only userId param
-		// it should be shorter than other urls
-		// hence, sufficient to use it to revalidate
 		mutate((key) => typeof key === 'string' && key.startsWith(url))
 	}
 
 	return (
-		<button onClick={() => handleDelete(item)}>
+		<button onClick={handleDelete}>
 			<DeleteForeverIcon fontSize='medium' />
 		</button>
 	)

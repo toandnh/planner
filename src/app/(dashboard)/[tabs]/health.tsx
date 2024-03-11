@@ -95,17 +95,25 @@ export default function HealthHome() {
 
 	let content = (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
-			<h3 className='text-xl font-semibold'>
-				Calorie Remaining: {calorieRemaining} kcal{' '}
-				{!isHealthLoading && `(${recommendedCalorie} kcal Recommended Daily*)`}
-			</h3>
-			<CalorieConsumed data={calorieComsumed} isLoading={isCalorieLoading} />
-			<CalorieBurnt data={calorieBurnt} isLoading={isCalorieLoading} />
-			<CalorieChart />
-			<p className='text-xs font-normal'>
-				* Based on Mifflin-St Jeor equation; With the assumption of
-				gaining/losing 1/2 - 1 pound a week
-			</p>
+			{!isHealthLoading && !isCalorieLoading && (
+				<>
+					<h3 className='text-xl font-semibold'>
+						Calorie Remaining: {calorieRemaining} kcal{' '}
+						{!isHealthLoading &&
+							`(${recommendedCalorie} kcal Recommended Daily*)`}
+					</h3>
+					<CalorieConsumed
+						data={calorieComsumed}
+						isLoading={isCalorieLoading}
+					/>
+					<CalorieBurnt data={calorieBurnt} isLoading={isCalorieLoading} />
+					<CalorieChart />
+					<p className='text-xs font-normal'>
+						* Based on Mifflin-St Jeor equation; With the assumption of
+						gaining/losing 1/2 - 1 pound a week
+					</p>
+				</>
+			)}
 		</div>
 	)
 

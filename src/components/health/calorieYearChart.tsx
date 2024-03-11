@@ -43,7 +43,7 @@ export default function CalorieYearChart({
 
 		if (!isLoading) {
 			// Server will send empty object if there is no data
-			if (data.length > 0) {
+			if (data?.length > 0) {
 				for (let datum of data) {
 					let date = new Date(parseInt(datum.date))
 

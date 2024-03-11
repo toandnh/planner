@@ -56,6 +56,11 @@ export default function TodosSearchResults({
 			<div className='flex flex-col gap-5 pl-5 pt-5 pb-5'>
 				<h4 className='text-lg font-semibold'>In Progress</h4>
 				<div className='flex flex-col gap-5'>
+					{inProgressData.length == 0 && (
+						<div className='flex justify-center font-normal italic'>
+							No items here!
+						</div>
+					)}
 					{inProgressData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>
@@ -66,6 +71,11 @@ export default function TodosSearchResults({
 				</div>
 				<h4 className='text-lg font-semibold'>Completed</h4>
 				<div className='flex flex-col gap-5'>
+					{completedData.length == 0 && (
+						<div className='flex justify-center font-normal italic'>
+							No items here!
+						</div>
+					)}
 					{completedData.map((result: TodoDatum) => {
 						return (
 							<React.Fragment key={result.item}>

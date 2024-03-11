@@ -6,6 +6,8 @@ import { mutate } from 'swr'
 
 import useSWRMutation from 'swr/mutation'
 
+import { isNumeric } from '../utilities/utilities'
+
 export default function SpendingAddForm() {
 	const fetcher = async (url: string, { arg }: { arg: SpendingDatum }) =>
 		fetch(url, {
@@ -23,7 +25,7 @@ export default function SpendingAddForm() {
 	const [canAdd, setCanAdd] = useState(false)
 
 	useEffect(() => {
-		setCanAdd(spending !== '' && amount !== '')
+		setCanAdd(spending !== '' && amount !== '' && isNumeric(amount))
 	}, [spending, amount])
 
 	const handleSpendingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +73,7 @@ export default function SpendingAddForm() {
 					type='text'
 					value={amount}
 					onChange={handleAmountChange}
-					placeholder='10000CAD'
+					placeholder='10000'
 				/>
 				<div className='w-1/3'>
 					<select
@@ -81,13 +83,14 @@ export default function SpendingAddForm() {
 						name='category'
 					>
 						<option value='Others'>Others</option>
+						<option value='Bills'>Bills</option>
 						<option value='Education'>Education</option>
 						<option value='Emergency'>Emergency</option>
 						<option value='Entertainment'>Entertainment</option>
-						<option value='Bills'>Bills</option>
+						<option value='Grocery'>Grocery</option>
 						<option value='Health'>Health</option>
 						<option value='Hobby'>Hobby</option>
-						<option value='Grocery'>Grocery</option>
+						<option value='Grocery'>Investing</option>
 					</select>
 				</div>
 			</div>

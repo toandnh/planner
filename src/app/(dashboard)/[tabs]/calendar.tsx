@@ -114,35 +114,37 @@ export default function Calendar() {
 
 	return (
 		<div className='w-full flex flex-col gap-10 p-10 border-l-2'>
-			<div className='min-h-[600px]'>
-				<ReactBigCalendar
-					localizer={localizer}
-					events={events}
-					max={max}
-					startAccessor='start'
-					endAccessor='end'
-					selectable
-					onSelectSlot={handleSelectSlot}
-					onSelectEvent={handleSelectEvent}
-					onNavigate={handleNavigate}
-				/>
-				{modalOpened && (
-					<Modal toggleModal={toggleModal}>
-						{addEvent && (
-							<CalendarAddForm
-								eventPeriod={eventPeriod}
-								toggleModal={toggleModal}
-							/>
-						)}
-						{!addEvent && (
-							<CalendarUpdateForm
-								calendarEvent={currEvent}
-								toggleModal={toggleModal}
-							/>
-						)}
-					</Modal>
-				)}
-			</div>
+			{!isLoading && (
+				<div className='min-h-[600px]'>
+					<ReactBigCalendar
+						localizer={localizer}
+						events={events}
+						max={max}
+						startAccessor='start'
+						endAccessor='end'
+						selectable
+						onSelectSlot={handleSelectSlot}
+						onSelectEvent={handleSelectEvent}
+						onNavigate={handleNavigate}
+					/>
+					{modalOpened && (
+						<Modal toggleModal={toggleModal}>
+							{addEvent && (
+								<CalendarAddForm
+									eventPeriod={eventPeriod}
+									toggleModal={toggleModal}
+								/>
+							)}
+							{!addEvent && (
+								<CalendarUpdateForm
+									calendarEvent={currEvent}
+									toggleModal={toggleModal}
+								/>
+							)}
+						</Modal>
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

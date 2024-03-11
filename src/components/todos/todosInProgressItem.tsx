@@ -77,7 +77,7 @@ export default function TodosInProgressItem({
 					datum={datum}
 					color={priorityMap[datum.priority!]}
 				/>
-				<div className='w-full flex flex-row gap-5'>
+				<div className='w-full'>
 					<progress
 						className='w-2/3 rounded-md'
 						max='100'
@@ -99,7 +99,7 @@ export default function TodosInProgressItem({
 					<TodosCompleteButton datum={datum} />
 				</div>
 				<div className='w-1/3 flex justify-center items-center'>
-					<DeleteButton url={'/api/todos'} item={datum.item!} />
+					<DeleteButton url={'/api/todos'} item={datum.item} />
 				</div>
 			</div>
 

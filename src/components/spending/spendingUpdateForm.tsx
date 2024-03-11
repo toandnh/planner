@@ -96,13 +96,14 @@ export default function SpendingUpdateForm({
 					name='category'
 				>
 					<option value='Others'>Others</option>
+					<option value='Bills'>Bills</option>
 					<option value='Education'>Education</option>
 					<option value='Emergency'>Emergency</option>
 					<option value='Entertainment'>Entertainment</option>
-					<option value='Bills'>Bills</option>
+					<option value='Grocery'>Grocery</option>
 					<option value='Health'>Health</option>
 					<option value='Hobby'>Hobby</option>
-					<option value='Grocery'>Grocery</option>
+					<option value='Grocery'>Investing</option>
 				</select>
 				<input
 					className='bg-green-500 flex items-end justify-center px-2 rounded-md hover:bg-green-600 hover:cursor-pointer hover:disabled:bg-green-100 hover:disabled:cursor-default disabled:bg-green-100'

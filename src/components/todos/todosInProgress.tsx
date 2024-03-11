@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import { Flipper, Flipped } from 'react-flip-toolkit'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 import SwapVertIcon from '@mui/icons-material/SwapVert'
 
 import { useAppSelector } from '@/lib/hooks'
@@ -84,34 +86,39 @@ export default function TodosInProgress({
 		<div className='h-full w-full flex flex-col gap-5'>
 			<h3 className='text-xl font-semibold'>In Progress</h3>
 			<Flipper flipKey={flipKey}>
-				{!isLoading && (
-					<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
-						<div className='flex'>
-							<div className='w-1/3 flex justify-start font-semibold'>
-								<button onClick={handlePrioritySort}>
-									<SwapVertIcon fontSize='small' />
-								</button>
-							</div>
-							<div className='w-full flex justify-start gap-3 font-semibold'>
-								Task
-								<button onClick={handleTaskNameSort}>
-									<SwapVertIcon fontSize='small' />
-								</button>
-							</div>
-							<div className='w-full flex justify-start font-semibold'>
-								Progress
-							</div>
-							<div className='w-1/3'>
-								<p className='hidden'>HIDDEN</p>
-							</div>
-							<div className='w-1/3'>
-								<p className='hidden'>HIDDEN</p>
-							</div>
-							<div className='w-1/3'>
-								<p className='hidden'>HIDDEN</p>
-							</div>
+				<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
+					<div className='flex'>
+						<div className='w-1/3 flex justify-start font-semibold'>
+							<button onClick={handlePrioritySort}>
+								<SwapVertIcon fontSize='small' />
+							</button>
 						</div>
+						<div className='w-full flex justify-start gap-3 font-semibold'>
+							Task
+							<button onClick={handleTaskNameSort}>
+								<SwapVertIcon fontSize='small' />
+							</button>
+						</div>
+						<div className='w-full flex justify-start font-semibold'>
+							Progress
+						</div>
+						<div className='w-1/3'>
+							<p className='hidden'>HIDDEN</p>
+						</div>
+						<div className='w-1/3'>
+							<p className='hidden'>HIDDEN</p>
+						</div>
+						<div className='w-1/3'>
+							<p className='hidden'>HIDDEN</p>
+						</div>
+					</div>
+					{!isLoading && (
 						<div className='flex flex-col gap-5'>
+							{sortedData.length == 0 && (
+								<div className='flex justify-center font-normal italic'>
+									No items here!
+								</div>
+							)}
 							{sortedData.map((datum: TodoDatum) => {
 								return (
 									<Flipped key={datum.item} flipId={datum.item}>
@@ -122,10 +129,15 @@ export default function TodosInProgress({
 								)
 							})}
 						</div>
-					</div>
-				)}
+					)}
+					{isLoading && (
+						<div className='flex justify-center items-center'>
+							<CircularProgress />
+						</div>
+					)}
+				</div>
 			</Flipper>
-			<TodosAddForm />
+			{!isLoading && <TodosAddForm />}
 		</div>
 	)
 }
