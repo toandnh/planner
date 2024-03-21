@@ -25,7 +25,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body
 				className={clsx(
-					'bg-honeydew min-h-screen min-w-screen p-10',
+					'bg-honeydew min-h-screen min-w-[1028px] p-10',
 					inter.className
 				)}
 			>
