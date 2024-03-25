@@ -102,7 +102,7 @@ export default function HealthHome() {
 	let content = (
 		<div
 			className={clsx(
-				'w-full flex flex-col p-10 gap-10',
+				'w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10',
 				isBreakPoint ? '' : 'border-l-2'
 			)}
 		>

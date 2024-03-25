@@ -1,18 +1,23 @@
 import { axisClasses, BarChart } from '@mui/x-charts'
 
+import { useMediaQuery, useScreenSize } from '@/hooks/hooks'
+
 export default function CalorieBarChart({
 	dataset
 }: {
 	dataset: CalorieChartData[]
 }) {
+	const isBreakPoint = useMediaQuery(601)
+	const screenSize = useScreenSize()
+
 	const chartSetting = {
 		yAxis: [
 			{
 				label: 'Amount (kcal)'
 			}
 		],
-		width: 500,
-		height: 500,
+		width: isBreakPoint ? screenSize.width / 2 : screenSize.width / 3,
+		height: isBreakPoint ? screenSize.width / 2 : screenSize.width / 3,
 		sx: {
 			[`.${axisClasses.left} .${axisClasses.label}`]: {
 				transform: 'translate(-12px, 0)'

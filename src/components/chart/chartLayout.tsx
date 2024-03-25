@@ -32,7 +32,7 @@ export default function ChartLayout({
 			<div className='p-5'>
 				{startTime} - {endTime}
 			</div>
-			<div className='flex justify-center items-center gap-5'>
+			<div className='flex justify-center items-center gap-2 md:gap-5 lg:gap-10'>
 				<button onClick={handlePrevClick} disabled={prevClickDisabled}>
 					<KeyboardArrowLeftIcon
 						fontSize='large'

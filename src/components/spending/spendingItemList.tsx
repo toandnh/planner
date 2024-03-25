@@ -20,7 +20,7 @@ export default function SpendingItemList({
 			</div>
 			<div className='flex flex-col gap-5'>
 				{!isLoading &&
-					data.length > 0 &&
+					data &&
 					data.map((datum: SpendingDatum) => (
 						<React.Fragment key={datum.item}>
 							<SpendingItem datum={datum} />

@@ -6,7 +6,7 @@ function getTodosData(
 	let returnData: TodoDatum[] = []
 	if (!isLoading) {
 		// If there is data
-		if (data?.length > 0) {
+		if (data) {
 			data.map((datum: TodoDatum) => {
 				if (type == 'completed' ? datum.completed : !datum.completed)
 					returnData.push(datum)
@@ -38,7 +38,7 @@ function getCalorieData(
 	let returnData: CalorieDatum[] = []
 	if (!isLoading) {
 		// If there is data
-		if (data?.length > 0) {
+		if (data) {
 			data.map((datum: CalorieDatum) => {
 				if (type == 'consumed' ? datum.consumed : !datum.consumed)
 					returnData.push(datum)

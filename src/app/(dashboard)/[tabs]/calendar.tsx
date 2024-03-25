@@ -121,7 +121,7 @@ export default function Calendar() {
 			{!isLoading && (
 				<div
 					className={clsx(
-						'w-full h-screen min-h-[600px] p-10',
+						'w-full h-screen min-h-[600px] p-2 md:p-5 lg:p-10',
 						isBreakPoint ? '' : 'border-l-2'
 					)}
 				>
