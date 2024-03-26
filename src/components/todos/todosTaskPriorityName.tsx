@@ -33,7 +33,7 @@ export default function TodosTaskPriorityName({
 	}
 
 	return (
-		<>
+		<div className='w-full flex'>
 			<div className='w-1/3 min-h-[25px] flex justify-start items-center'>
 				<span
 					key={datum.item}
@@ -55,6 +55,6 @@ export default function TodosTaskPriorityName({
 					/>
 				)}
 			</div>
-		</>
+		</div>
 	)
 }

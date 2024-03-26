@@ -15,6 +15,8 @@ import { inSearchResults } from '@/lib/features/todos/todosSlice'
 import TodosInProgressItem from './todosInProgressItem'
 import TodosAddForm from './todosAddForm'
 
+import { useMediaQuery } from '@/hooks/hooks'
+
 import {
 	sortByTaskNameAsc,
 	sortByTaskNameDsc,
@@ -40,6 +42,8 @@ export default function TodosInProgress({
 	const [sortBy, setSortBy] = useState('tasK-priority')
 
 	const inResults: Set<string> = useAppSelector(inSearchResults)
+
+	const isBreakPoint = useMediaQuery(601)
 
 	useEffect(() => {
 		let returnData: TodoDatum[] = []
@@ -87,29 +91,36 @@ export default function TodosInProgress({
 			<h3 className='text-xl font-semibold'>In Progress</h3>
 			<Flipper flipKey={flipKey}>
 				<div className='flex flex-col justify-center gap-10 pl-5 pt-5 pb-5'>
-					<div className='flex'>
-						<div className='w-1/3 flex justify-start font-semibold'>
-							<button onClick={handlePrioritySort}>
-								<SwapVertIcon fontSize='small' />
-							</button>
+					<div className='h-full min-h-[35px] flex justify-center items-center z-10'>
+						<div className='w-full flex'>
+							<div className='w-1/3 min-h-[25px] flex justify-start font-semibold'>
+								<button onClick={handlePrioritySort}>
+									<SwapVertIcon fontSize='small' />
+								</button>
+							</div>
+							<div className='w-full flex justify-start gap-3 font-semibold'>
+								Task
+								<button onClick={handleTaskNameSort}>
+									<SwapVertIcon fontSize='small' />
+								</button>
+							</div>
 						</div>
-						<div className='w-full flex justify-start gap-3 font-semibold'>
-							Task
-							<button onClick={handleTaskNameSort}>
-								<SwapVertIcon fontSize='small' />
-							</button>
-						</div>
-						<div className='w-full flex justify-start font-semibold'>
-							Progress
-						</div>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
-						</div>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
-						</div>
-						<div className='w-1/3'>
-							<p className='hidden'>HIDDEN</p>
+
+						<div className='w-full flex'>
+							{!isBreakPoint && (
+								<div className='w-full flex justify-start font-semibold'>
+									Progress
+								</div>
+							)}
+							<div className='w-1/3'>
+								<p className='hidden'>HIDDEN</p>
+							</div>
+							<div className='w-1/3'>
+								<p className='hidden'>HIDDEN</p>
+							</div>
+							<div className='w-1/3'>
+								<p className='hidden'>HIDDEN</p>
+							</div>
 						</div>
 					</div>
 					{!isLoading && (

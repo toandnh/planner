@@ -5,6 +5,8 @@ import React, { useMemo } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import CloseIcon from '@mui/icons-material/Close'
 
+import clsx from 'clsx'
+
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
 
 import {
@@ -24,6 +26,8 @@ import TodosTaskPriorityName from './todosTaskPriorityName'
 import TodosCompleteButton from './todosCompleteButton'
 
 import DeleteButton from '@/components/buttons/deleteButton'
+
+import { useMediaQuery } from '@/hooks/hooks'
 
 const priorityMap: { [key: string]: string } = {
 	'1': 'bg-emerald-500',
@@ -51,6 +55,8 @@ export default function TodosInProgressItem({
 	)
 	const hasEditTransitionedIn = useMountTransition(showEdit, 150)
 
+	const isBreakPoint = useMediaQuery(601)
+
 	const completePercentage: number = useMemo(() => {
 		let percent: number = 0
 		// taskItems return empty array if there are no items
@@ -71,35 +77,40 @@ export default function TodosInProgressItem({
 		<div {...flippedProps}>
 			<div
 				key={datum.item}
-				className='h-full min-h-[35px] flex justify-center items-center z-10'
+				className={clsx(
+					'h-full min-h-[35px] flex justify-center items-center z-10',
+					isBreakPoint ? 'flex-col gap-5' : ''
+				)}
 			>
 				<TodosTaskPriorityName
 					datum={datum}
 					color={priorityMap[datum.priority!]}
 				/>
-				<div className='w-full'>
-					<progress
-						className='w-2/3 rounded-md'
-						max='100'
-						value={completePercentage}
-					>
-						{`${completePercentage}%`}
-					</progress>
-				</div>
-				<div className='w-1/3'>
-					<button onClick={handleShowEdit}>
-						{showEdit ? (
-							<CloseIcon fontSize='medium' />
-						) : (
-							<EditIcon fontSize='medium' />
-						)}
-					</button>
-				</div>
-				<div className='w-1/3'>
-					<TodosCompleteButton datum={datum} />
-				</div>
-				<div className='w-1/3 flex justify-center items-center'>
-					<DeleteButton url={'/api/todos'} item={datum.item} />
+				<div className={clsx('flex', isBreakPoint ? 'w-2/3' : 'w-full')}>
+					<div className='w-full'>
+						<progress
+							className='w-2/3 rounded-md'
+							max='100'
+							value={completePercentage}
+						>
+							{`${completePercentage}%`}
+						</progress>
+					</div>
+					<div className='w-1/3'>
+						<button onClick={handleShowEdit}>
+							{showEdit ? (
+								<CloseIcon fontSize='medium' />
+							) : (
+								<EditIcon fontSize='medium' />
+							)}
+						</button>
+					</div>
+					<div className='w-1/3'>
+						<TodosCompleteButton datum={datum} />
+					</div>
+					<div className='w-1/3 flex justify-center items-center'>
+						<DeleteButton url={'/api/todos'} item={datum.item} />
+					</div>
 				</div>
 			</div>
 

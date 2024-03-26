@@ -16,6 +16,8 @@ import TodosTaskPriorityName from './todosTaskPriorityName'
 
 import DeleteButton from '@/components/buttons/deleteButton'
 
+import { useMediaQuery } from '@/hooks/hooks'
+
 export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 	const fetcher = async (url: string, { arg }: { arg: TodoDatum }) =>
 		fetch(url, {
@@ -32,6 +34,8 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 	const hasTaskItems: boolean = datum.taskItems.length > 0
 
 	const hasTransitionedIn = useMountTransition(showItems, 150)
+
+	const isBreakPoint = useMediaQuery(601)
 
 	const handleRestoreClick = async () => {
 		await trigger({
@@ -63,19 +67,30 @@ export default function TodosCompletedItem({ datum }: { datum: TodoDatum }) {
 
 	return (
 		<div>
-			<div className='min-h-[35px] flex justify-center items-center'>
+			<div
+				className={clsx(
+					'h-full min-h-[35px] flex justify-center items-center z-10',
+					isBreakPoint ? 'flex-col gap-5' : ''
+				)}
+			>
 				<TodosTaskPriorityName datum={datum} color='bg-neutral-400' />
-				<button className='w-1/3' onClick={handleRestoreClick}>
-					<RestoreIcon fontSize='medium' />
-				</button>
-				<div className='w-1/3 flex justify-center items-center'>
-					<DeleteButton url={'/api/todos'} item={datum.item} />
-				</div>
-				<div className='w-1/3'>
-					<p className='hidden'>HIDDEN</p>
-				</div>
-				<div className='w-1/3'>
-					<p className='hidden'>HIDDEN</p>
+				<div className={clsx('w-2/3 flex', isBreakPoint ? 'justify-end' : '')}>
+					<button className='w-1/3' onClick={handleRestoreClick}>
+						<RestoreIcon fontSize='medium' />
+					</button>
+					<div className='w-1/3 flex justify-center items-center'>
+						<DeleteButton url={'/api/todos'} item={datum.item} />
+					</div>
+					{!isBreakPoint && (
+						<>
+							<div className='w-1/3'>
+								<p className='hidden'>HIDDEN</p>
+							</div>
+							<div className='w-1/3'>
+								<p className='hidden'>HIDDEN</p>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 
