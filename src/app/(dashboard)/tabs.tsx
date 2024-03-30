@@ -40,7 +40,7 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							'text-black text-center font-semibold p-2 rounded-md hover:bg-rose-100',
 							tab == 'calendar' || tab == null ? 'bg-rose-200' : ''
 						)}
 					>
@@ -54,7 +54,7 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							'text-black text-center font-semibold p-2 rounded-md hover:bg-rose-100',
 							tab == 'todos' ? 'bg-rose-200' : ''
 						)}
 					>
@@ -68,7 +68,7 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							'text-black text-center font-semibold p-2 rounded-md hover:bg-rose-100',
 							tab == 'health' ? 'bg-rose-200' : ''
 						)}
 					>
@@ -82,7 +82,7 @@ export default function Tabs() {
 				>
 					<h2
 						className={clsx(
-							'text-black text-center font-semibold py-2 rounded-md hover:bg-rose-100',
+							'text-black text-center font-semibold p-2 rounded-md hover:bg-rose-100',
 							tab == 'spending' ? 'bg-rose-200' : ''
 						)}
 					>

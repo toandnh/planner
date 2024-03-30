@@ -8,5 +8,5 @@ export default function CheckoutLayout({
 }: {
 	children: React.ReactNode
 }) {
-	return <section className=''>{children}</section>
+	return <section>{children}</section>
 }

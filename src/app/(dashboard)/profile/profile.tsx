@@ -6,6 +6,10 @@ import { mutate } from 'swr'
 
 import useSWRMutation from 'swr/mutation'
 
+import clsx from 'clsx'
+
+import { useMediaQuery } from '@/hooks/hooks'
+
 export default function Profile({ data }: { data: HealthData }) {
 	const fetcher = async (url: string, { arg }: { arg: HealthData }) =>
 		fetch(url, {
@@ -24,6 +28,9 @@ export default function Profile({ data }: { data: HealthData }) {
 	const [activity, setActivity] = useState(data.activity)
 
 	const [canSave, setCanSave] = useState(false)
+
+	const isFirstBreakPoint = useMediaQuery(962)
+	const isSecondBreakPoint = useMediaQuery(520)
 
 	const bmi = useMemo(() => {
 		// weight in kg
@@ -93,58 +100,132 @@ export default function Profile({ data }: { data: HealthData }) {
 		setCanSave(false)
 	}
 
-	return (
-		<div className='min-h-[60vh] flex flex-col justify-center items-center gap-10 border-2 rounded-md'>
-			<div className='flex justify-center gap-5'>
-				<div className='flex gap-5'>
-					<div className='grid grid-flow-row gap-5'>
-						<label>Gender: </label>
-						<label>Height: </label>
-						<label>Goal: </label>
-					</div>
+	const breakPointView = (
+		<div className='flex gap-5'>
+			<div className='grid grid-flow-row gap-5'>
+				<label>Gender: </label>
+				<label>Height: </label>
+				<label>Goal: </label>
+				<label>Birthyear: </label>
+				<label>Weight: </label>
+				<label>Activity Level: </label>
+			</div>
 
-					<div className='grid grid-flow-row gap-5'>
-						<select value={gender} onChange={handleGenderChange} name='gender'>
-							<option value='female'>Female</option>
-							<option value='male'>Male</option>
-						</select>
-						<input type='text' value={height} onChange={handleHeightChange} />
-						<select value={goal} onChange={handleGoalChange} name='options'>
-							<option value='lose'>Lose</option>
-							<option value='maintain'>Maintain</option>
-							<option value='gain'>Gain</option>
-						</select>
-					</div>
+			<div
+				className={clsx(
+					'grid grid-flow-row gap-5',
+					isSecondBreakPoint ? 'w-1/2' : ''
+				)}
+			>
+				<select
+					className='w-full'
+					value={gender}
+					onChange={handleGenderChange}
+					name='gender'
+				>
+					<option value='female'>Female</option>
+					<option value='male'>Male</option>
+				</select>
+				<input
+					className='w-full'
+					type='text'
+					value={height}
+					onChange={handleHeightChange}
+				/>
+				<select
+					className='w-full'
+					value={goal}
+					onChange={handleGoalChange}
+					name='options'
+				>
+					<option value='lose'>Lose</option>
+					<option value='maintain'>Maintain</option>
+					<option value='gain'>Gain</option>
+				</select>
+				<input
+					className='w-full'
+					type='text'
+					value={birthYear}
+					onChange={handleBirthYearChange}
+				/>
+				<input
+					className='w-full'
+					type='text'
+					value={weight}
+					onChange={handleWeightChange}
+				/>
+				<select
+					className='w-full'
+					value={activity}
+					onChange={handleActivityChange}
+					name='options'
+				>
+					<option value='Sedentary'>Sedentary</option>
+					<option value='Lightly Active'>Lightly Active</option>
+					<option value='Moderately Active'>Moderately Active</option>
+					<option value='Active'>Active</option>
+					<option value='Very Active'>Very Active</option>
+				</select>
+			</div>
+		</div>
+	)
+
+	const otherView = (
+		<div className='flex justify-center gap-5'>
+			<div className='flex gap-5'>
+				<div className='grid grid-flow-row gap-5'>
+					<label>Gender: </label>
+					<label>Height: </label>
+					<label>Goal: </label>
 				</div>
 
-				<div className='flex gap-5'>
-					<div className='grid grid-flow-row gap-5'>
-						<p>Birthyear: </p>
-						<label>Weight: </label>
-						<label>Activity Level: </label>
-					</div>
-
-					<div className='grid grid-flow-row gap-5'>
-						<input
-							type='text'
-							value={birthYear}
-							onChange={handleBirthYearChange}
-						/>
-						<input type='text' value={weight} onChange={handleWeightChange} />
-						<select
-							value={activity}
-							onChange={handleActivityChange}
-							name='options'
-						>
-							<option value='Sedentary'>Sedentary</option>
-							<option value='Lightly Active'>Lightly Active</option>
-							<option value='Moderately Active'>Moderately Active</option>
-							<option value='Active'>Active</option>
-							<option value='Very Active'>Very Active</option>
-						</select>
-					</div>
+				<div className='grid grid-flow-row gap-5'>
+					<select value={gender} onChange={handleGenderChange} name='gender'>
+						<option value='female'>Female</option>
+						<option value='male'>Male</option>
+					</select>
+					<input type='text' value={height} onChange={handleHeightChange} />
+					<select value={goal} onChange={handleGoalChange} name='options'>
+						<option value='lose'>Lose</option>
+						<option value='maintain'>Maintain</option>
+						<option value='gain'>Gain</option>
+					</select>
 				</div>
 			</div>
+
+			<div className='flex gap-5'>
+				<div className='grid grid-flow-row gap-5'>
+					<label>Birthyear: </label>
+					<label>Weight: </label>
+					<label>Activity Level: </label>
+				</div>
+
+				<div className='grid grid-flow-row gap-5'>
+					<input
+						type='text'
+						value={birthYear}
+						onChange={handleBirthYearChange}
+					/>
+					<input type='text' value={weight} onChange={handleWeightChange} />
+					<select
+						value={activity}
+						onChange={handleActivityChange}
+						name='options'
+					>
+						<option value='Sedentary'>Sedentary</option>
+						<option value='Lightly Active'>Lightly Active</option>
+						<option value='Moderately Active'>Moderately Active</option>
+						<option value='Active'>Active</option>
+						<option value='Very Active'>Very Active</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	)
+
+	return (
+		<div className='min-h-[60vh] flex flex-col justify-center items-center gap-10 p-5 border-2 rounded-md'>
+			{isFirstBreakPoint ? breakPointView : otherView}
 
 			<div>BMI: {bmi}</div>
 
