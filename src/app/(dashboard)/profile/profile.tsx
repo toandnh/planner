@@ -59,29 +59,23 @@ export default function Profile({ data }: { data: HealthData }) {
 		setCanSave(canUpdate)
 	}, [gender, birthYear, height, weight, goal, activity])
 
-	const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleGenderChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
 		setGender(e.target.options[e.target.selectedIndex].text)
-	}
 
-	const handleBirthYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleBirthYearChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setBirthYear(e.target.value)
-	}
 
-	const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setHeight(e.target.value)
-	}
 
-	const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setWeight(e.target.value)
-	}
 
-	const handleGoalChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleGoalChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
 		setGoal(e.target.options[e.target.selectedIndex].text)
-	}
 
-	const handleActivityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleActivityChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
 		setActivity(e.target.options[e.target.selectedIndex].text)
-	}
 
 	const handleSubmit = async () => {
 		await trigger({
