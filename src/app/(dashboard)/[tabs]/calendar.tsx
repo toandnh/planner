@@ -13,8 +13,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import moment from 'moment'
 
-import clsx from 'clsx'
-
 import CalendarAddForm from '@/components/calendar/calendarAddForm'
 import CalendarUpdateForm from '@/components/calendar/calendarUpdateForm'
 
@@ -25,7 +23,7 @@ import {
 	getLastDayOfMonth
 } from '@/components/utilities/utilities'
 
-import { useMediaQuery, useToggle } from '@/hooks/hooks'
+import { useToggle } from '@/hooks/hooks'
 
 const localizer = momentLocalizer(moment)
 
@@ -64,8 +62,6 @@ export default function Calendar() {
 	const [modalOpened, toggleModal] = useToggle(false)
 
 	const max = useMemo(() => new Date(new Date().getFullYear() + 10, 11, 0), [])
-
-	const isBreakPoint = useMediaQuery(1028)
 
 	const events: EventType[] = useMemo(() => {
 		const eventArr: EventType[] = new Array<EventType>()
@@ -119,12 +115,7 @@ export default function Calendar() {
 	return (
 		<>
 			{!isLoading && (
-				<div
-					className={clsx(
-						'w-full h-screen min-h-[600px] p-2 md:p-5 lg:p-10',
-						isBreakPoint ? '' : 'border-l-2'
-					)}
-				>
+				<div className='w-full h-screen min-h-[600px] p-2 md:p-5 lg:p-10'>
 					<ReactBigCalendar
 						localizer={localizer}
 						events={events}

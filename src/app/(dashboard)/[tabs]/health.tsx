@@ -4,8 +4,6 @@ import { useMemo } from 'react'
 
 import useSWR from 'swr'
 
-import clsx from 'clsx'
-
 import StoreProvider from '@/app/StoreProvider'
 
 import CalorieConsumed from '@/components/health/calorieConsumed'
@@ -14,8 +12,6 @@ import CalorieBurnt from '@/components/health/calorieBurnt'
 import CalorieChart from '@/components/health/calorieChart'
 
 import { getConsumedData, getBurntData } from '@/components/utilities/utilities'
-
-import { useMediaQuery } from '@/hooks/hooks'
 
 const activityLevelMap: { [key: string]: number } = {
 	'Sedentary': 1.2,
@@ -43,8 +39,6 @@ export default function HealthHome() {
 		}`,
 		fetcher
 	)
-
-	const isBreakPoint = useMediaQuery(1028)
 
 	const recommendedCalorie = useMemo(() => {
 		if (!isHealthLoading) {
@@ -100,12 +94,7 @@ export default function HealthHome() {
 	)
 
 	let content = (
-		<div
-			className={clsx(
-				'w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10',
-				isBreakPoint ? '' : 'border-l-2'
-			)}
-		>
+		<div className='w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10'>
 			{!isHealthLoading && !isCalorieLoading && (
 				<>
 					<h3 className='text-xl font-semibold'>

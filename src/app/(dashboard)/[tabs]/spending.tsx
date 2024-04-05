@@ -2,14 +2,10 @@
 
 import useSWR from 'swr'
 
-import clsx from 'clsx'
-
 import StoreProvider from '@/app/StoreProvider'
 
 import SpendingChart from '@/components/spending/spendingChart'
 import SpendingItemList from '@/components/spending/spendingItemList'
-
-import { useMediaQuery } from '@/hooks/hooks'
 
 export default function SpendingHome() {
 	const millisecInDay = 24 * 60 * 60 * 1000
@@ -24,15 +20,8 @@ export default function SpendingHome() {
 		fetcher
 	)
 
-	const isBreakPoint = useMediaQuery(1028)
-
 	let content = (
-		<div
-			className={clsx(
-				'w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10',
-				isBreakPoint ? '' : 'border-l-2'
-			)}
-		>
+		<div className='w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10'>
 			{!isLoading && (
 				<>
 					<SpendingChart />

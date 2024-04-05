@@ -13,27 +13,13 @@ import clsx from 'clsx'
 
 import TabHome from './[tabs]/page'
 
-import { useMediaQuery } from '@/hooks/hooks'
-
 export default function Tabs() {
 	const searchParams = useSearchParams()
 	const tab = searchParams.get('tab')
 
-	const isBreakPoint = useMediaQuery(1028)
-
 	return (
-		<div
-			className={clsx(
-				'min-h-screen w-full flex gap-2',
-				isBreakPoint ? 'flex-col' : ''
-			)}
-		>
-			<div
-				className={clsx(
-					'h-full w-1/5 flex items-center',
-					!isBreakPoint ? 'flex-col' : 'w-2/3'
-				)}
-			>
+		<div className='min-h-screen w-full flex flex-col gap-2'>
+			<div className='h-full w-2/3 flex items-center'>
 				<Link
 					className='w-full border-b-2 p-5'
 					href={{ pathname: '/', query: { tab: 'calendar' } }}
