@@ -10,7 +10,8 @@ export async function authenticate(
 		await signIn('credentials', Object.fromEntries(formData))
 	} catch (error) {
 		if ((error as Error).message.includes('CredentialsSignin')) {
-			return 'CredentialsSignin'
+			// To trigger useEffect when another signin is attempted
+			return 'CredentialsSignin' + new Date().getTime().toString()
 		}
 		throw error
 	}

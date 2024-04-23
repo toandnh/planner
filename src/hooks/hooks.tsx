@@ -1,40 +1,21 @@
 import { Dispatch, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
-export function useToggle(
-	initialValue?: boolean
-): [boolean, () => void, Dispatch<SetStateAction<boolean>>] {
-	const [value, setValue] = useState(!!initialValue)
-	const toggle = useCallback(() => {
-		setValue((v) => !v)
-	}, [])
-	return [value, toggle, setValue]
-}
-
-export function useMountTransition(
-	isMounted: boolean,
-	unmountDelay: number
-): boolean {
-	const [hasTransitionedIn, setHasTransitionedIn] = useState(false)
+export function useAnimationTimer(
+	duration: number
+): [boolean, Dispatch<SetStateAction<boolean>>] {
+	const [inEffect, setInEffect] = useState(false)
 
 	useEffect(() => {
-		let timeoutId: string | number | NodeJS.Timeout | undefined
+		setInterval(() => {
+			setInEffect(false)
+		}, duration)
+	}, [inEffect])
 
-		if (isMounted && !hasTransitionedIn) {
-			setHasTransitionedIn(true)
-		} else if (!isMounted && hasTransitionedIn) {
-			timeoutId = setTimeout(() => setHasTransitionedIn(false), unmountDelay)
-		}
-
-		return () => {
-			clearTimeout(timeoutId)
-		}
-	}, [unmountDelay, isMounted, hasTransitionedIn])
-
-	return hasTransitionedIn
+	return [inEffect, setInEffect]
 }
 
-export function useMediaQuery(width: number) {
+export function useMediaQuery(width: number): boolean {
 	const [targetReached, setTargetReached] = useState(false)
 
 	const updateTarget = useCallback((e: MediaQueryListEvent) => {
@@ -60,7 +41,30 @@ export function useMediaQuery(width: number) {
 	return targetReached
 }
 
-export function useScreenSize() {
+export function useMountTransition(
+	isMounted: boolean,
+	unmountDelay: number
+): boolean {
+	const [hasTransitionedIn, setHasTransitionedIn] = useState(false)
+
+	useEffect(() => {
+		let timeoutId: string | number | NodeJS.Timeout | undefined
+
+		if (isMounted && !hasTransitionedIn) {
+			setHasTransitionedIn(true)
+		} else if (!isMounted && hasTransitionedIn) {
+			timeoutId = setTimeout(() => setHasTransitionedIn(false), unmountDelay)
+		}
+
+		return () => {
+			clearTimeout(timeoutId)
+		}
+	}, [unmountDelay, isMounted, hasTransitionedIn])
+
+	return hasTransitionedIn
+}
+
+export function useScreenSize(): { width: number; height: number } {
 	const [screenSize, setScreenSize] = useState({
 		width: window.innerWidth,
 		height: window.innerHeight
@@ -83,4 +87,16 @@ export function useScreenSize() {
 	}, [])
 
 	return screenSize
+}
+
+export function useToggle(
+	initialValue?: boolean
+): [boolean, () => void, Dispatch<SetStateAction<boolean>>] {
+	const [value, setValue] = useState(!!initialValue)
+
+	const toggle = useCallback(() => {
+		setValue((v) => !v)
+	}, [])
+
+	return [value, toggle, setValue]
 }

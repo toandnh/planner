@@ -23,6 +23,12 @@ const config: Config = {
 				'charcoal': '#364156',
 				'oxford-blue': '#011638',
 				'cal-poly-green': '#214E34'
+			},
+			keyframes: {
+				shake: {
+					'0%, 100%': { transform: 'translateX(-5px)' },
+					'50%': { transform: 'translateX(5px)' }
+				}
 			}
 		}
 	},
