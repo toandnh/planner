@@ -2,6 +2,8 @@
 
 import useSWR from 'swr'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 import StoreProvider from '@/app/StoreProvider'
 
 import SpendingChart from '@/components/spending/spendingChart'
@@ -22,6 +24,11 @@ export default function SpendingHome() {
 
 	let content = (
 		<div className='w-full flex flex-col gap-10 p-2 md:p-5 lg:p-10'>
+			{isLoading && (
+				<div className='w-full h-[50vh] flex justify-center items-center'>
+					<CircularProgress />
+				</div>
+			)}
 			{!isLoading && (
 				<>
 					<SpendingChart />

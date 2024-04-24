@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/react'
 
 import useSWR from 'swr'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 import Name from './name'
 import Profile from './profile'
 
@@ -15,6 +17,11 @@ export default function ProfilePage() {
 
 	return (
 		<div className='min-h-[80vh] flex flex-col p-10'>
+			{isLoading && (
+				<div className='w-full h-[50vh] flex justify-center items-center'>
+					<CircularProgress />
+				</div>
+			)}
 			{!isLoading && (
 				<>
 					{session?.user && <Name name={session?.user.name} />}

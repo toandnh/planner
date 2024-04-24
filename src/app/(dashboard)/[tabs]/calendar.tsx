@@ -13,6 +13,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import moment from 'moment'
 
+import CircularProgress from '@mui/material/CircularProgress'
+
 import CalendarAddForm from '@/components/calendar/calendarAddForm'
 import CalendarUpdateForm from '@/components/calendar/calendarUpdateForm'
 
@@ -113,9 +115,14 @@ export default function Calendar() {
 	}
 
 	return (
-		<>
+		<div className='w-full h-screen min-h-[600px] p-2 md:p-5 lg:p-10'>
+			{isLoading && (
+				<div className='w-full h-[50vh] flex justify-center items-center'>
+					<CircularProgress />
+				</div>
+			)}
 			{!isLoading && (
-				<div className='w-full h-screen min-h-[600px] p-2 md:p-5 lg:p-10'>
+				<>
 					<ReactBigCalendar
 						localizer={localizer}
 						events={events}
@@ -143,8 +150,8 @@ export default function Calendar() {
 							)}
 						</Modal>
 					)}
-				</div>
+				</>
 			)}
-		</>
+		</div>
 	)
 }
