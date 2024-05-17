@@ -25,7 +25,7 @@ export default function Submit({
 
 	return (
 		<>
-			<div className='flex flex-col gap-5'>
+			<div key='form-inputs' className='flex flex-col gap-5'>
 				<label>Username</label>
 				<input
 					className='p-4 rounded-md'
@@ -52,7 +52,11 @@ export default function Submit({
 			>
 				<div className='flex items-center gap-5'>
 					Submit
-					{pending && <CircularProgress size='1rem' />}
+					<div
+						className={pending ? 'flex justify-center items-center' : 'hidden'}
+					>
+						<CircularProgress size='1rem' />
+					</div>
 				</div>
 			</button>
 		</>

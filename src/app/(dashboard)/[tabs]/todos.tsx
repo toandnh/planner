@@ -22,12 +22,12 @@ export default function Todos() {
 	const { isLoading, data } = useSWR('/api/todos', fetcher)
 
 	const inProgressData: TodoDatum[] = useMemo(
-		() => getInProgressData(data, isLoading),
+		() => getInProgressData(data?.message ? undefined : data, isLoading),
 		[data]
 	)
 
 	const completedData: TodoDatum[] = useMemo(
-		() => getCompletedData(data, isLoading),
+		() => getCompletedData(data?.message ? undefined : data, isLoading),
 		[data]
 	)
 
