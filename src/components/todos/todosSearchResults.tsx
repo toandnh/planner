@@ -47,7 +47,7 @@ export default function TodosSearchResults({
 		<>
 			<div className='w-full flex pt-5'>
 				<h3 className='w-1/2 flex justify-start text-xl font-semibold'>
-					Search Results for '{searchQuery}'
+					Search Results for &apos;{searchQuery}&apos;
 				</h3>
 				<button className='w-1/2 flex justify-end' onClick={handleClose}>
 					<CloseIcon fontSize='medium' />

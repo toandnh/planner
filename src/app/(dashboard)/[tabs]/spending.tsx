@@ -38,5 +38,5 @@ export default function SpendingHome() {
 		</div>
 	)
 
-	return <StoreProvider children={content} />
+	return <StoreProvider>{content}</StoreProvider>
 }

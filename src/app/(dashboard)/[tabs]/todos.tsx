@@ -51,5 +51,5 @@ export default function Todos() {
 		</div>
 	)
 
-	return <StoreProvider children={content} />
+	return <StoreProvider>{content}</StoreProvider>
 }

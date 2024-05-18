@@ -124,5 +124,5 @@ export default function HealthHome() {
 		</div>
 	)
 
-	return <StoreProvider children={content} />
+	return <StoreProvider>{content}</StoreProvider>
 }
